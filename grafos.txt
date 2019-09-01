@@ -1,54 +1,54 @@
 [Vertices]
-Salvador
-Feira_de_Santana
-Vitoria_da_Conquista
-Camacari
-Juazeiro
-Itabuna
-Lauro_de_Freitas
-Ilheus
-Jequie
-Teixeira_de_Freitas
-Barreiras
-Alagoinhas
-Porto_Seguro
-Simoes_Filho
-Paulo_Afonso
-Eunapolis
-Santo_Antonio_de_Jesus
-Valenca
-Candeias
-Guanambi
-Jacobina
-Luis_Eduardo_Magalhaes
-Serrinha
-Senhor_do_Bonfim
-Irara
-Itapetinga
-Irece
-Campo_Formoso
-Casa_Nova
-Bom_Jesus_da_Lapa
-Brumado
-Conceicao_do_Coite
-Itamaraju
-Itaberaba
-Cruz_das_Almas
-Ipira
-Santo_Amaro
-Euclides_da_Cunha
-Catu
-Jaguaquara
-Araci
-Ribeira_do_Pombal
-Barra
-Santo_Estevao
-Caetite
-Tucano
-Monte_Santo
-Macaubas
-Pocoes
-Xique_Xique
+Salvador 3
+Feira_de_Santana 0
+Vitoria_da_Conquista 1
+Camacari 1
+Juazeiro 2
+Itabuna 0
+Lauro_de_Freitas 1
+Ilheus 0
+Jequie 2
+Teixeira_de_Freitas 2
+Barreiras 2
+Alagoinhas 0
+Porto_Seguro 0
+Simoes_Filho 1
+Paulo_Afonso 0
+Eunapolis 0
+Santo_Antonio_de_Jesus 0
+Valenca 0
+Candeias 2
+Guanambi 0
+Jacobina 2
+Luis_Eduardo_Magalhaes 1
+Serrinha 0
+Senhor_do_Bonfim 1
+Irara 2
+Itapetinga 0
+Irece 1
+Campo_Formoso 0
+Casa_Nova 0
+Bom_Jesus_da_Lapa 0
+Brumado 0
+Conceicao_do_Coite 0
+Itamaraju 2
+Itaberaba 0
+Cruz_das_Almas 0
+Ipira 0
+Santo_Amaro 0
+Euclides_da_Cunha 0
+Catu 1
+Jaguaquara 1
+Araci 0
+Ribeira_do_Pombal 0
+Barra 0
+Santo_Estevao 2
+Caetite 0
+Tucano 1
+Monte_Santo 2
+Macaubas 0
+Pocoes 0
+Xique_Xique 0
 [Arestas]
 Salvador Santo_Antonio_de_Jesus 20
 Salvador Porto_Seguro 8
