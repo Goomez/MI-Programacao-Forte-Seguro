@@ -1,5 +1,5 @@
 No test do Grafo:
-- Modificado para generics;
+- Modificado para generics (usei String, porque são nomes de cidades que tão no arquivo de leitura);
 - Variaveis e dados modificados;
 - Limpada geral/mais legibilidade.
 
