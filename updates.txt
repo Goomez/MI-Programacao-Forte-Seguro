@@ -1,0 +1,8 @@
+No test do Grafo:
+- Modificado para generics;
+- Variaveis e dados modificados;
+- Limpada geral/mais legibilidade.
+
+Na Classe Vertice:
+- Adicionado a posicao X e Y;
+- Construtor modificado.
