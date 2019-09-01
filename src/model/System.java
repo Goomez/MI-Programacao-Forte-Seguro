@@ -12,9 +12,9 @@
  * de avaliação. Alguns trechos do código podem coincidir com de outros
  * colegas pois estes foram discutidos em sessões tutorias.
  */
-package br.uefs.ecomp.forteseguro.model;
+package model;
 
-import br.uefs.ecomp.forteseguro.util.*;
+import util.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
