@@ -32,12 +32,12 @@ public class GrafoTest {
     Boolean flag;
     Grafo<String> grafo;
     AlgoritmoDijkstra dijkstra;
-    Vertice<String> vert1, vert2, vert3, vert4, vert5, vert6, vert7, vert8, vert9, vert10, vert11, vert12;
+    Vertice<String> vert111, vert2, vert3, vert4, vert5, vert6, vert7, vert8, vert9, vert10, vert11, vert12;
 
     @Before
     public void setUp() throws Exception {
         grafo = new Grafo();
-        vert1 = grafo.inserir("Feira_de_Santana", 10, 10); // Nome : Posicao X : Posicao Y
+        vert111 = grafo.inserir("Feira_de_Santana", 10, 10); // Nome : Posicao X : Posicao Y
         vert2 = grafo.inserir("Amelia_Rodrigues", 10, 10);
         vert3 = grafo.inserir("Irara",  10, 10);
         vert4 = grafo.inserir("Serrinha",  10, 10);
@@ -50,10 +50,10 @@ public class GrafoTest {
         vert11 = grafo.inserir("Salvador",  10, 10);
         vert12 = grafo.inserir("Igreja_Universal",  10, 10);
 
-        grafo.inserirAresta(vert1, vert2, 3);
-        grafo.inserirAresta(vert1, vert5, 2);
+        grafo.inserirAresta(vert111, vert2, 3);
+        grafo.inserirAresta(vert111, vert5, 2);
 
-        grafo.inserirAresta(vert2, vert1, 3);
+        grafo.inserirAresta(vert2, vert111, 3);
         grafo.inserirAresta(vert2, vert4, 7);
 
         grafo.inserirAresta(vert3, vert6, 2);
@@ -63,7 +63,7 @@ public class GrafoTest {
         grafo.inserirAresta(vert4, vert7, 9);
         grafo.inserirAresta(vert4, vert6, 3);
 
-        grafo.inserirAresta(vert5, vert1, 2);
+        grafo.inserirAresta(vert5, vert111, 2);
         grafo.inserirAresta(vert5, vert4, 5);
         grafo.inserirAresta(vert5, vert7, 4);
 
@@ -109,12 +109,12 @@ public class GrafoTest {
     
     @Test
     public void Caminho1_1Test() throws Exception {
-        dijkstra.executar(vert1);
+        dijkstra.executar(vert111);
         List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert7);
         ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
         ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
-        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert111);
         caminhoEsperado.add(vert5);
         caminhoEsperado.add(vert7);
 
@@ -146,7 +146,7 @@ public class GrafoTest {
 
         ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
         caminhoEsperado.add(vert2);
-        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert111);
         caminhoEsperado.add(vert5);
         caminhoEsperado.add(vert7);
 
@@ -206,7 +206,7 @@ public class GrafoTest {
         ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
         caminhoEsperado.add(vert7);
         caminhoEsperado.add(vert5);
-        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert111);
         caminhoEsperado.add(vert2);
 
         caminhosEsperados.add(caminhoEsperado);
@@ -233,14 +233,14 @@ public class GrafoTest {
     @Test
     public void Caminho4_2Test() throws Exception {
         dijkstra.executar(vert6);
-        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert1);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert111);
         ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
         ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
         caminhoEsperado.add(vert6);
         caminhoEsperado.add(vert4);
         caminhoEsperado.add(vert5);
-        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert111);
 
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
@@ -388,12 +388,12 @@ public class GrafoTest {
     @Test
     public void Caminho9_2Test() throws Exception {
         dijkstra.executar(vert2);
-        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert1);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert111);
         ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
         ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
         caminhoEsperado.add(vert2);
-        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert111);
 
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
