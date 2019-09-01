@@ -75,8 +75,8 @@ public class System {
                 String[] subString = leitura.split(" ");
                 int distancia = Integer.parseInt(subString[2]);
                 
-                //Aresta aresta = new Aresta(grafo.buscarVertice(vertice1), grafo.buscarVertice(vertice2), distancia);
                 grafo.inserirAresta(grafo.buscarVertice(subString[0]), grafo.buscarVertice(subString[1]), distancia);
+                grafo.inserirAresta(grafo.buscarVertice(subString[1]), grafo.buscarVertice(subString[0]), distancia);
             }
         }
         catch(FileNotFoundException e){
