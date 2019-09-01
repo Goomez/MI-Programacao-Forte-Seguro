@@ -35,10 +35,10 @@ public class Grafo<T>{
         return this.listaArestas;
     }
 
-    public Vertice<T> inserir(T obj) {
+    public Vertice<T> inserir(T obj, int posX, int posY) {
         if(obj == null)
             return null;
-        Vertice<T> vertice = new Vertice<>(obj);
+        Vertice<T> vertice = new Vertice<>(obj, posX, posY);
         this.listaVertices.add(vertice);
         this.quantidadeVertices++;
         return vertice;
@@ -78,7 +78,7 @@ public class Grafo<T>{
 
     public Vertice<T> buscarVertice(T obj){
         for(Vertice<T> auxVertice : this.listaVertices)
-            if(auxVertice.getObjeto().equals(obj))
+            if(auxVertice.getObj().equals(obj))
                 return auxVertice;
         return null;
     }
@@ -93,8 +93,8 @@ public class Grafo<T>{
     public List<Aresta<T>> arestasIncidentes(String nome){
         List<Aresta<T>> arestasIncidentes = new ArrayList<>();
         
-        this.listaArestas.stream().filter((auxAresta) -> (auxAresta.getVertice1().getObjeto().equals(nome) 
-                || auxAresta.getVertice2().getObjeto().equals(nome))).forEachOrdered((auxAresta) -> {
+        this.listaArestas.stream().filter((auxAresta) -> (auxAresta.getVertice1().getObj().equals(nome) 
+                || auxAresta.getVertice2().getObj().equals(nome))).forEachOrdered((auxAresta) -> {
             arestasIncidentes.add(auxAresta);
         });
         

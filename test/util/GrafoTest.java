@@ -1,3 +1,18 @@
+/**
+ * Componente Curricular: Módulo Integrado de Programação II
+ * Autores: <Kevin Cerqueira Gomes e Allan Capistrano de Santana Santos>
+ * Data: <31/08/2019>
+ *
+ * Declaro que este código foi elaborado por nós de forma individual e
+ * não contém nenhum trecho de código de outro colega ou de outro autor, 
+ * tais como provindos de livros e apostilas, e páginas ou documentos 
+ * eletrônicos da Internet. Qualquer trecho de código de outra autoria que
+ * uma citação para o  não a minha está destacado com  autor e a fonte do
+ * código, e estou ciente que estes trechos não serão considerados para fins
+ * de avaliação. Alguns trechos do código podem coincidir com de outros
+ * colegas pois estes foram discutidos em sessões tutorias.
+ */
+
 package util;
 
 import static org.junit.Assert.assertEquals;
@@ -8,450 +23,413 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Testes de unidade para a classe ({@link Grafo}).
+ * @author Kevin Cerqueira
+ * @author Allan Capistrano
+ */
 public class GrafoTest {
-	Boolean flag;
-	Grafo grafo;
-	AlgoritmoDijkstra operador;
-	Vertice a, b, c, d, e, f, g, h, i, j, k, l;
-        
-	@Before
-	public void setUp() throws Exception {
-		grafo = new Grafo();
-		a = grafo.inserir("A");
-		b = grafo.inserir("B");
-		c = grafo.inserir("C");
-		d = grafo.inserir("D");
-		e = grafo.inserir("E");
-		f = grafo.inserir("F");
-		g = grafo.inserir("G");
-		h = grafo.inserir("H");
-		i = grafo.inserir("I");
-		j = grafo.inserir("J");
-		k = grafo.inserir("K");
-		l = grafo.inserir("L");
+    Boolean flag;
+    Grafo<String> grafo;
+    AlgoritmoDijkstra dijkstra;
+    Vertice<String> vert1, vert2, vert3, vert4, vert5, vert6, vert7, vert8, vert9, vert10, vert11, vert12;
 
-		grafo.inserirAresta(a, b, 3);
-		grafo.inserirAresta(a, e, 2);
-		
-		grafo.inserirAresta(b, a, 3);
-		grafo.inserirAresta(b, d, 7);
-		
-		grafo.inserirAresta(c, f, 2);
-		
-		grafo.inserirAresta(d, b, 7);
-		grafo.inserirAresta(d, e, 5);
-		grafo.inserirAresta(d, g, 9);
-		grafo.inserirAresta(d, f, 3);
-		
-		grafo.inserirAresta(e, a, 2);
-		grafo.inserirAresta(e, d, 5);
-		grafo.inserirAresta(e, g, 4);
-		
-		grafo.inserirAresta(f, c, 2);
-		grafo.inserirAresta(f, d, 3);
-		grafo.inserirAresta(f, g, 6);
-		
-		grafo.inserirAresta(g, e, 4);
-		grafo.inserirAresta(g, d, 9);
-		grafo.inserirAresta(g, f, 6);
-		grafo.inserirAresta(g, i, 1);
-		
-		grafo.inserirAresta(h, j, 7);
-		
-		grafo.inserirAresta(i, g, 1);
-		grafo.inserirAresta(i, j, 3);
-		
-		grafo.inserirAresta(j, h, 7);
-		grafo.inserirAresta(j, i, 3);
-		grafo.inserirAresta(j, k, 9);
-		
-		grafo.inserirAresta(k, j, 9);
+    @Before
+    public void setUp() throws Exception {
+        grafo = new Grafo();
+        vert1 = grafo.inserir("Feira_de_Santana", 10, 10); // Nome : Posicao X : Posicao Y
+        vert2 = grafo.inserir("Amelia_Rodrigues", 10, 10);
+        vert3 = grafo.inserir("Irara",  10, 10);
+        vert4 = grafo.inserir("Serrinha",  10, 10);
+        vert5 = grafo.inserir("Banco_do_Brasil",  10, 10);
+        vert6 = grafo.inserir("Santander",  10, 10);
+        vert7 = grafo.inserir("Nubank",  10, 10);
+        vert8 = grafo.inserir("Maria_Quiteria",  10, 10);
+        vert9 = grafo.inserir("Banco_do_Nordeste",  10, 10);
+        vert10 = grafo.inserir("Bradesco",  10, 10);
+        vert11 = grafo.inserir("Salvador",  10, 10);
+        vert12 = grafo.inserir("Igreja_Universal",  10, 10);
 
-		operador = new AlgoritmoDijkstra(grafo);
+        grafo.inserirAresta(vert1, vert2, 3);
+        grafo.inserirAresta(vert1, vert5, 2);
 
-	}
+        grafo.inserirAresta(vert2, vert1, 3);
+        grafo.inserirAresta(vert2, vert4, 7);
 
-	private void comparar(ArrayList<ArrayList<Vertice>> caminhosEsperados, List<List<Vertice>> caminhos) {
-		assertEquals(caminhosEsperados.size(), caminhos.size());
-		for(List<Vertice> caminho : caminhos){
-			assertNotNull(caminho);
-			assertTrue(caminho.size() > 0);
-			assertEquals(caminhosEsperados.size(), caminhos.size());
+        grafo.inserirAresta(vert3, vert6, 2);
 
-			flag = false;
-			for(List<Vertice> camEsperado : caminhosEsperados){
-				if(!flag && camEsperado.equals(caminho))flag = true;
-			}
-			assertTrue(flag);
+        grafo.inserirAresta(vert4, vert2, 7);
+        grafo.inserirAresta(vert4, vert5, 5);
+        grafo.inserirAresta(vert4, vert7, 9);
+        grafo.inserirAresta(vert4, vert6, 3);
 
-		}
+        grafo.inserirAresta(vert5, vert1, 2);
+        grafo.inserirAresta(vert5, vert4, 5);
+        grafo.inserirAresta(vert5, vert7, 4);
 
-	}
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho1_1Test() throws Exception {
+        grafo.inserirAresta(vert6, vert3, 2);
+        grafo.inserirAresta(vert6, vert4, 3);
+        grafo.inserirAresta(vert6, vert7, 6);
 
-		operador.executar(a);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, g);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(a);
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(g);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho1_2Test() throws Exception {
+        grafo.inserirAresta(vert7, vert5, 4);
+        grafo.inserirAresta(vert7, vert4, 9);
+        grafo.inserirAresta(vert7, vert6, 6);
+        grafo.inserirAresta(vert7, vert9, 1);
 
-		operador.executar(g);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, h);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(i);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(h);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho2_1Test() throws Exception {
+        grafo.inserirAresta(vert8, vert10, 7);
 
-		operador.executar(b);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, g);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(b);
-		caminhoEsperado.add(a);
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(g);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho2_2Test() throws Exception {
+        grafo.inserirAresta(vert9, vert7, 1);
+        grafo.inserirAresta(vert9, vert10, 3);
 
-		operador.executar(g);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, c);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(c);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho3_1Test() throws Exception {
+        grafo.inserirAresta(vert10, vert8, 7);
+        grafo.inserirAresta(vert10, vert9, 3);
+        grafo.inserirAresta(vert10, vert11, 9);
 
-		operador.executar(d);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, g);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(g);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		
-		caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(g);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		
-		caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(g);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho3_2Test() throws Exception {
+        grafo.inserirAresta(vert11, vert10, 9);
 
-		operador.executar(g);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, b);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(a);
-		caminhoEsperado.add(b);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho4_1Test() throws Exception {
+        dijkstra = new AlgoritmoDijkstra(grafo);
 
-		operador.executar(k);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, f);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(k);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(i);
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(f);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho4_2Test() throws Exception {
+    }
 
-		operador.executar(f);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, a);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(a);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho5_1Test() throws Exception {
+    private void comparar(ArrayList<ArrayList<Vertice<String>>> caminhosEsperados, List<List<Vertice<String>>> caminhos) {
+        assertEquals(caminhosEsperados.size(), caminhos.size());
+        for(List<Vertice<String>> caminho : caminhos){
+            assertNotNull(caminho);
+            assertTrue(caminho.size() > 0);
+            assertEquals(caminhosEsperados.size(), caminhos.size());
 
-		operador.executar(c);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, k);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(c);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(i);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(k);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho5_2Test() throws Exception {
+            flag = false;
+            for(ArrayList<Vertice<String>> camEsperado : caminhosEsperados){
+                    if(!flag && camEsperado.equals(caminho))flag = true;
+            }
+            assertTrue(flag);
+        }
 
-		operador.executar(k);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, h);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(k);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(h);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho6_1Test() throws Exception {
+    }
+    
+    @Test
+    public void Caminho1_1Test() throws Exception {
+        dijkstra.executar(vert1);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert7);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
-		operador.executar(h);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, i);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(h);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(i);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho6_2Test() throws Exception {
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert7);
 
-		operador.executar(i);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, k);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(i);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(k);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho7_1Test() throws Exception {
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho1_2Test() throws Exception {
+        dijkstra.executar(vert7);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert8);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
-		operador.executar(f);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, e);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(e);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho7_2Test() throws Exception {
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert9);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert8);
 
-		operador.executar(e);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, i);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(i);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho8_1Test() throws Exception {
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho2_1Test() throws Exception {
+        dijkstra.executar(vert2);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert7);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
-		operador.executar(i);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, c);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(i);
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(c);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho8_2Test() throws Exception {
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert2);
+        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert7);
 
-		operador.executar(c);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, b);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(c);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(b);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho9_1Test() throws Exception {
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho2_2Test() throws Exception {
+        dijkstra.executar(vert7);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert3);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
-		operador.executar(d);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, b);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(b);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho9_2Test() throws Exception {
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert3);
 
-		operador.executar(b);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, a);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(b);
-		caminhoEsperado.add(a);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho10_1Test() throws Exception {
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho3_1Test() throws Exception {
+        dijkstra.executar(vert4);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert7);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
 
-		operador.executar(e);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, c);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(e);
-		caminhoEsperado.add(d);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(c);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	/*---------------------------------------------------------------------------------*/
-	@Test
-	public void Caminho10_2Test() throws Exception {
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert7);
 
-		operador.executar(c);
-		List<List<Vertice>> caminhos = operador.getCaminho(null, h);
-		ArrayList<ArrayList<Vertice>> caminhosEsperados = new ArrayList<ArrayList<Vertice>>();
-		
-		ArrayList<Vertice> caminhoEsperado = new ArrayList<Vertice>();
-		caminhoEsperado.add(c);
-		caminhoEsperado.add(f);
-		caminhoEsperado.add(g);
-		caminhoEsperado.add(i);
-		caminhoEsperado.add(j);
-		caminhoEsperado.add(h);
-		
-		caminhosEsperados.add(caminhoEsperado);
-		comparar(caminhosEsperados, caminhos);
-	}
-	/*---------------------------------------------------------------------------------*/
-	
+        caminhosEsperados.add(caminhoEsperado);
+
+        caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert7);
+
+        caminhosEsperados.add(caminhoEsperado);
+
+        caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert7);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho3_2Test() throws Exception {
+        dijkstra.executar(vert7);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert2);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert1);
+        caminhoEsperado.add(vert2);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho4_1Test() throws Exception {
+        dijkstra.executar(vert11);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert6);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert11);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert9);
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert6);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho4_2Test() throws Exception {
+        dijkstra.executar(vert6);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert1);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert1);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho5_1Test() throws Exception {
+        dijkstra.executar(vert3);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert11);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert3);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert9);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert11);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho5_2Test() throws Exception {
+        dijkstra.executar(vert11);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert8);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert11);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert8);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho6_1Test() throws Exception {
+        dijkstra.executar(vert8);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert9);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert8);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert9);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho6_2Test() throws Exception {
+        dijkstra.executar(vert9);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert11);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert9);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert11);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho7_1Test() throws Exception {
+        dijkstra.executar(vert6);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert5);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert5);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho7_2Test() throws Exception {
+        dijkstra.executar(vert5);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert9);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert9);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho8_1Test() throws Exception {
+        dijkstra.executar(vert9);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert3);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert9);
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert3);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho8_2Test() throws Exception {
+        dijkstra.executar(vert3);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert2);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert3);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert2);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho9_1Test() throws Exception {
+        dijkstra.executar(vert4);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert2);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert2);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho9_2Test() throws Exception {
+        dijkstra.executar(vert2);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert1);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert2);
+        caminhoEsperado.add(vert1);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho10_1Test() throws Exception {
+        dijkstra.executar(vert5);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert3);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert5);
+        caminhoEsperado.add(vert4);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert3);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
+    
+    @Test
+    public void Caminho10_2Test() throws Exception {
+        dijkstra.executar(vert3);
+        List<List<Vertice<String>>> caminhos = dijkstra.getCaminho(null, vert8);
+        ArrayList<ArrayList<Vertice<String>>> caminhosEsperados = new ArrayList<>();
+
+        ArrayList<Vertice<String>> caminhoEsperado = new ArrayList<>();
+        caminhoEsperado.add(vert3);
+        caminhoEsperado.add(vert6);
+        caminhoEsperado.add(vert7);
+        caminhoEsperado.add(vert9);
+        caminhoEsperado.add(vert10);
+        caminhoEsperado.add(vert8);
+
+        caminhosEsperados.add(caminhoEsperado);
+        comparar(caminhosEsperados, caminhos);
+    }
 }

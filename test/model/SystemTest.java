@@ -1,4 +1,4 @@
-package br.uefs.ecomp.forteseguro.model;
+package model;
 
 import org.junit.Before;
 import org.junit.Test;
