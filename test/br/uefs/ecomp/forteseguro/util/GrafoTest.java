@@ -13,8 +13,11 @@
  * colegas pois estes foram discutidos em sessões tutorias.
  */
 
-package util;
+package br.uefs.ecomp.forteseguro.util;
 
+import br.uefs.ecomp.forteseguro.util.Grafo;
+import br.uefs.ecomp.forteseguro.util.AlgoritmoDijkstra;
+import br.uefs.ecomp.forteseguro.util.Vertice;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

@@ -12,7 +12,7 @@
  * de avaliação. Alguns trechos do código podem coincidir com de outros
  * colegas pois estes foram discutidos em sessões tutorias.
  */
-package util;
+package br.uefs.ecomp.forteseguro.util;
 
 public class Aresta<T>{
     private Vertice<T> vertice1;

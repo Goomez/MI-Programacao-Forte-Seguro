@@ -1,5 +1,5 @@
 
-package util;
+package br.uefs.ecomp.forteseguro.util;
 
 import java.util.ArrayList;
 

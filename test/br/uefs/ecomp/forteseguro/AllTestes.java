@@ -1,8 +1,8 @@
-
+package br.uefs.ecomp.forteseguro;
+import br.uefs.ecomp.forteseguro.model.*;
+import br.uefs.ecomp.forteseguro.util.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import util.*;
-import model.*;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({

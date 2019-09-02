@@ -1,13 +1,14 @@
-package model;
+package br.uefs.ecomp.forteseguro.model;
 
+import br.uefs.ecomp.forteseguro.model.System;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import util.Aresta;
-import util.Vertice;
+import br.uefs.ecomp.forteseguro.util.Aresta;
+import br.uefs.ecomp.forteseguro.util.Vertice;
 
 /**
  * Testes de unidade para a classe ({@link System}).
