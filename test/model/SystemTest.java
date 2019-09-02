@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import util.Aresta;
 import util.Vertice;
 
@@ -43,8 +44,30 @@ public class SystemTest {
         assertTrue(sys.getGrafo().buscarVertice("Serrinha").equals(vertice2));
         assertTrue(sys.getGrafo().buscarVertice("Irara").equals(vertice3));
         
-        assertTrue(sys.getGrafo().buscarAresta(vertice1, vertice3).equals(aresta1));
-        assertTrue(sys.getGrafo().buscarAresta(vertice2, vertice3).equals(aresta2));
+        assertTrue(sys.getGrafo().buscarAresta("Feira_de_Santana", "Irara").equals(aresta1));
+        assertTrue(sys.getGrafo().buscarAresta("Serrinha", "Irara").equals(aresta2));
         
+    }
+    
+    @Test
+    public void removerPontosLigacoes(){
+        assertEquals("Grafo criado com sucesso", sys.criarGrafo("grafos.txt"));
+        
+        assertTrue(sys.getGrafo().buscarVertice("Feira_de_Santana").equals(vertice1));
+        assertTrue(sys.getGrafo().buscarVertice("Serrinha").equals(vertice2));
+        assertTrue(sys.getGrafo().buscarVertice("Irara").equals(vertice3));
+        
+        assertTrue(sys.getGrafo().buscarAresta("Feira_de_Santana", "Irara").equals(aresta1));
+        assertTrue(sys.getGrafo().buscarAresta("Serrinha", "Irara").equals(aresta2));
+
+        assertEquals("Ligação removida com sucesso!", sys.removerLigacao(aresta1));
+        assertNull(sys.getGrafo().buscarAresta("Feira_de_Santana", "Irara"));
+        
+        assertEquals("Cruzamento removido com sucesso!", sys.removerCruzamento("Irara"));
+        assertNull(sys.getGrafo().buscarVertice("Irara"));
+        assertNull(sys.getGrafo().buscarAresta(vertice3));
+        
+        assertEquals("Cruzamento não existe!", sys.removerCruzamento("Irara"));
+        assertEquals("Ligação não existe!", sys.removerLigacao(aresta2));
     }
 }

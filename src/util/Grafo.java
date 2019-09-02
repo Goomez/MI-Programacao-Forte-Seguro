@@ -83,17 +83,24 @@ public class Grafo<T>{
         Aresta<T> auxAresta = this.buscarAresta(aresta.getVertice1(), aresta.getVertice2());
         if(auxAresta != null)
             this.listaArestas.remove(auxAresta);
+        this.quantidadeArestas--;
     }
 
     public Vertice removerVertice(T obj){
         Vertice<T> vertice = this.buscarVertice(obj);
         if(this.buscarVertice(obj) == null)
             return null;
-        // isso ai em baixo é o msm que o for each
-        this.listaArestas.stream().filter((auxAresta) -> (auxAresta.getVertice1().equals(vertice) 
-                || auxAresta.getVertice2().equals(vertice))).forEachOrdered((auxAresta) -> {
+        
+        Aresta<T> auxAresta = this.buscarAresta(vertice);
+        int qtdArestasRemovidas = 0;
+        
+        while(auxAresta != null){
             this.listaArestas.remove(auxAresta);
-        });
+            qtdArestasRemovidas++;
+            auxAresta = this.buscarAresta(vertice);
+        }
+        this.quantidadeVertices--;
+        this.quantidadeArestas -= qtdArestasRemovidas;
         this.listaVertices.remove(vertice);
         return vertice;
     }
@@ -108,6 +115,30 @@ public class Grafo<T>{
     public Aresta<T> buscarAresta(Vertice<T> vertice1, Vertice<T> vertice2){
         for(Aresta<T> auxAresta : this.listaArestas)
             if(auxAresta.getVertice1().equals(vertice1) && auxAresta.getVertice2().equals(vertice2))
+                return auxAresta;
+        return null;
+    }
+    
+    public Aresta<T> buscarAresta(T v1, T v2){
+        Vertice<T> vertice1 = buscarVertice(v1);
+        Vertice<T> vertice2 = buscarVertice(v2);
+        for(Aresta<T> auxAresta : this.listaArestas)
+            if(auxAresta.getVertice1().equals(vertice1) && auxAresta.getVertice2().equals(vertice2))
+                return auxAresta;
+        return null;
+    }
+
+    /** Método que busca uma aresta que possua ligação com um determinado vértice
+     * 
+     * @param vertice Vertice - Vértice que se deseja procurar as arestas que o
+     * mesmo possui.
+     * @return Aresta - Aresta que possui relação o vértice passado como parâmetro
+     * null - Caso não exista nenhuma aresta relacionada com o vértice passado 
+     * por parâmetro.
+     */
+    public Aresta<T> buscarAresta(Vertice<T> vertice){
+        for(Aresta<T> auxAresta : this.listaArestas)
+            if(auxAresta.getVertice1().equals(vertice) || auxAresta.getVertice2().equals(vertice))
                 return auxAresta;
         return null;
     }

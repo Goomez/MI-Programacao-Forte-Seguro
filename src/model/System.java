@@ -87,5 +87,31 @@ public class System {
         }
         return "Grafo criado com sucesso";
     }
+    
+    /** Método que remove uma determinada aresta do grafo.
+     * 
+     * @param aresta Aresta - Aresta que se deseja remover.
+     * @return Ligação não existe! - Caso não seja possível remover a ligação
+     * Ligação removida com sucesso! - Caso a remoção ocorra com sucesso. 
+     */
+    public String removerLigacao(Aresta aresta){
+        if(this.getGrafo().buscarAresta(aresta.getVertice1(), aresta.getVertice2()) == null)
+            return "Ligação não existe!";
+        this.getGrafo().removerAresta(aresta);
+        return "Ligação removida com sucesso!";
+    }
+    
+    /** Método que remove um vértice e suas ligações do grafo.
+     * 
+     * @param cruzamento String - Identificador do vértice que se deseja remover.
+     * @return Cruzamento não existe! - Caso não seja possível remover o cruzamento
+     * Cruzamento removido com sucesso! - Caso a remoção ocorra com sucesso.
+     */
+    public String removerCruzamento(String cruzamento){
+         if(this.getGrafo().buscarVertice(cruzamento) == null)
+            return "Cruzamento não existe!";
+        this.getGrafo().removerVertice(cruzamento);
+        return "Cruzamento removido com sucesso!";
+    }
 
 }
