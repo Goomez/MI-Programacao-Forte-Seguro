@@ -1,8 +1,3 @@
-No test do Grafo:
-- Modificado para generics (usei String, porque são nomes de cidades que tão no arquivo de leitura);
-- Variaveis e dados modificados;
-- Limpada geral/mais legibilidade.
-
-Na Classe Vertice:
-- Adicionado a posicao X e Y;
-- Construtor modificado.
+View:
+- View do cadastramento de ponto alterado;
+- View de Remoção de ponto e/ou ligações criado.
