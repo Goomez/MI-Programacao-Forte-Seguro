@@ -50,7 +50,7 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        cadastrarPanelLigacoesPontos = new javax.swing.JPanel();
         cadastrarComboBoxLigacoesPonto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cadastrarComboBoxAdicionarLigacao = new javax.swing.JToggleButton();
@@ -151,9 +151,9 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da inserção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        jPanel9.setBackground(new java.awt.Color(30, 144, 255));
-        jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ligações entre pontos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel9.setForeground(new java.awt.Color(255, 255, 255));
+        cadastrarPanelLigacoesPontos.setBackground(new java.awt.Color(30, 144, 255));
+        cadastrarPanelLigacoesPontos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ligações entre pontos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        cadastrarPanelLigacoesPontos.setForeground(new java.awt.Color(255, 255, 255));
 
         cadastrarComboBoxLigacoesPonto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
@@ -164,24 +164,24 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarComboBoxAdicionarLigacao.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarComboBoxAdicionarLigacao.setText("Adicionar ligação");
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout cadastrarPanelLigacoesPontosLayout = new javax.swing.GroupLayout(cadastrarPanelLigacoesPontos);
+        cadastrarPanelLigacoesPontos.setLayout(cadastrarPanelLigacoesPontosLayout);
+        cadastrarPanelLigacoesPontosLayout.setHorizontalGroup(
+            cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cadastrarComboBoxAdicionarLigacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+                    .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cadastrarComboBoxLigacoesPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        cadastrarPanelLigacoesPontosLayout.setVerticalGroup(
+            cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
+                .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cadastrarComboBoxLigacoesPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,7 +227,7 @@ public class MainSwing extends javax.swing.JFrame {
                                     .addComponent(cadastrarCampoNomeVertice)
                                     .addGap(24, 24, 24)))
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cadastrarPanelLigacoesPontos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)))
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cadastrarButtonCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -278,7 +278,7 @@ public class MainSwing extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cadastrarButtonCadastrar)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cadastrarPanelLigacoesPontos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -683,6 +683,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cadastrarComboBoxTipoPonto;
     private javax.swing.JLabel cadastrarLabelNomeVertice;
     private javax.swing.JLabel cadastrarLabelPrincipal;
+    private javax.swing.JPanel cadastrarPanelLigacoesPontos;
     private javax.swing.JButton calcularButtonCalcular;
     private javax.swing.JComboBox<String> calcularComboBoxBanco;
     private javax.swing.JComboBox<String> calcularComboBoxLugarColeta;
@@ -713,7 +714,6 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
