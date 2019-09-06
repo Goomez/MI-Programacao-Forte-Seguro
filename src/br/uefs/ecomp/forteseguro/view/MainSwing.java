@@ -11,12 +11,18 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import br.uefs.ecomp.forteseguro.controller.Controller;
+import br.uefs.ecomp.forteseguro.util.Aresta;
+import br.uefs.ecomp.forteseguro.util.Vertice;
+import java.util.Iterator;
 
 /**
  *
  * @author Kevin
  */
 public class MainSwing extends javax.swing.JFrame {
+    private Controller controller = new Controller();
+    private String arquivoGrafos = "grafos.txt";
 
     /**
      * Creates new form MainSwing
@@ -53,7 +59,7 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarPanelLigacoesPontos = new javax.swing.JPanel();
         cadastrarComboBoxLigacoesPonto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        cadastrarComboBoxAdicionarLigacao = new javax.swing.JToggleButton();
+        cadastrarButtonAdicionarLigacao = new javax.swing.JToggleButton();
         jLabel4 = new javax.swing.JLabel();
         cadastrarCampoCoordenadaY = new javax.swing.JTextField();
         cadastrarCampoCoordenadaX = new javax.swing.JTextField();
@@ -88,6 +94,12 @@ public class MainSwing extends javax.swing.JFrame {
         calcularProgressBar = new javax.swing.JProgressBar();
         panelAlterar = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        alterarComboBoxAlterarPara = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        alterarComboBoxEscolhaPonto = new javax.swing.JComboBox<>();
+        alterarButtonAlterar = new javax.swing.JToggleButton();
+        alterarLabelLogAlteracao = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         inicialMenuInicial = new javax.swing.JMenu();
         inicialMenuSobre = new javax.swing.JMenu();
@@ -99,13 +111,13 @@ public class MainSwing extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
-
-        tabbedPaneInicial.setBackground(new java.awt.Color(104, 107, 153));
-        tabbedPaneInicial.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabbedPaneInicialMouseClicked(evt);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
             }
         });
+
+        tabbedPaneInicial.setBackground(new java.awt.Color(255, 255, 255));
 
         panelCadastrar.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -115,12 +127,6 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarLabelNomeVertice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cadastrarLabelNomeVertice.setForeground(new java.awt.Color(255, 255, 255));
         cadastrarLabelNomeVertice.setText("Nome do novo ponto:");
-
-        cadastrarCampoNomeVertice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarCampoNomeVerticeActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,8 +167,8 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Ponto:");
 
-        cadastrarComboBoxAdicionarLigacao.setBackground(new java.awt.Color(255, 255, 255));
-        cadastrarComboBoxAdicionarLigacao.setText("Adicionar ligação");
+        cadastrarButtonAdicionarLigacao.setBackground(new java.awt.Color(255, 255, 255));
+        cadastrarButtonAdicionarLigacao.setText("Adicionar ligação");
 
         javax.swing.GroupLayout cadastrarPanelLigacoesPontosLayout = new javax.swing.GroupLayout(cadastrarPanelLigacoesPontos);
         cadastrarPanelLigacoesPontos.setLayout(cadastrarPanelLigacoesPontosLayout);
@@ -171,11 +177,11 @@ public class MainSwing extends javax.swing.JFrame {
             .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cadastrarComboBoxAdicionarLigacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cadastrarButtonAdicionarLigacao, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                     .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cadastrarComboBoxLigacoesPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cadastrarComboBoxLigacoesPonto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         cadastrarPanelLigacoesPontosLayout.setVerticalGroup(
@@ -185,18 +191,12 @@ public class MainSwing extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cadastrarComboBoxLigacoesPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cadastrarComboBoxAdicionarLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cadastrarButtonAdicionarLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Coordenada (X,Y) do ponto:");
-
-        cadastrarCampoCoordenadaX.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarCampoCoordenadaXActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -215,7 +215,7 @@ public class MainSwing extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cadastrarLabelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,9 +431,9 @@ public class MainSwing extends javax.swing.JFrame {
         panelRemoverLayout.setHorizontalGroup(
             panelRemoverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRemoverLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(48, 48, 48)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         panelRemoverLayout.setVerticalGroup(
             panelRemoverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,7 +476,7 @@ public class MainSwing extends javax.swing.JFrame {
         calcularPainelPrincipal.setLayout(calcularPainelPrincipalLayout);
         calcularPainelPrincipalLayout.setHorizontalGroup(
             calcularPainelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 404, Short.MAX_VALUE)
         );
         calcularPainelPrincipalLayout.setVerticalGroup(
             calcularPainelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -501,37 +501,34 @@ public class MainSwing extends javax.swing.JFrame {
                     .addComponent(calcularComboBoxLugarColeta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularComboBoxBanco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularButtonCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcularComboBoxLugarColeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcularComboBoxBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(calcularButtonCalcular)
-                        .addGap(7, 7, 7)
-                        .addComponent(calcularProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, Short.MAX_VALUE))
-                    .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcularComboBoxLugarColeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcularComboBoxBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(calcularButtonCalcular)
+                .addGap(7, 7, 7)
+                .addComponent(calcularProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, Short.MAX_VALUE))
+            .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelCalcularLayout = new javax.swing.GroupLayout(panelCalcular);
@@ -553,36 +550,85 @@ public class MainSwing extends javax.swing.JFrame {
 
         tabbedPaneInicial.addTab("Calcular Caminho", panelCalcular);
 
+        panelAlterar.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(30, 144, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("Alterar para:");
+
+        alterarComboBoxAlterarPara.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Banco", "Ponto de coleta", "Cruzamento", "Estacionamento" }));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Escolha o ponto que deseja alterar:");
+
+        alterarComboBoxEscolhaPonto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
+        alterarButtonAlterar.setBackground(new java.awt.Color(255, 255, 255));
+        alterarButtonAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        alterarButtonAlterar.setText("ALTERAR");
+
+        alterarLabelLogAlteracao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        alterarLabelLogAlteracao.setForeground(new java.awt.Color(255, 255, 255));
+        alterarLabelLogAlteracao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        alterarLabelLogAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log de alteração", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(133, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(alterarButtonAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(alterarComboBoxAlterarPara, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(alterarComboBoxEscolhaPonto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(133, 133, 133))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(alterarLabelLogAlteracao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarComboBoxEscolhaPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarComboBoxAlterarPara, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(alterarButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(alterarLabelLogAlteracao, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelAlterarLayout = new javax.swing.GroupLayout(panelAlterar);
         panelAlterar.setLayout(panelAlterarLayout);
         panelAlterarLayout.setHorizontalGroup(
             panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 660, Short.MAX_VALUE)
-            .addGroup(panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelAlterarLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 135, Short.MAX_VALUE)))
+            .addGroup(panelAlterarLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         panelAlterarLayout.setVerticalGroup(
             panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
-            .addGroup(panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelAlterarLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlterarLayout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
 
         tabbedPaneInicial.addTab("Alterar pontos", panelAlterar);
@@ -616,25 +662,43 @@ public class MainSwing extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tabbedPaneInicialMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneInicialMouseClicked
-
-    }//GEN-LAST:event_tabbedPaneInicialMouseClicked
-
     private void cadastrarButtonCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonCadastrarMouseClicked
 
     }//GEN-LAST:event_cadastrarButtonCadastrarMouseClicked
-
-    private void cadastrarCampoNomeVerticeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarCampoNomeVerticeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cadastrarCampoNomeVerticeActionPerformed
 
     private void calcularButtonCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_calcularButtonCalcularMouseClicked
 
-    private void cadastrarCampoCoordenadaXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarCampoCoordenadaXActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cadastrarCampoCoordenadaXActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.tabbedPaneInicial.setEnabledAt(1, false);
+        this.tabbedPaneInicial.setEnabledAt(2, false);
+        this.tabbedPaneInicial.setEnabledAt(3, false);
+        if(this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")){
+            this.tabbedPaneInicial.setEnabledAt(1, true);
+            this.tabbedPaneInicial.setEnabledAt(2, true);
+            this.tabbedPaneInicial.setEnabledAt(3, true);
+            Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
+            while(itVertices.hasNext()){
+                Vertice vertice = ((Vertice<String>) itVertices.next());
+                String nomeVertice = (String) vertice.getObj();
+                this.cadastrarComboBoxLigacoesPonto.addItem(nomeVertice);
+                this.removerComboBoxPontos.addItem(nomeVertice);
+                this.alterarComboBoxEscolhaPonto.addItem(nomeVertice);
+                //0 = banco, 1 = ponto de coleta, 2 = cruzamneto, 3 = estacionaemnto
+                if(vertice.getTipo() == 0)
+                    this.calcularComboBoxBanco.addItem(nomeVertice);
+                else if(vertice.getTipo() == 1)
+                    this.calcularComboBoxLugarColeta.addItem(nomeVertice);
+            }
+            Iterator<Aresta<String>> itArestas = this.controller.getLigacoesArestas();
+            while(itArestas.hasNext()){
+                Aresta<String> aresta = (Aresta<String>) itArestas.next();
+                String ligacao = aresta.getVertice1().getObj() + " - " + aresta.getVertice2().getObj();
+                this.removerComboBoxLigacoes.addItem(ligacao);
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -673,12 +737,16 @@ public class MainSwing extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton alterarButtonAlterar;
+    private javax.swing.JComboBox<String> alterarComboBoxAlterarPara;
+    private javax.swing.JComboBox<String> alterarComboBoxEscolhaPonto;
+    private javax.swing.JLabel alterarLabelLogAlteracao;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JToggleButton cadastrarButtonAdicionarLigacao;
     private javax.swing.JButton cadastrarButtonCadastrar;
     private javax.swing.JTextField cadastrarCampoCoordenadaX;
     private javax.swing.JTextField cadastrarCampoCoordenadaY;
     private javax.swing.JTextField cadastrarCampoNomeVertice;
-    private javax.swing.JToggleButton cadastrarComboBoxAdicionarLigacao;
     private javax.swing.JComboBox<String> cadastrarComboBoxLigacoesPonto;
     private javax.swing.JComboBox<String> cadastrarComboBoxTipoPonto;
     private javax.swing.JLabel cadastrarLabelNomeVertice;
@@ -701,6 +769,8 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
