@@ -55,7 +55,7 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarLabelPrincipal = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
+        cadastrarLabelLogInsercao = new javax.swing.JLabel();
         cadastrarPanelLigacoesPontos = new javax.swing.JPanel();
         cadastrarComboBoxLigacoesPonto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -137,11 +137,6 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarButtonCadastrar.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarButtonCadastrar.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         cadastrarButtonCadastrar.setText("CADASTRAR PONTO");
-        cadastrarButtonCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cadastrarButtonCadastrarMouseClicked(evt);
-            }
-        });
 
         cadastrarLabelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarLabelPrincipal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -153,9 +148,9 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/forte_seguro_logo.png"))); // NOI18N
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da inserção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        cadastrarLabelLogInsercao.setForeground(new java.awt.Color(255, 255, 255));
+        cadastrarLabelLogInsercao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cadastrarLabelLogInsercao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da inserção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         cadastrarPanelLigacoesPontos.setBackground(new java.awt.Color(30, 144, 255));
         cadastrarPanelLigacoesPontos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ligações entre pontos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -213,7 +208,7 @@ public class MainSwing extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cadastrarLabelLogInsercao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cadastrarLabelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
@@ -280,7 +275,7 @@ public class MainSwing extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(cadastrarPanelLigacoesPontos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cadastrarLabelLogInsercao, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -485,11 +480,6 @@ public class MainSwing extends javax.swing.JFrame {
 
         calcularButtonCalcular.setBackground(new java.awt.Color(255, 255, 255));
         calcularButtonCalcular.setText("Calcular");
-        calcularButtonCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                calcularButtonCalcularMouseClicked(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -662,14 +652,6 @@ public class MainSwing extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cadastrarButtonCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonCadastrarMouseClicked
-
-    }//GEN-LAST:event_cadastrarButtonCadastrarMouseClicked
-
-    private void calcularButtonCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_calcularButtonCalcularMouseClicked
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.tabbedPaneInicial.setEnabledAt(1, false);
         this.tabbedPaneInicial.setEnabledAt(2, false);
@@ -697,6 +679,9 @@ public class MainSwing extends javax.swing.JFrame {
                 String ligacao = aresta.getVertice1().getObj() + " - " + aresta.getVertice2().getObj();
                 this.removerComboBoxLigacoes.addItem(ligacao);
             }
+        }
+        else{
+            this.cadastrarLabelLogInsercao.setText(this.controller.criarGrafo(arquivoGrafos));
         }
     }//GEN-LAST:event_formWindowOpened
 
@@ -749,6 +734,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JTextField cadastrarCampoNomeVertice;
     private javax.swing.JComboBox<String> cadastrarComboBoxLigacoesPonto;
     private javax.swing.JComboBox<String> cadastrarComboBoxTipoPonto;
+    private javax.swing.JLabel cadastrarLabelLogInsercao;
     private javax.swing.JLabel cadastrarLabelNomeVertice;
     private javax.swing.JLabel cadastrarLabelPrincipal;
     private javax.swing.JPanel cadastrarPanelLigacoesPontos;
@@ -761,7 +747,6 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JMenu inicialMenuInicial;
     private javax.swing.JMenu inicialMenuSobre;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
