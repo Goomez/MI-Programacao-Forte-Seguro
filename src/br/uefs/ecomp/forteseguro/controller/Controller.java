@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Classe responsável por gerenciar todo o sistema (classes e objetos) do 
@@ -94,6 +95,14 @@ public class Controller {
 //        this.grafo.inserir(nome, tipo, radom1, radom2);
         
         return true;
+    }
+    
+    public Iterator getNomesVertices(){
+        return this.grafo.getVertices().iterator();
+    }
+    
+    public Iterator getLigacoesArestas(){
+        return this.grafo.getArestas().iterator();
     }
 
 }
