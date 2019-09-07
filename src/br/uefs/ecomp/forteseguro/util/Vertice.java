@@ -87,17 +87,10 @@ public class Vertice<T> {
         this.tipo = tipo;
     }
     
-    /*public boolean equals(Vertice vertice){
-        return this.obj == vertice.getObj() && 
-                this.foiVisitado == vertice.foiVisitado && 
-                this.grauVertice == vertice.getGrauVertice() &&
-                this.tipo == vertice.getTipo();
-    }*/
-    
     public boolean equals(Vertice vertice){
         return this.obj.equals(vertice.getObj()) &&
                 this.foiVisitado == vertice.foiVisitado() &&
-                this.grauVertice == vertice.getGrauVertice() &&
-                this.tipo == vertice.getTipo();
+                this.grauVertice == vertice.getGrauVertice() /*&&
+                this.tipo == vertice.getTipo()*/; /*REVER*/
     }
 }

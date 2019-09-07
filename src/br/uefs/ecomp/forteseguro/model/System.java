@@ -16,6 +16,7 @@ package br.uefs.ecomp.forteseguro.model;
 
 import br.uefs.ecomp.forteseguro.util.Aresta;
 import br.uefs.ecomp.forteseguro.util.Grafo;
+import br.uefs.ecomp.forteseguro.util.Vertice;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,7 +69,7 @@ public class System {
                 //int x = Integer.parseInt(subString[2]);
                 //int y = Integer.parseInt(subString[3]);
                 
-                grafo.inserir(identificador, tipo);
+                this.grafo.inserir(identificador, tipo);
                 contador++;
             }
             /*Lê a parte do arquivo que estão as arestas*/
@@ -76,8 +77,8 @@ public class System {
                 String[] subString = leitura.split(" ");
                 int distancia = Integer.parseInt(subString[2]);
                 
-                grafo.inserirAresta(grafo.buscarVertice(subString[0]), grafo.buscarVertice(subString[1]), distancia);
-                grafo.inserirAresta(grafo.buscarVertice(subString[1]), grafo.buscarVertice(subString[0]), distancia);
+                this.grafo.inserirAresta(this.grafo.buscarVertice(subString[0]), this.grafo.buscarVertice(subString[1]), distancia);
+                this.grafo.inserirAresta(this.grafo.buscarVertice(subString[1]), this.grafo.buscarVertice(subString[0]), distancia);
             }
         }
         catch(FileNotFoundException e){
@@ -87,6 +88,43 @@ public class System {
             return "Dados inválidos e/ou incompreensíveis no arquivo!";
         }
         return "Grafo criado com sucesso";
+    }
+    
+    /** Método que adiciona um novo vértice ao grafo.
+     * 
+     * @param cruzamento String - Identificador do vértice que se deseja adicionar.
+     * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
+     * @return Cruzamento adicionado com sucesso! - Caso o vértice seja adicionado
+     * com sucesso | Não foi possível adicionar o cruzamento! - caso ocorra 
+     * algum problema ao tentar inserir determinado vértice.
+     */
+    public String adicionarCruzamento(String cruzamento, int tipo){
+        if(this.grafo.buscarVertice(cruzamento) == null){
+            this.grafo.inserir(cruzamento, 0);
+            return "Cruzamento adicionado com sucesso!";
+        }
+        return "Não foi possível adicionar o cruzamento!";
+    }
+    
+    /** Método que adiciona uma nova ligação ao grafo.
+     * 
+     * @param v1 String - Um dos vértices que faz parte da ligação.
+     * @param v2 String - O outro vértice que faz parte da ligação.
+     * @param distancia int - Distância entre os dois vértices formadoes.
+     * @return Ligação adicionada com sucesso! - Caso a aresta seja adicionada 
+     * com sucesso | Não foi possível adicionar a ligação! - Caso ocoorra algum
+     * problema ao tentar inserir determinada aresta.
+     */
+    /*Por enquanto está com a distância definida pelo usuário*/
+    public String adicionarLigacao(String v1, String v2, int distancia){
+        Vertice<String> vertice1 = this.grafo.buscarVertice(v1);
+        Vertice<String> vertice2 = this.grafo.buscarVertice(v2);
+        
+        if(this.grafo.buscarAresta(vertice1, vertice2) == null){
+            this.grafo.inserirAresta(vertice1, vertice2, distancia);
+            return "Ligação adicionada com sucesso!";
+        }
+        return "Não foi possível adicionar a ligação!";
     }
     
     /** Método que remove uma determinada aresta do grafo.
