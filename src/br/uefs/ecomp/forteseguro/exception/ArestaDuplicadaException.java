@@ -35,7 +35,7 @@ public class ArestaDuplicadaException extends Exception{
      */
     @Override
     public String toString() {
-        return "Aresta já adicionada no sistema!";
+        return "Ligação já está adicionada no sistema!";
     }
     
 }

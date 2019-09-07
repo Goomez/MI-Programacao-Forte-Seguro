@@ -35,7 +35,7 @@ public class VerticeDuplicadoException extends Exception{
      */
     @Override
     public String toString() {
-        return "Vértice já adicionado no grafo!";
+        return "Cruzamento já está adicionado no grafo!";
     }
     
     

@@ -117,7 +117,7 @@ public class System {
             return "Cruzamento adicionado com sucesso!";
         }
         catch(VerticeDuplicadoException v){
-            return "Vértice já está adicionado no grafo!";
+            return "Cruzamento já está adicionado no grafo!";
         }
     }
     
@@ -141,7 +141,7 @@ public class System {
             return "Ligação adicionada com sucesso!";
         }
         catch(ArestaDuplicadaException a){
-            return "Aresta já está adicionada no sistema!";
+            return "Ligação já está adicionada no sistema!";
         }
         
     }

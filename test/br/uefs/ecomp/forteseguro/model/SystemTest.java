@@ -73,16 +73,16 @@ public class SystemTest {
         assertTrue(sys.getGrafo().buscarVertice("Ipiau").equals(vertice4));
         assertTrue(sys.getGrafo().buscarVertice("Cicero_Dantas").equals(vertice5));
         
-        assertEquals("Vértice já está adicionado no grafo!", sys.adicionarCruzamento("Santo_Amaro", 0));
-        assertEquals("Vértice já está adicionado no grafo!", sys.adicionarCruzamento("Juazeiro", 2));
+        assertEquals("Cruzamento já está adicionado no grafo!", sys.adicionarCruzamento("Santo_Amaro", 0));
+        assertEquals("Cruzamento já está adicionado no grafo!", sys.adicionarCruzamento("Juazeiro", 2));
         assertEquals(53, sys.getGrafo().quantidadeVertices());
         
         assertEquals("Ligação adicionada com sucesso!", sys.adicionarLigacao("Cicero_Dantas", "Valente", 10));
         assertEquals("Ligação adicionada com sucesso!", sys.adicionarLigacao("Ipiau", "Valente", 23));
         assertEquals(238, sys.getGrafo().quantidadeArestas());
         
-        assertEquals("Aresta já está adicionada no sistema!", sys.adicionarLigacao("Feira_de_Santana", "Irara", 6));
-        assertEquals("Aresta já está adicionada no sistema!", sys.adicionarLigacao("Serrinha", "Irara", 16));
+        assertEquals("Ligação já está adicionada no sistema!", sys.adicionarLigacao("Feira_de_Santana", "Irara", 6));
+        assertEquals("Ligação já está adicionada no sistema!", sys.adicionarLigacao("Serrinha", "Irara", 16));
         assertEquals(238, sys.getGrafo().quantidadeArestas());
         
         assertTrue(sys.getGrafo().buscarAresta("Ipiau", "Valente").equals(aresta4));
