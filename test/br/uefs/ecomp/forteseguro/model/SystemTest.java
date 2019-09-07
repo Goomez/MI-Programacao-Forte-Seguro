@@ -1,6 +1,5 @@
 package br.uefs.ecomp.forteseguro.model;
 
-import br.uefs.ecomp.forteseguro.model.System;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -31,7 +30,7 @@ public class SystemTest {
         vertice3 = new Vertice("Irara", 2);
         vertice4 = new Vertice("Ipiau", 2);
         vertice5 = new Vertice("Cicero_Dantas", 0);
-        vertice6 = new Vertice("Valente", 0);
+        vertice6 = new Vertice("Valente", 1);
         aresta1 = new Aresta(vertice1, vertice3, 6);
         aresta2 = new Aresta(vertice2, vertice3, 16);
         aresta3 = new Aresta(vertice5, vertice6, 10);
@@ -65,28 +64,25 @@ public class SystemTest {
         assertEquals(50, sys.getGrafo().quantidadeVertices());
         assertEquals(236, sys.getGrafo().quantidadeArestas());
         
-        assertEquals("Cruzamento adicionado com sucesso!", sys.adicionarCruzamento("Valente", 0));
+        assertEquals("Cruzamento adicionado com sucesso!", sys.adicionarCruzamento("Valente", 1));
         assertEquals("Cruzamento adicionado com sucesso!", sys.adicionarCruzamento("Ipiau", 2));
         assertEquals("Cruzamento adicionado com sucesso!", sys.adicionarCruzamento("Cicero_Dantas", 0));
         assertEquals(53, sys.getGrafo().quantidadeVertices());
         
-        /*O método equals não está funcionando no caso do usuário criar um novo
-        vértice e colocar o tipo diferente de Vértice Comum(0). O método equals
-        para, e por isso tirei por enquanto*/
         assertTrue(sys.getGrafo().buscarVertice("Valente").equals(vertice6));
         assertTrue(sys.getGrafo().buscarVertice("Ipiau").equals(vertice4));
         assertTrue(sys.getGrafo().buscarVertice("Cicero_Dantas").equals(vertice5));
         
-        assertEquals("Não foi possível adicionar o cruzamento!", sys.adicionarCruzamento("Santo_Amaro", 0));
-        assertEquals("Não foi possível adicionar o cruzamento!", sys.adicionarCruzamento("Juazeiro", 2));
+        assertEquals("Vértice já está adicionado no grafo!", sys.adicionarCruzamento("Santo_Amaro", 0));
+        assertEquals("Vértice já está adicionado no grafo!", sys.adicionarCruzamento("Juazeiro", 2));
         assertEquals(53, sys.getGrafo().quantidadeVertices());
         
         assertEquals("Ligação adicionada com sucesso!", sys.adicionarLigacao("Cicero_Dantas", "Valente", 10));
         assertEquals("Ligação adicionada com sucesso!", sys.adicionarLigacao("Ipiau", "Valente", 23));
         assertEquals(238, sys.getGrafo().quantidadeArestas());
         
-        assertEquals("Não foi possível adicionar a ligação!", sys.adicionarLigacao("Feira_de_Santana", "Irara", 6));
-        assertEquals("Não foi possível adicionar a ligação!", sys.adicionarLigacao("Serrinha", "Irara", 16));
+        assertEquals("Aresta já está adicionada no sistema!", sys.adicionarLigacao("Feira_de_Santana", "Irara", 6));
+        assertEquals("Aresta já está adicionada no sistema!", sys.adicionarLigacao("Serrinha", "Irara", 16));
         assertEquals(238, sys.getGrafo().quantidadeArestas());
         
         assertTrue(sys.getGrafo().buscarAresta("Ipiau", "Valente").equals(aresta4));

@@ -14,6 +14,8 @@
  */
 package br.uefs.ecomp.forteseguro.model;
 
+import br.uefs.ecomp.forteseguro.exception.ArestaDuplicadaException;
+import br.uefs.ecomp.forteseguro.exception.VerticeDuplicadoException;
 import br.uefs.ecomp.forteseguro.util.Aresta;
 import br.uefs.ecomp.forteseguro.util.Grafo;
 import br.uefs.ecomp.forteseguro.util.Vertice;
@@ -68,17 +70,28 @@ public class System {
                 int tipo = Integer.parseInt(subString[1]);
                 //int x = Integer.parseInt(subString[2]);
                 //int y = Integer.parseInt(subString[3]);
-                
-                this.grafo.inserir(identificador, tipo);
-                contador++;
+                try{
+                    this.grafo.inserir(identificador, tipo);
+                    contador++;
+                }
+                catch(VerticeDuplicadoException v){
+                    v.toString();
+                }
             }
             /*Lê a parte do arquivo que estão as arestas*/
             while((leitura = br.readLine()) != null){
                 String[] subString = leitura.split(" ");
                 int distancia = Integer.parseInt(subString[2]);
                 
-                this.grafo.inserirAresta(this.grafo.buscarVertice(subString[0]), this.grafo.buscarVertice(subString[1]), distancia);
-                this.grafo.inserirAresta(this.grafo.buscarVertice(subString[1]), this.grafo.buscarVertice(subString[0]), distancia);
+                try{
+                    this.grafo.inserirAresta(this.grafo.buscarVertice(subString[0]), 
+                            this.grafo.buscarVertice(subString[1]), distancia);
+                    this.grafo.inserirAresta(this.grafo.buscarVertice(subString[1]), 
+                            this.grafo.buscarVertice(subString[0]), distancia);
+                }
+                catch(ArestaDuplicadaException a){
+                    a.toString();
+                }
             }
         }
         catch(FileNotFoundException e){
@@ -95,15 +108,17 @@ public class System {
      * @param cruzamento String - Identificador do vértice que se deseja adicionar.
      * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
      * @return Cruzamento adicionado com sucesso! - Caso o vértice seja adicionado
-     * com sucesso | Não foi possível adicionar o cruzamento! - caso ocorra 
+     * com sucesso | Vértice já está adicionado no grafo! - caso ocorra 
      * algum problema ao tentar inserir determinado vértice.
      */
     public String adicionarCruzamento(String cruzamento, int tipo){
-        if(this.grafo.buscarVertice(cruzamento) == null){
-            this.grafo.inserir(cruzamento, 0);
+        try{
+            this.grafo.inserir(cruzamento, tipo);
             return "Cruzamento adicionado com sucesso!";
         }
-        return "Não foi possível adicionar o cruzamento!";
+        catch(VerticeDuplicadoException v){
+            return "Vértice já está adicionado no grafo!";
+        }
     }
     
     /** Método que adiciona uma nova ligação ao grafo.
@@ -112,19 +127,23 @@ public class System {
      * @param v2 String - O outro vértice que faz parte da ligação.
      * @param distancia int - Distância entre os dois vértices formadoes.
      * @return Ligação adicionada com sucesso! - Caso a aresta seja adicionada 
-     * com sucesso | Não foi possível adicionar a ligação! - Caso ocoorra algum
+     * com sucesso | Aresta já está adicionada no sistema! - Caso ocoorra algum
      * problema ao tentar inserir determinada aresta.
      */
+    
     /*Por enquanto está com a distância definida pelo usuário*/
     public String adicionarLigacao(String v1, String v2, int distancia){
         Vertice<String> vertice1 = this.grafo.buscarVertice(v1);
         Vertice<String> vertice2 = this.grafo.buscarVertice(v2);
         
-        if(this.grafo.buscarAresta(vertice1, vertice2) == null){
+        try{
             this.grafo.inserirAresta(vertice1, vertice2, distancia);
             return "Ligação adicionada com sucesso!";
         }
-        return "Não foi possível adicionar a ligação!";
+        catch(ArestaDuplicadaException a){
+            return "Aresta já está adicionada no sistema!";
+        }
+        
     }
     
     /** Método que remove uma determinada aresta do grafo.

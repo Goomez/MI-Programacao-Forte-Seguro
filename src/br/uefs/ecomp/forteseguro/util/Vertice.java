@@ -90,7 +90,7 @@ public class Vertice<T> {
     public boolean equals(Vertice vertice){
         return this.obj.equals(vertice.getObj()) &&
                 this.foiVisitado == vertice.foiVisitado() &&
-                this.grauVertice == vertice.getGrauVertice() /*&&
-                this.tipo == vertice.getTipo()*/; /*REVER*/
+                this.grauVertice == vertice.getGrauVertice() &&
+                this.tipo == vertice.getTipo();
     }
 }

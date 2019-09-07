@@ -14,6 +14,8 @@
  */
 package br.uefs.ecomp.forteseguro.controller;
 
+import br.uefs.ecomp.forteseguro.exception.ArestaDuplicadaException;
+import br.uefs.ecomp.forteseguro.exception.VerticeDuplicadoException;
 import br.uefs.ecomp.forteseguro.util.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -68,16 +70,28 @@ public class Controller {
                 //int x = Integer.parseInt(subString[2]);
                 //int y = Integer.parseInt(subString[3]);
                 
-                this.grafo.inserir(identificador, tipo);
-                contador++;
+                try{
+                    this.grafo.inserir(identificador, tipo);
+                    contador++;
+                }
+                catch(VerticeDuplicadoException v){
+                    v.toString();
+                }
             }
             /*Lê a parte do arquivo que estão as arestas*/
             while((leitura = br.readLine()) != null){
                 String[] subString = leitura.split(" ");
                 int distancia = Integer.parseInt(subString[2]);
                 
-                this.grafo.inserirAresta(grafo.buscarVertice(subString[0]), grafo.buscarVertice(subString[1]), distancia);
-                this.grafo.inserirAresta(grafo.buscarVertice(subString[1]), grafo.buscarVertice(subString[0]), distancia);
+                try{
+                    this.grafo.inserirAresta(this.grafo.buscarVertice(subString[0]), 
+                            this.grafo.buscarVertice(subString[1]), distancia);
+                    this.grafo.inserirAresta(this.grafo.buscarVertice(subString[1]), 
+                            this.grafo.buscarVertice(subString[0]), distancia);
+                }
+                catch(ArestaDuplicadaException a){
+                    a.toString();
+                }
             }
         }
         catch(FileNotFoundException e){
