@@ -40,18 +40,18 @@ public class GrafoTest {
     @Before
     public void setUp() throws Exception {
         grafo = new Grafo();
-        vert1 = grafo.inserir("Feira_de_Santana", 10, 10); // Nome : Posicao X : Posicao Y
-        vert2 = grafo.inserir("Amelia_Rodrigues", 10, 10);
-        vert3 = grafo.inserir("Irara",  10, 10);
-        vert4 = grafo.inserir("Serrinha",  10, 10);
-        vert5 = grafo.inserir("Banco_do_Brasil",  10, 10);
-        vert6 = grafo.inserir("Santander",  10, 10);
-        vert7 = grafo.inserir("Nubank",  10, 10);
-        vert8 = grafo.inserir("Maria_Quiteria",  10, 10);
-        vert9 = grafo.inserir("Banco_do_Nordeste",  10, 10);
-        vert10 = grafo.inserir("Bradesco",  10, 10);
-        vert11 = grafo.inserir("Salvador",  10, 10);
-        vert12 = grafo.inserir("Igreja_Universal",  10, 10);
+        vert1 = grafo.inserir("Feira_de_Santana", 0, 10, 10); // Nome : Posicao X : Posicao Y
+        vert2 = grafo.inserir("Amelia_Rodrigues", 3, 10, 10);
+        vert3 = grafo.inserir("Irara", 1, 10, 10);
+        vert4 = grafo.inserir("Serrinha", 1, 10, 10);
+        vert5 = grafo.inserir("Banco_do_Brasil", 0, 10, 10);
+        vert6 = grafo.inserir("Santander", 2, 10, 10);
+        vert7 = grafo.inserir("Nubank", 0, 10, 10);
+        vert8 = grafo.inserir("Maria_Quiteria", 2, 10, 10);
+        vert9 = grafo.inserir("Banco_do_Nordeste", 0, 10, 10);
+        vert10 = grafo.inserir("Bradesco", 1, 10, 10);
+        vert11 = grafo.inserir("Salvador", 0, 10, 10);
+        vert12 = grafo.inserir("Igreja_Universal", 0, 10, 10);
 
         grafo.inserirAresta(vert1, vert2, 3);
         grafo.inserirAresta(vert1, vert5, 2);
