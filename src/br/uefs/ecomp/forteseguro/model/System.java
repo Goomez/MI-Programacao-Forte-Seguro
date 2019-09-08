@@ -172,4 +172,43 @@ public class System {
         return "Cruzamento removido com sucesso!";
     }
 
+    /** Método que altera o tipo do cruzamento
+     * 
+     * @param cruzamento String - Identificador do vértice que se deseja alterar
+     * o tipo.
+     * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 
+     * 3 - Estacionamento.
+     */
+    public void alterarTipoCruzamento(String cruzamento, int tipo){
+        Vertice<String> vertice = this.getGrafo().buscarVertice(cruzamento);
+        
+        if(vertice != null){
+            vertice.setTipo(tipo);
+        }
+    }
+    
+    /** Método que verifica se existe algum vértice do tipo estacionamento.
+     * 
+     * @return true - Caso exista | false - Caso contrário.
+     */
+    public boolean existeEstacionamento(){
+        for(Vertice<String> vertice: this.grafo.getVertices()){
+            if(vertice.getTipo() == 3)
+                return true;
+        }
+        return false;
+    }
+    
+    /** Método que verifica se o vértice passado como parâmetro existe no grafo.
+     * 
+     * @return true - Caso exista | false - Caso contrário.
+     */
+    public boolean existeVertice(String cruzamento){
+        Vertice<String> vertice = this.getGrafo().buscarVertice(cruzamento);
+        
+        if(vertice != null)
+            return true;
+        
+        return false;
+    }
 }

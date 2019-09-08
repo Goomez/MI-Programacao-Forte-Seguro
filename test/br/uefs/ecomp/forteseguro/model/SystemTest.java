@@ -14,7 +14,7 @@ import br.uefs.ecomp.forteseguro.util.Vertice;
  */
 public class SystemTest {
     private System sys;
-    private Vertice<String> vertice1, vertice2, vertice3, vertice4, vertice5, vertice6;
+    private Vertice<String> vertice1, vertice2, vertice3, vertice4, vertice5, vertice6, vertice7;
     private Aresta aresta1, aresta2, aresta3, aresta4;
     
     /**
@@ -31,6 +31,7 @@ public class SystemTest {
         vertice4 = new Vertice("Ipiau", 2);
         vertice5 = new Vertice("Cicero_Dantas", 0);
         vertice6 = new Vertice("Valente", 1);
+        vertice7 = new Vertice("Salvador", 3);
         aresta1 = new Aresta(vertice1, vertice3, 6);
         aresta2 = new Aresta(vertice2, vertice3, 16);
         aresta3 = new Aresta(vertice5, vertice6, 10);
@@ -109,5 +110,25 @@ public class SystemTest {
         
         assertEquals("Cruzamento não existe!", sys.removerCruzamento("Irara"));
         assertEquals("Ligação não existe!", sys.removerLigacao(aresta2));
+    }
+    
+    @Test
+    public void alterarPontos(){
+        sys.criarGrafo("grafos.txt");
+        
+        assertTrue(sys.existeEstacionamento());
+        
+        assertTrue(sys.getGrafo().buscarVertice("Salvador").equals(vertice7));
+        assertTrue(sys.getGrafo().buscarVertice("Serrinha").equals(vertice2));
+        assertTrue(sys.getGrafo().buscarVertice("Irara").equals(vertice3));
+        
+        sys.alterarTipoCruzamento("Salvador", 2);
+        sys.alterarTipoCruzamento("Serrinha", 1);
+        
+        assertFalse(sys.getGrafo().buscarVertice("Salvador").equals(vertice7));
+        assertFalse(sys.getGrafo().buscarVertice("Serrinha").equals(vertice2));
+        assertTrue(sys.getGrafo().buscarVertice("Irara").equals(vertice3));
+        
+        assertFalse(sys.existeEstacionamento());
     }
 }
