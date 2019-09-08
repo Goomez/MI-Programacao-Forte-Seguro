@@ -14,6 +14,8 @@
  */
 package br.uefs.ecomp.forteseguro.util;
 
+import br.uefs.ecomp.forteseguro.exception.ArestaDuplicadaException;
+import br.uefs.ecomp.forteseguro.exception.VerticeDuplicadoException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,35 +50,50 @@ public class Grafo<T>{
         return this.listaArestas;
     }
 
-    public Vertice<T> inserir(T obj, int posX, int posY) {
+    public Vertice<T> inserir(T obj, int tipo, int posX, int posY) throws VerticeDuplicadoException{
         if(obj == null)
             return null;
-        Vertice<T> vertice = new Vertice<>(obj, posX, posY);
+        Vertice<T> vertice = new Vertice<>(obj, tipo, posX, posY);
         this.listaVertices.add(vertice);
         this.quantidadeVertices++;
         return vertice;
     }
     
-    public Vertice<T> inserir(T obj, int tipo) {
+    public Vertice<T> inserir(T obj, int tipo) throws VerticeDuplicadoException{
         if(obj == null)
             return null;
+        
+        if(this.buscarVertice(obj) != null)
+            throw new VerticeDuplicadoException();
+        
         Vertice<T> vertice = new Vertice<>(obj, tipo);
         this.listaVertices.add(vertice);
         this.quantidadeVertices++;
         return vertice;
     }
 
-    public boolean inserirAresta(Vertice<T> vertice1, Vertice<T> vertice2, int peso) {
+    public boolean inserirAresta(Vertice<T> vertice1, Vertice<T> vertice2, 
+            int peso) throws ArestaDuplicadaException{
+        
         if(vertice1 == null || vertice2 == null)
             return false;
+        
+        if(this.buscarAresta(vertice1, vertice2) != null)
+            throw new ArestaDuplicadaException();
+        
         this.listaArestas.add(new Aresta<>(vertice1, vertice2, peso));
         this.quantidadeArestas++;
         return true;
     }
 
     public void inserirArestaNaoOrientada(Vertice<T> vertice1, Vertice<T> vertice2, int peso) {
-        this.inserirAresta(vertice1 , vertice2 , peso);
-        this.inserirAresta(vertice2 , vertice1 , peso);
+        try{
+            this.inserirAresta(vertice1 , vertice2 , peso);
+            this.inserirAresta(vertice2 , vertice1 , peso);
+        }
+        catch(ArestaDuplicadaException a){
+            a.toString();
+        }
     }
 
     public void removerAresta(Aresta<T> aresta) {

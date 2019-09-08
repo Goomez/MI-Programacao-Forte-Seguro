@@ -5,24 +5,26 @@
  */
 package br.uefs.ecomp.forteseguro.view;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JRadioButton;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
-import br.uefs.ecomp.forteseguro.controller.Controller;
 import br.uefs.ecomp.forteseguro.util.Aresta;
 import br.uefs.ecomp.forteseguro.util.Vertice;
 import java.util.Iterator;
+import javax.swing.JPopupMenu;
+import br.uefs.ecomp.forteseguro.model.System;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author Kevin
  */
 public class MainSwing extends javax.swing.JFrame {
-    private Controller controller = new Controller();
+
+    private System controller = new System();
     private String arquivoGrafos = "grafos.txt";
+    private List<String> listaLigacoes = new ArrayList<>();
+    private List<Integer> pesoLigacoes = new ArrayList<>();
 
     /**
      * Creates new form MainSwing
@@ -44,6 +46,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jComboBox3 = new javax.swing.JComboBox<>();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         tabbedPaneInicial = new javax.swing.JTabbedPane();
         panelCadastrar = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -60,6 +63,8 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarComboBoxLigacoesPonto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         cadastrarButtonAdicionarLigacao = new javax.swing.JToggleButton();
+        jLabel1 = new javax.swing.JLabel();
+        cadastrarCampoPeso = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cadastrarCampoCoordenadaY = new javax.swing.JTextField();
         cadastrarCampoCoordenadaX = new javax.swing.JTextField();
@@ -73,14 +78,12 @@ public class MainSwing extends javax.swing.JFrame {
         removerComboBoxPontos = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        removerComboBoxLigacoes = new javax.swing.JComboBox<>();
-        jSeparator3 = new javax.swing.JSeparator();
-        jLabel14 = new javax.swing.JLabel();
-        removerCampoInserirLigacao = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
+        removerComboBoxLigacoes1 = new javax.swing.JComboBox<>();
         removerButtonRemoverLigacao = new javax.swing.JButton();
         removerButtonRemoverPonto = new javax.swing.JButton();
         removerLabelLogRemocao = new javax.swing.JLabel();
+        removerComboBoxLigacoes2 = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
         panelCalcular = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -132,11 +135,16 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Tipo de ponto:");
 
-        cadastrarComboBoxTipoPonto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Banco", "Ponto de Coleta", "Cruzamento" }));
+        cadastrarComboBoxTipoPonto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cruzamento", "Banco", "Ponto de Coleta" }));
 
         cadastrarButtonCadastrar.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarButtonCadastrar.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         cadastrarButtonCadastrar.setText("CADASTRAR PONTO");
+        cadastrarButtonCadastrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarButtonCadastrarMouseClicked(evt);
+            }
+        });
 
         cadastrarLabelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarLabelPrincipal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -164,6 +172,16 @@ public class MainSwing extends javax.swing.JFrame {
 
         cadastrarButtonAdicionarLigacao.setBackground(new java.awt.Color(255, 255, 255));
         cadastrarButtonAdicionarLigacao.setText("Adicionar ligação");
+        cadastrarButtonAdicionarLigacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cadastrarButtonAdicionarLigacaoMouseClicked(evt);
+            }
+        });
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Peso:");
 
         javax.swing.GroupLayout cadastrarPanelLigacoesPontosLayout = new javax.swing.GroupLayout(cadastrarPanelLigacoesPontos);
         cadastrarPanelLigacoesPontos.setLayout(cadastrarPanelLigacoesPontosLayout);
@@ -174,19 +192,28 @@ public class MainSwing extends javax.swing.JFrame {
                 .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cadastrarButtonAdicionarLigacao, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                     .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cadastrarComboBoxLigacoesPonto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cadastrarComboBoxLigacoesPonto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cadastrarCampoPeso))))
                 .addContainerGap())
         );
         cadastrarPanelLigacoesPontosLayout.setVerticalGroup(
             cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cadastrarPanelLigacoesPontosLayout.createSequentialGroup()
-                .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cadastrarComboBoxLigacoesPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cadastrarButtonAdicionarLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cadastrarComboBoxLigacoesPonto, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(cadastrarPanelLigacoesPontosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cadastrarCampoPeso, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cadastrarButtonAdicionarLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -271,10 +298,10 @@ public class MainSwing extends javax.swing.JFrame {
                             .addComponent(jLabel11)
                             .addComponent(jLabel16))
                         .addGap(18, 18, 18)
-                        .addComponent(cadastrarButtonCadastrar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cadastrarPanelLigacoesPontos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                        .addComponent(cadastrarButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addComponent(cadastrarPanelLigacoesPontos, javax.swing.GroupLayout.PREFERRED_SIZE, 125, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cadastrarLabelLogInsercao, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -330,24 +357,28 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText(" Selecione a ligação: ");
 
-        removerComboBoxLigacoes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
-
-        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Ou, insira uma ligação:");
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Exemplo: Serrinha-Irará. ");
+        removerComboBoxLigacoes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
 
         removerButtonRemoverLigacao.setBackground(new java.awt.Color(255, 255, 255));
         removerButtonRemoverLigacao.setText("REMOVER LIGAÇÃO");
+        removerButtonRemoverLigacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerButtonRemoverLigacaoActionPerformed(evt);
+            }
+        });
 
         removerButtonRemoverPonto.setBackground(new java.awt.Color(255, 255, 255));
         removerButtonRemoverPonto.setText("REMOVER PONTO");
 
         removerLabelLogRemocao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da remoção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        removerComboBoxLigacoes2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("-");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -365,19 +396,20 @@ public class MainSwing extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(removerCampoInserirLigacao, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(removerButtonRemoverLigacao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
-                            .addComponent(removerComboBoxLigacoes, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(16, 16, 16))))
+                        .addGap(16, 16, 16))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(removerButtonRemoverLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                                .addComponent(removerComboBoxLigacoes1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removerComboBoxLigacoes2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(20, Short.MAX_VALUE))))
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(removerLabelLogRemocao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -393,15 +425,10 @@ public class MainSwing extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(removerComboBoxLigacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(removerCampoInserirLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(jLabel15)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(removerComboBoxLigacoes1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(removerComboBoxLigacoes2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
                         .addGap(18, 18, 18)
                         .addComponent(removerButtonRemoverLigacao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
@@ -415,9 +442,9 @@ public class MainSwing extends javax.swing.JFrame {
                         .addComponent(removerButtonRemoverPonto, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(removerLabelLogRemocao, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(removerLabelLogRemocao, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -433,9 +460,9 @@ public class MainSwing extends javax.swing.JFrame {
         panelRemoverLayout.setVerticalGroup(
             panelRemoverLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRemoverLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
-                .addGap(29, 29, 29))
+                .addGap(71, 71, 71)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         tabbedPaneInicial.addTab("Remover pontos e/ou ligações", panelRemover);
@@ -480,6 +507,11 @@ public class MainSwing extends javax.swing.JFrame {
 
         calcularButtonCalcular.setBackground(new java.awt.Color(255, 255, 255));
         calcularButtonCalcular.setText("Calcular");
+        calcularButtonCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                calcularButtonCalcularMouseEntered(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -550,7 +582,7 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Alterar para:");
 
-        alterarComboBoxAlterarPara.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Banco", "Ponto de coleta", "Cruzamento", "Estacionamento" }));
+        alterarComboBoxAlterarPara.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cruzamento", "Banco", "Ponto de coleta", "Estacionamento" }));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -653,37 +685,189 @@ public class MainSwing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        javax.swing.JLabel label = new javax.swing.JLabel("OIOIOI");
+        label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
+        label.setBounds(208, 115, 10, 10);
+
+        this.calcularPainelPrincipal.add(label);
+
+        this.removerComboBoxLigacoes2.setEnabled(false);
         this.tabbedPaneInicial.setEnabledAt(1, false);
         this.tabbedPaneInicial.setEnabledAt(2, false);
         this.tabbedPaneInicial.setEnabledAt(3, false);
-        if(this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")){
+        if (this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
             this.tabbedPaneInicial.setEnabledAt(1, true);
             this.tabbedPaneInicial.setEnabledAt(2, true);
             this.tabbedPaneInicial.setEnabledAt(3, true);
-            Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-            while(itVertices.hasNext()){
-                Vertice vertice = ((Vertice<String>) itVertices.next());
-                String nomeVertice = (String) vertice.getObj();
-                this.cadastrarComboBoxLigacoesPonto.addItem(nomeVertice);
-                this.removerComboBoxPontos.addItem(nomeVertice);
-                this.alterarComboBoxEscolhaPonto.addItem(nomeVertice);
-                //0 = banco, 1 = ponto de coleta, 2 = cruzamneto, 3 = estacionaemnto
-                if(vertice.getTipo() == 0)
-                    this.calcularComboBoxBanco.addItem(nomeVertice);
-                else if(vertice.getTipo() == 1)
-                    this.calcularComboBoxLugarColeta.addItem(nomeVertice);
-            }
-            Iterator<Aresta<String>> itArestas = this.controller.getLigacoesArestas();
-            while(itArestas.hasNext()){
-                Aresta<String> aresta = (Aresta<String>) itArestas.next();
-                String ligacao = aresta.getVertice1().getObj() + " - " + aresta.getVertice2().getObj();
-                this.removerComboBoxLigacoes.addItem(ligacao);
-            }
-        }
-        else{
+            this.atualizaPaineis();
+        } else {
             this.cadastrarLabelLogInsercao.setText(this.controller.criarGrafo(arquivoGrafos));
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void removerButtonRemoverLigacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_removerButtonRemoverLigacaoActionPerformed
+
+    private void calcularButtonCalcularMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseEntered
+        // TODO add your handling code here:
+        JPopupMenu oi = new JPopupMenu();
+        oi.add("oioioi");
+        oi.setBounds(WIDTH, WIDTH, WIDTH, WIDTH);
+        this.calcularButtonCalcular.add(oi);
+
+    }//GEN-LAST:event_calcularButtonCalcularMouseEntered
+
+    private void cadastrarButtonAdicionarLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonAdicionarLigacaoMouseClicked
+        // TODO add your handling code here:
+        if (this.cadastrarComboBoxLigacoesPonto.getSelectedItem() == "") {
+            this.cadastrarLabelLogInsercao.setText("Por favor, selecione um ponto de ligação!");
+        } else if ("".equals(this.cadastrarCampoPeso.getText())) {
+            this.cadastrarLabelLogInsercao.setText("Por favor, digite um peso!");
+        } else {
+            try {
+                Integer.parseInt(this.cadastrarCampoPeso.getText());
+                //Caso o usuario tente inserir uma mesma liçacao duas vezes. O que vai acontecer é que
+                //ele só mudará o  peso da ligaçao
+                if (this.listaLigacoes.contains((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem())) {
+                    int pos = 0;
+                    String aux = this.listaLigacoes.get(0);
+                    while (!aux.equals(this.listaLigacoes.get(pos))) {
+                        aux = this.listaLigacoes.get(pos);
+                        pos++;
+                    }
+                    this.pesoLigacoes.set(pos, Integer.parseInt(this.cadastrarCampoPeso.getText()));
+                    this.cadastrarCampoPeso.setText("");
+                    this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+                    this.cadastrarLabelLogInsercao.setText("Ligação recadastrada com sucesso! Novo peso: " + this.pesoLigacoes.get(pos));
+                } else {
+                    this.listaLigacoes.add((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem());
+                    this.pesoLigacoes.add(Integer.parseInt(this.cadastrarCampoPeso.getText()));
+                    this.cadastrarCampoPeso.setText("");
+                    this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+                    this.cadastrarLabelLogInsercao.setText("Ligação cadastrada com sucesso!");
+                }
+
+            } catch (NumberFormatException e) {
+                this.cadastrarLabelLogInsercao.setText("Por favor, insira somente número no campo de peso!");
+                this.cadastrarCampoPeso.setText("");
+            }
+        }
+
+    }//GEN-LAST:event_cadastrarButtonAdicionarLigacaoMouseClicked
+
+    private void cadastrarButtonCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonCadastrarMouseClicked
+        String nomeVertice = this.cadastrarCampoNomeVertice.getText();
+        if (nomeVertice.equals("")) {
+            this.cadastrarLabelLogInsercao.setText("Por favor, digite um nome para o ponto!");
+        } else if (this.controller.existeVertice(nomeVertice)) {
+            this.cadastrarLabelLogInsercao.setText("Este ponto já existe, por favor insira um novo!");
+        } else if ("".equals(this.cadastrarCampoCoordenadaX.getText()) || "".equals(this.cadastrarCampoCoordenadaY.getText())) {
+            this.cadastrarLabelLogInsercao.setText("Por favor, insira as coordenadas!");
+        } else {
+            try {
+                int coordX = Integer.parseInt(this.cadastrarCampoCoordenadaX.getText());
+                int coordY = Integer.parseInt(this.cadastrarCampoCoordenadaY.getText());
+                this.cadastrarLabelLogInsercao.setText(this.controller.adicionarVertice(nomeVertice, this.cadastrarComboBoxTipoPonto.getSelectedIndex(), coordX, coordY));
+
+                if (!this.listaLigacoes.isEmpty()) {
+                    int i = 0;
+                    for (String auxLista : this.listaLigacoes) {
+                        this.controller.adicionarLigacao(nomeVertice, auxLista, this.pesoLigacoes.get(i));
+                        i++;
+                    }
+                }
+                this.limpaPainelCadastro();
+                this.listaLigacoes.removeAll(this.listaLigacoes);
+                this.pesoLigacoes.removeAll(this.pesoLigacoes);
+                this.atualizaPaineis();
+            } catch (NumberFormatException e) {
+                this.cadastrarLabelLogInsercao.setText("Somente número são aceitos como coordenadas!");
+                this.cadastrarCampoCoordenadaX.setText("");
+                this.cadastrarCampoCoordenadaY.setText("");
+            }
+        }
+
+    }//GEN-LAST:event_cadastrarButtonCadastrarMouseClicked
+    public void limpaPainelCadastro() {
+        this.cadastrarCampoCoordenadaX.setText("");
+        this.cadastrarCampoCoordenadaY.setText("");
+        this.cadastrarCampoNomeVertice.setText("");
+        this.cadastrarCampoPeso.setText("");
+        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+    }
+
+    public void limpaPainelRemove() {
+        this.removerComboBoxLigacoes1.setSelectedIndex(0);
+        this.removerComboBoxLigacoes2.setSelectedIndex(0);
+        this.removerComboBoxLigacoes2.setSelectedIndex(0);
+        this.removerLabelLogRemocao.setText("");
+    }
+
+    public void limpaPainelCalcula() {
+        this.calcularComboBoxBanco.setSelectedIndex(0);
+        this.calcularComboBoxLugarColeta.setSelectedIndex(0);
+    }
+
+    public void limpaPainelAltera() {
+        this.alterarComboBoxAlterarPara.setSelectedIndex(0);
+        this.alterarComboBoxEscolhaPonto.setSelectedIndex(0);
+    }
+
+    public void atualizaPaineis() {
+        this.atualizaCadastro();
+        this.atualizaRemove();
+        this.atualizaCalcula();
+        this.atualizaAlterar();
+    }
+
+    private void atualizaCadastro() {
+        this.limpaPainelCadastro();
+        this.cadastrarComboBoxLigacoesPonto.removeAllItems();
+        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
+        while (itVertices.hasNext()) {
+            Vertice vertice = ((Vertice<String>) itVertices.next());
+            this.cadastrarComboBoxLigacoesPonto.addItem((String) vertice.getObj());
+        }
+    }
+
+    private void atualizaRemove() {
+        this.limpaPainelRemove();
+        this.removerComboBoxPontos.removeAllItems();
+        this.removerComboBoxLigacoes1.removeAllItems();
+        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
+        while (itVertices.hasNext()) {
+            Vertice vertice = ((Vertice<String>) itVertices.next());
+            this.removerComboBoxPontos.addItem((String) vertice.getObj());
+            this.removerComboBoxLigacoes1.addItem((String) vertice.getObj());
+        }
+    }
+
+    private void atualizaCalcula() {
+        this.limpaPainelCalcula();
+        this.calcularComboBoxBanco.removeAllItems();
+        this.calcularComboBoxLugarColeta.removeAllItems();
+        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
+        while (itVertices.hasNext()) {
+            Vertice vertice = ((Vertice<String>) itVertices.next());
+            if (vertice.getTipo() == 1) {
+                this.calcularComboBoxBanco.addItem((String) vertice.getObj());
+            } else if (vertice.getTipo() == 2) {
+                this.calcularComboBoxLugarColeta.addItem((String) vertice.getObj());
+            }
+        }
+    }
+
+    private void atualizaAlterar() {
+        this.limpaPainelAltera();
+        this.alterarComboBoxEscolhaPonto.removeAllItems();
+        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
+        while (itVertices.hasNext()) {
+            Vertice vertice = ((Vertice<String>) itVertices.next());
+            this.alterarComboBoxEscolhaPonto.addItem((String) vertice.getObj());
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -732,6 +916,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JTextField cadastrarCampoCoordenadaX;
     private javax.swing.JTextField cadastrarCampoCoordenadaY;
     private javax.swing.JTextField cadastrarCampoNomeVertice;
+    private javax.swing.JTextField cadastrarCampoPeso;
     private javax.swing.JComboBox<String> cadastrarComboBoxLigacoesPonto;
     private javax.swing.JComboBox<String> cadastrarComboBoxTipoPonto;
     private javax.swing.JLabel cadastrarLabelLogInsercao;
@@ -747,12 +932,12 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JMenu inicialMenuInicial;
     private javax.swing.JMenu inicialMenuSobre;
     private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -769,17 +954,17 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel panelAlterar;
     private javax.swing.JPanel panelCadastrar;
     private javax.swing.JPanel panelCalcular;
     private javax.swing.JPanel panelRemover;
     private javax.swing.JButton removerButtonRemoverLigacao;
     private javax.swing.JButton removerButtonRemoverPonto;
-    private javax.swing.JTextField removerCampoInserirLigacao;
-    private javax.swing.JComboBox<String> removerComboBoxLigacoes;
+    private javax.swing.JComboBox<String> removerComboBoxLigacoes1;
+    private javax.swing.JComboBox<String> removerComboBoxLigacoes2;
     private javax.swing.JComboBox<String> removerComboBoxPontos;
     private javax.swing.JLabel removerLabelLogRemocao;
     private javax.swing.JTabbedPane tabbedPaneInicial;
