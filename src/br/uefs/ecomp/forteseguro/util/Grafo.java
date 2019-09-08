@@ -50,10 +50,10 @@ public class Grafo<T>{
         return this.listaArestas;
     }
 
-    public Vertice<T> inserir(T obj, int posX, int posY) {
+    public Vertice<T> inserir(T obj, int tipo, int posX, int posY) throws VerticeDuplicadoException{
         if(obj == null)
             return null;
-        Vertice<T> vertice = new Vertice<>(obj, posX, posY);
+        Vertice<T> vertice = new Vertice<>(obj, tipo, posX, posY);
         this.listaVertices.add(vertice);
         this.quantidadeVertices++;
         return vertice;

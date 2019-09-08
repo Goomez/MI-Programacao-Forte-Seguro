@@ -114,6 +114,7 @@ public class SystemTest {
     
     @Test
     public void alterarPontos(){
+        
         sys.criarGrafo("grafos.txt");
         
         assertTrue(sys.existeEstacionamento());

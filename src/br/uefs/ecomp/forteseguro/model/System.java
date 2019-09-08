@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 /**
  * Classe responsável por gerenciar todo o sistema (classes e objetos) do 
@@ -121,6 +122,26 @@ public class System {
         }
     }
     
+    /** Método que adiciona um novo vértice ao grafo.
+     * 
+     * @param cruzamento String - Identificador do vértice que se deseja adicionar.
+     * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
+     * @param x
+     * @param y
+     * @return Cruzamento adicionado com sucesso! - Caso o vértice seja adicionado
+     * com sucesso | Vértice já está adicionado no grafo! - caso ocorra 
+     * algum problema ao tentar inserir determinado vértice.
+     */
+    public String adicionarVertice(String cruzamento, int tipo, int x, int y){
+        try{
+            this.grafo.inserir(cruzamento, tipo, x, y);
+            return "Cruzamento adicionado com sucesso!";
+        }
+        catch(VerticeDuplicadoException v){
+            return "Cruzamento já está adicionado no grafo!";
+        }
+    }
+    
     /** Método que adiciona uma nova ligação ao grafo.
      * 
      * @param v1 String - Um dos vértices que faz parte da ligação.
@@ -145,6 +166,7 @@ public class System {
         }
         
     }
+    
     
     /** Método que remove uma determinada aresta do grafo.
      * 
@@ -209,5 +231,13 @@ public class System {
         Vertice<String> vertice = this.getGrafo().buscarVertice(cruzamento);
         
         return vertice != null;
+    }
+    
+     public Iterator getNomesVertices(){
+        return this.grafo.getVertices().iterator();
+    }
+    
+    public Iterator getLigacoesArestas(){
+        return this.grafo.getArestas().iterator();
     }
 }

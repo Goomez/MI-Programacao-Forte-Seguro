@@ -21,15 +21,14 @@ public class Vertice<T> {
     private int posX;
     private int posY;
     private int tipo;
-    //private List<Arestas<T>> listaArestas;
 
-    public Vertice(T obj, int posX, int posY){
+    public Vertice(T obj, int tipo, int posX, int posY) {
         this.obj = obj;
         this.grauVertice = 0;
         this.foiVisitado = false;
         this.posX = posX;
         this.posY = posY;
-        //listaArestas = new ArrayList<>();
+        this.tipo = tipo;
     }
     
     public Vertice(T obj, int tipo){
@@ -93,4 +92,5 @@ public class Vertice<T> {
                 this.grauVertice == vertice.getGrauVertice() &&
                 this.tipo == vertice.getTipo();
     }
+
 }
