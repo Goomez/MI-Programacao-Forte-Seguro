@@ -34,7 +34,7 @@ public class System {
     private Grafo<String> grafo;
 
     public System() {
-        grafo = new Grafo<String>();
+        grafo = new Grafo<>();
     }
     
     public Grafo<String> getGrafo() {
@@ -201,14 +201,13 @@ public class System {
     
     /** Método que verifica se o vértice passado como parâmetro existe no grafo.
      * 
+     * @param cruzamento String - Identificador do vértice que se deseja procurar
+     * no grafo.
      * @return true - Caso exista | false - Caso contrário.
      */
     public boolean existeVertice(String cruzamento){
         Vertice<String> vertice = this.getGrafo().buscarVertice(cruzamento);
         
-        if(vertice != null)
-            return true;
-        
-        return false;
+        return vertice != null;
     }
 }
