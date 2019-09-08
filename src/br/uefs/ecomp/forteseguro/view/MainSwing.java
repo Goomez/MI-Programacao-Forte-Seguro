@@ -507,11 +507,6 @@ public class MainSwing extends javax.swing.JFrame {
 
         calcularButtonCalcular.setBackground(new java.awt.Color(255, 255, 255));
         calcularButtonCalcular.setText("Calcular");
-        calcularButtonCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                calcularButtonCalcularMouseEntered(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -709,15 +704,6 @@ public class MainSwing extends javax.swing.JFrame {
     private void removerButtonRemoverLigacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_removerButtonRemoverLigacaoActionPerformed
-
-    private void calcularButtonCalcularMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseEntered
-        // TODO add your handling code here:
-        JPopupMenu oi = new JPopupMenu();
-        oi.add("oioioi");
-        oi.setBounds(WIDTH, WIDTH, WIDTH, WIDTH);
-        this.calcularButtonCalcular.add(oi);
-
-    }//GEN-LAST:event_calcularButtonCalcularMouseEntered
 
     private void cadastrarButtonAdicionarLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonAdicionarLigacaoMouseClicked
         // TODO add your handling code here:
