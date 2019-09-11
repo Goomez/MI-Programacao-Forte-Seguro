@@ -221,6 +221,14 @@ public class System {
         return false;
     }
     
+    public Vertice<String> getEstacionamento(){
+        for(Vertice<String> vertice: this.grafo.getVertices()){
+            if(vertice.getTipo() == 3)
+                return vertice;
+        }
+        return null;
+    }
+    
     /** Método que verifica se o vértice passado como parâmetro existe no grafo.
      * 
      * @param cruzamento String - Identificador do vértice que se deseja procurar

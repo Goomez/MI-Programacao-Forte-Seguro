@@ -10,10 +10,12 @@ import br.uefs.ecomp.forteseguro.util.Vertice;
 import java.util.Iterator;
 import javax.swing.JPopupMenu;
 import br.uefs.ecomp.forteseguro.model.System;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -24,7 +26,7 @@ import javax.swing.JTextField;
 public class MainSwing extends javax.swing.JFrame {
 
     private System controller = new System();
-    private String arquivoGrafos = "grafos.txt";
+    private String arquivoGrafos = "grafoss.txt";
     private List<String> listaLigacoes = new ArrayList<>();
     private List<Integer> pesoLigacoes = new ArrayList<>();
     private boolean msgEstacionamento = false;
@@ -100,6 +102,8 @@ public class MainSwing extends javax.swing.JFrame {
         calcularPainelPrincipal = new javax.swing.JPanel();
         calcularButtonCalcular = new javax.swing.JButton();
         calcularProgressBar = new javax.swing.JProgressBar();
+        calculaLabelEstacionamento = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         panelAlterar = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
@@ -519,7 +523,9 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/icon_forteseguro_branco.png"))); // NOI18N
 
-        calcularLabelMenorCaminho.setBorder(javax.swing.BorderFactory.createTitledBorder("Menor Caminho"));
+        calcularLabelMenorCaminho.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        calcularLabelMenorCaminho.setForeground(new java.awt.Color(255, 0, 51));
+        calcularLabelMenorCaminho.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menor Caminho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         calcularPainelPrincipal.setBackground(new java.awt.Color(135, 206, 250));
         calcularPainelPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -537,6 +543,22 @@ public class MainSwing extends javax.swing.JFrame {
 
         calcularButtonCalcular.setBackground(new java.awt.Color(255, 255, 255));
         calcularButtonCalcular.setText("Calcular");
+        calcularButtonCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calcularButtonCalcularActionPerformed(evt);
+            }
+        });
+
+        calculaLabelEstacionamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        calculaLabelEstacionamento.setForeground(new java.awt.Color(255, 255, 255));
+        calculaLabelEstacionamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        calculaLabelEstacionamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        calculaLabelEstacionamento.setMinimumSize(new java.awt.Dimension(28, 20));
+        calculaLabelEstacionamento.setPreferredSize(new java.awt.Dimension(28, 20));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Estacionamento:");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -552,7 +574,9 @@ public class MainSwing extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularButtonCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(calcularProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(calcularProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(calculaLabelEstacionamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -567,15 +591,19 @@ public class MainSwing extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calcularComboBoxBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calculaLabelEstacionamento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calcularButtonCalcular)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calcularProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, Short.MAX_VALUE))
-            .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelCalcularLayout = new javax.swing.GroupLayout(panelCalcular);
@@ -619,6 +647,11 @@ public class MainSwing extends javax.swing.JFrame {
         alterarButtonAlterar.setBackground(new java.awt.Color(255, 255, 255));
         alterarButtonAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         alterarButtonAlterar.setText("ALTERAR");
+        alterarButtonAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                alterarButtonAlterarMouseClicked(evt);
+            }
+        });
 
         alterarLabelLogAlteracao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         alterarLabelLogAlteracao.setForeground(new java.awt.Color(255, 255, 255));
@@ -656,8 +689,8 @@ public class MainSwing extends javax.swing.JFrame {
                 .addComponent(alterarComboBoxAlterarPara, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(alterarButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(alterarLabelLogAlteracao, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarLabelLogAlteracao, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -686,6 +719,11 @@ public class MainSwing extends javax.swing.JFrame {
         jMenuBar1.add(inicialMenuInicial);
 
         inicialMenuSobre.setText("Sobre");
+        inicialMenuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inicialMenuSobreMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(inicialMenuSobre);
 
         setJMenuBar(jMenuBar1);
@@ -724,9 +762,11 @@ public class MainSwing extends javax.swing.JFrame {
                 this.atualizaPaineis();
                 break;
             } else {
-                //this.cadastrarLabelLogInsercao.setText(this.controller.criarGrafo(arquivoGrafos));
                 this.arquivoGrafos = JOptionPane.showInputDialog("Não foi possível ler o arquivo de leitura.\nPor favor "
                         + "insira um novo endereço com o arquivo:");
+                if (this.arquivoGrafos == null) {
+                    this.arquivoGrafos = "";
+                }
             }
         }
     }//GEN-LAST:event_formWindowOpened
@@ -852,6 +892,61 @@ public class MainSwing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removerButtonRemoverLigacaoMouseClicked
 
+    private void alterarButtonAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarButtonAlterarMouseClicked
+        String ponto = (String) this.alterarComboBoxEscolhaPonto.getSelectedItem();
+        int novoTipo = this.alterarComboBoxAlterarPara.getSelectedIndex();
+        if (novoTipo == 3) {
+            if (!this.controller.existeEstacionamento()) {
+                this.controller.getGrafo().buscarVertice(ponto).setTipo(3);
+                this.atualizaPaineis();
+                this.alterarLabelLogAlteracao.setText(ponto + " agora é o estacionamento!");
+            } else {
+                this.controller.getEstacionamento().setTipo(0);
+                this.controller.getGrafo().buscarVertice(ponto).setTipo(3);
+                this.atualizaPaineis();
+                this.alterarLabelLogAlteracao.setText("Estacionamento alterado para: " + ponto);
+            }
+        } else {
+            this.controller.getGrafo().buscarVertice(ponto).setTipo(novoTipo);
+            this.atualizaPaineis();
+            this.alterarLabelLogAlteracao.setText(ponto + " foi alterado!");
+        }
+    }//GEN-LAST:event_alterarButtonAlterarMouseClicked
+
+    private void calcularButtonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calcularButtonCalcularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_calcularButtonCalcularActionPerformed
+
+    private void inicialMenuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicialMenuSobreMouseClicked
+        String msg = "> Componente Curricular: Módulo Integrado de Programação II\n"
+                + "Data:  <12/09/2019>\n"
+                + "Declaro que este código foi elaborado por nós de forma individual e\n"
+                + "não contém nenhum trecho de código de outro colega ou de outro autor, \n"
+                + "tais como provindos de livros e apostilas, e páginas ou documentos \n"
+                + "eletrônicos da Internet. Qualquer trecho de código de outra autoria que\n"
+                + "uma citação para o  não a minha está destacado com  autor e a fonte do\n"
+                + "código, e estou ciente que estes trechos não serão considerados para fins\n"
+                + "de avaliação. Alguns trechos do código podem coincidir com de outros\n"
+                + "colegas pois estes foram discutidos em sessões tutorias."
+                + ""
+                + "\n\n# Autores:\n"
+                + "<Kevin Gomes>\n"
+                + "-- GitHub: Goomez"
+                + "\n\n"
+                + "<Allan Capistrano>\n"
+                + "-- GitHub: AllanCapistrano\n"
+                + "Código fonte: https://github.com/Goomez/MI-Programacao-Forte-Seguro";
+
+        JOptionPane.showMessageDialog(this, msg);
+    }//GEN-LAST:event_inicialMenuSobreMouseClicked
+
+    /**
+     * SE O GRAU DO PONTO FOR 0, NOTIFICAMOS ISSO AO USUARIO, SE ELE TENTAR
+     * CALCULAR ALGO COM ELE, AVISAMOS TAMBEM
+     *
+     * @param aba
+     * @param onOff
+     */
     public void onOffAbas(int aba, boolean onOff) {// aba: a aba que será mudada, onOff: se habilitará ou desabilitará a aba
         if (aba == -1) {//se o valor for -1, se aplicara a todas as abas
             this.tabbedPaneInicial.setEnabledAt(0, onOff);
@@ -895,7 +990,7 @@ public class MainSwing extends javax.swing.JFrame {
         this.atualizaAlterar();
         if (!this.controller.existeEstacionamento()) {
             if (!this.msgEstacionamento) {
-                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! O estacionamento foi removido.\n"
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! O estacionamento foi removido/alterado.\n"
                         + "Para calcular uma nova rota, por favor, cadastre um novo\n"
                         + "estacionamento ou altere um ponto já existente para estacionamento!");
                 this.onOffAbas(2, false);
@@ -946,6 +1041,9 @@ public class MainSwing extends javax.swing.JFrame {
             } else if (vertice.getTipo() == 2) {
                 this.calcularComboBoxLugarColeta.addItem((String) vertice.getObj());
             }
+        }
+        if (this.controller.existeEstacionamento()) {
+            this.calculaLabelEstacionamento.setText(this.controller.getEstacionamento().getObj());
         }
     }
 
@@ -1013,6 +1111,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel cadastrarLabelNomeVertice;
     private javax.swing.JLabel cadastrarLabelPrincipal;
     private javax.swing.JPanel cadastrarPanelLigacoesPontos;
+    private javax.swing.JLabel calculaLabelEstacionamento;
     private javax.swing.JButton calcularButtonCalcular;
     private javax.swing.JComboBox<String> calcularComboBoxBanco;
     private javax.swing.JComboBox<String> calcularComboBoxLugarColeta;
@@ -1031,6 +1130,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
