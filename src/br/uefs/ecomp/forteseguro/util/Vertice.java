@@ -92,5 +92,8 @@ public class Vertice<T> {
                 this.grauVertice == vertice.getGrauVertice() &&
                 this.tipo == vertice.getTipo();
     }
+    public boolean equals(String vertice){
+        return this.obj.equals(vertice);
+    }
 
 }

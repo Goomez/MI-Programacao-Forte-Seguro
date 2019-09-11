@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -25,6 +27,8 @@ public class MainSwing extends javax.swing.JFrame {
     private String arquivoGrafos = "grafos.txt";
     private List<String> listaLigacoes = new ArrayList<>();
     private List<Integer> pesoLigacoes = new ArrayList<>();
+    private boolean msgEstacionamento = false;
+    private boolean programaPronto = false;
 
     /**
      * Creates new form MainSwing
@@ -47,6 +51,7 @@ public class MainSwing extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jComboBox3 = new javax.swing.JComboBox<>();
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPanel2 = new javax.swing.JPanel();
         tabbedPaneInicial = new javax.swing.JTabbedPane();
         panelCadastrar = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -109,6 +114,17 @@ public class MainSwing extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Forte Seguro");
         setBackground(new java.awt.Color(255, 255, 255));
@@ -156,6 +172,7 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/forte_seguro_logo.png"))); // NOI18N
 
+        cadastrarLabelLogInsercao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         cadastrarLabelLogInsercao.setForeground(new java.awt.Color(255, 255, 255));
         cadastrarLabelLogInsercao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cadastrarLabelLogInsercao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da inserção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -358,18 +375,31 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel13.setText(" Selecione a ligação: ");
 
         removerComboBoxLigacoes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        removerComboBoxLigacoes1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                removerComboBoxLigacoes1ItemStateChanged(evt);
+            }
+        });
 
         removerButtonRemoverLigacao.setBackground(new java.awt.Color(255, 255, 255));
         removerButtonRemoverLigacao.setText("REMOVER LIGAÇÃO");
-        removerButtonRemoverLigacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removerButtonRemoverLigacaoActionPerformed(evt);
+        removerButtonRemoverLigacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removerButtonRemoverLigacaoMouseClicked(evt);
             }
         });
 
         removerButtonRemoverPonto.setBackground(new java.awt.Color(255, 255, 255));
         removerButtonRemoverPonto.setText("REMOVER PONTO");
+        removerButtonRemoverPonto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removerButtonRemoverPontoMouseClicked(evt);
+            }
+        });
 
+        removerLabelLogRemocao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        removerLabelLogRemocao.setForeground(new java.awt.Color(255, 255, 255));
+        removerLabelLogRemocao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         removerLabelLogRemocao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da remoção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         removerComboBoxLigacoes2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
@@ -686,27 +716,22 @@ public class MainSwing extends javax.swing.JFrame {
         label.setBounds(208, 115, 10, 10);
 
         this.calcularPainelPrincipal.add(label);
-
         this.removerComboBoxLigacoes2.setEnabled(false);
-        this.tabbedPaneInicial.setEnabledAt(1, false);
-        this.tabbedPaneInicial.setEnabledAt(2, false);
-        this.tabbedPaneInicial.setEnabledAt(3, false);
-        if (this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
-            this.tabbedPaneInicial.setEnabledAt(1, true);
-            this.tabbedPaneInicial.setEnabledAt(2, true);
-            this.tabbedPaneInicial.setEnabledAt(3, true);
-            this.atualizaPaineis();
-        } else {
-            this.cadastrarLabelLogInsercao.setText(this.controller.criarGrafo(arquivoGrafos));
+        this.onOffAbas(-1, false);
+        while (true) {
+            if (this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
+                this.onOffAbas(-1, true);
+                this.atualizaPaineis();
+                break;
+            } else {
+                //this.cadastrarLabelLogInsercao.setText(this.controller.criarGrafo(arquivoGrafos));
+                this.arquivoGrafos = JOptionPane.showInputDialog("Não foi possível ler o arquivo de leitura.\nPor favor "
+                        + "insira um novo endereço com o arquivo:");
+            }
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void removerButtonRemoverLigacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_removerButtonRemoverLigacaoActionPerformed
-
     private void cadastrarButtonAdicionarLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonAdicionarLigacaoMouseClicked
-        // TODO add your handling code here:
         if (this.cadastrarComboBoxLigacoesPonto.getSelectedItem() == "") {
             this.cadastrarLabelLogInsercao.setText("Por favor, selecione um ponto de ligação!");
         } else if ("".equals(this.cadastrarCampoPeso.getText())) {
@@ -714,25 +739,30 @@ public class MainSwing extends javax.swing.JFrame {
         } else {
             try {
                 Integer.parseInt(this.cadastrarCampoPeso.getText());
-                //Caso o usuario tente inserir uma mesma liçacao duas vezes. O que vai acontecer é que
-                //ele só mudará o  peso da ligaçao
-                if (this.listaLigacoes.contains((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem())) {
-                    int pos = 0;
-                    String aux = this.listaLigacoes.get(0);
-                    while (!aux.equals(this.listaLigacoes.get(pos))) {
-                        aux = this.listaLigacoes.get(pos);
-                        pos++;
-                    }
-                    this.pesoLigacoes.set(pos, Integer.parseInt(this.cadastrarCampoPeso.getText()));
-                    this.cadastrarCampoPeso.setText("");
-                    this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
-                    this.cadastrarLabelLogInsercao.setText("Ligação recadastrada com sucesso! Novo peso: " + this.pesoLigacoes.get(pos));
+                if (0 > Integer.parseInt(this.cadastrarCampoPeso.getText())) {
+                    this.cadastrarLabelLogInsercao.setText("Por favor, insira somente numeros positivos no campo de peso!");
+                    this.cadastrarLabelLogInsercao.setText("");
                 } else {
-                    this.listaLigacoes.add((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem());
-                    this.pesoLigacoes.add(Integer.parseInt(this.cadastrarCampoPeso.getText()));
-                    this.cadastrarCampoPeso.setText("");
-                    this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
-                    this.cadastrarLabelLogInsercao.setText("Ligação cadastrada com sucesso!");
+                    //Caso o usuario tente inserir uma mesma liçacao duas vezes. O que vai acontecer é que
+                    //ele só mudará o  peso da ligaçao
+                    if (this.listaLigacoes.contains((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem())) {
+                        int pos = 0;
+                        String aux = this.listaLigacoes.get(0);
+                        while (!aux.equals(this.listaLigacoes.get(pos))) {
+                            aux = this.listaLigacoes.get(pos);
+                            pos++;
+                        }
+                        this.pesoLigacoes.set(pos, Integer.parseInt(this.cadastrarCampoPeso.getText()));
+                        this.cadastrarCampoPeso.setText("");
+                        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+                        this.cadastrarLabelLogInsercao.setText("Ligação recadastrada com sucesso! Novo peso: " + this.pesoLigacoes.get(pos));
+                    } else {
+                        this.listaLigacoes.add((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem());
+                        this.pesoLigacoes.add(Integer.parseInt(this.cadastrarCampoPeso.getText()));
+                        this.cadastrarCampoPeso.setText("");
+                        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+                        this.cadastrarLabelLogInsercao.setText("Ligação cadastrada com sucesso!");
+                    }
                 }
 
             } catch (NumberFormatException e) {
@@ -776,6 +806,64 @@ public class MainSwing extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_cadastrarButtonCadastrarMouseClicked
+
+    private void removerButtonRemoverPontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverPontoMouseClicked
+        String pontoRemover = (String) this.removerComboBoxPontos.getSelectedItem();
+        this.controller.removerCruzamento(pontoRemover);
+        this.removerLabelLogRemocao.setText(pontoRemover + " foi removido com sucesso!");
+        this.atualizaPaineis();
+    }//GEN-LAST:event_removerButtonRemoverPontoMouseClicked
+
+    private void removerComboBoxLigacoes1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_removerComboBoxLigacoes1ItemStateChanged
+        if (this.programaPronto) {
+            this.removerComboBoxLigacoes2.removeAllItems();
+            if (this.removerComboBoxLigacoes1.getSelectedItem().equals("")) {
+                this.removerComboBoxLigacoes2.setEnabled(false);
+            } else {
+                this.removerComboBoxLigacoes2.setEnabled(true);
+                String pontoLigacao = (String) this.removerComboBoxLigacoes1.getSelectedItem();
+                if (this.controller.getGrafo().arestasIncidentes(pontoLigacao) == null) {
+                    this.removerComboBoxLigacoes2.removeAllItems();
+                } else {
+                    for (Aresta<String> arestas : this.controller.getGrafo().arestasIncidentes(pontoLigacao)) {
+                        if (arestas.getVertice1().equals(pontoLigacao)) {
+                            this.removerComboBoxLigacoes2.addItem(arestas.getVertice2().getObj());
+                        } else if (arestas.getVertice2().equals(pontoLigacao)) {
+                            this.removerComboBoxLigacoes2.addItem(arestas.getVertice1().getObj());
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_removerComboBoxLigacoes1ItemStateChanged
+
+    private void removerButtonRemoverLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoMouseClicked
+        if (((String) this.removerComboBoxLigacoes1.getSelectedItem()).equals("")) {
+            this.removerLabelLogRemocao.setText("Por favor, selecione uma ligação!");
+        } else if (this.removerComboBoxLigacoes2.getItemCount() == 0) {
+            this.removerLabelLogRemocao.setText(((String) this.removerComboBoxLigacoes1.getSelectedItem()) + " não possue ligações!");
+        } else {
+            String vertice1 = (String) this.removerComboBoxLigacoes1.getSelectedItem();
+            String vertice2 = (String) this.removerComboBoxLigacoes2.getSelectedItem();
+            this.controller.getGrafo().removerAresta(this.controller.getGrafo().buscarAresta(vertice1, vertice2));
+            this.atualizaPaineis();
+            this.removerComboBoxLigacoes2.setEnabled(false);
+            this.removerLabelLogRemocao.setText("Ligação removida com sucesso!");
+        }
+    }//GEN-LAST:event_removerButtonRemoverLigacaoMouseClicked
+
+    public void onOffAbas(int aba, boolean onOff) {// aba: a aba que será mudada, onOff: se habilitará ou desabilitará a aba
+        if (aba == -1) {//se o valor for -1, se aplicara a todas as abas
+            this.tabbedPaneInicial.setEnabledAt(0, onOff);
+            this.tabbedPaneInicial.setEnabledAt(1, onOff);
+            this.tabbedPaneInicial.setEnabledAt(2, onOff);
+            this.tabbedPaneInicial.setEnabledAt(3, onOff);
+            return;
+        }
+        // caso nao, somente a uma
+        this.tabbedPaneInicial.setEnabledAt(aba, onOff);
+    }
+
     public void limpaPainelCadastro() {
         this.cadastrarCampoCoordenadaX.setText("");
         this.cadastrarCampoCoordenadaY.setText("");
@@ -785,10 +873,8 @@ public class MainSwing extends javax.swing.JFrame {
     }
 
     public void limpaPainelRemove() {
+        this.removerComboBoxPontos.setSelectedIndex(0);
         this.removerComboBoxLigacoes1.setSelectedIndex(0);
-        this.removerComboBoxLigacoes2.setSelectedIndex(0);
-        this.removerComboBoxLigacoes2.setSelectedIndex(0);
-        this.removerLabelLogRemocao.setText("");
     }
 
     public void limpaPainelCalcula() {
@@ -802,10 +888,26 @@ public class MainSwing extends javax.swing.JFrame {
     }
 
     public void atualizaPaineis() {
+        this.programaPronto = false;
         this.atualizaCadastro();
         this.atualizaRemove();
         this.atualizaCalcula();
         this.atualizaAlterar();
+        if (!this.controller.existeEstacionamento()) {
+            if (!this.msgEstacionamento) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! O estacionamento foi removido.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "estacionamento ou altere um ponto já existente para estacionamento!");
+                this.onOffAbas(2, false);
+                this.cadastrarComboBoxTipoPonto.addItem("Estacionamento");
+                this.msgEstacionamento = true;
+            }
+        } else if ("Estacionamento".equals(this.cadastrarComboBoxTipoPonto.getItemAt(3))) {
+            this.onOffAbas(2, true);
+            this.cadastrarComboBoxTipoPonto.removeItemAt(3);
+            this.msgEstacionamento = false;
+        }
+        this.programaPronto = true;
     }
 
     private void atualizaCadastro() {
@@ -822,6 +924,8 @@ public class MainSwing extends javax.swing.JFrame {
         this.limpaPainelRemove();
         this.removerComboBoxPontos.removeAllItems();
         this.removerComboBoxLigacoes1.removeAllItems();
+        this.removerComboBoxLigacoes2.removeAllItems();
+        this.removerComboBoxLigacoes1.addItem("");
         Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
         while (itVertices.hasNext()) {
             Vertice vertice = ((Vertice<String>) itVertices.next());
@@ -937,6 +1041,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;

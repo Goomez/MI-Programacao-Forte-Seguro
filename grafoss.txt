@@ -1,0 +1,171 @@
+[Vertices]
+Salvador 3
+Feira_de_Santana 0
+Vitoria_da_Conquista 1
+Camacari 1
+Juazeiro 2
+Itabuna 0
+Lauro_de_Freitas 1
+Ilheus 0
+Jequie 2
+Teixeira_de_Freitas 2
+Barreiras 2
+Alagoinhas 0
+Porto_Seguro 0
+Simoes_Filho 1
+Paulo_Afonso 0
+Eunapolis 0
+Santo_Antonio_de_Jesus 0
+Valenca 0
+Candeias 2
+Guanambi 0
+Jacobina 2
+Luis_Eduardo_Magalhaes 1
+Serrinha 0
+Senhor_do_Bonfim 1
+Irara 2
+Itapetinga 0
+Irece 1
+Campo_Formoso 0
+Casa_Nova 0
+Bom_Jesus_da_Lapa 0
+Brumado 0
+Conceicao_do_Coite 0
+Itamaraju 2
+Itaberaba 0
+Cruz_das_Almas 0
+Ipira 0
+Santo_Amaro 0
+Euclides_da_Cunha 0
+Catu 1
+Jaguaquara 1
+Araci 0
+Ribeira_do_Pombal 0
+Barra 0
+Santo_Estevao 2
+Caetite 0
+Tucano 1
+Monte_Santo 2
+Macaubas 0
+Pocoes 0
+Xique_Xique 0
+[Arestas]
+Salvador Santo_Antonio_de_Jesus 20
+Salvador Porto_Seguro 8
+Salvador Serrinha 30
+Salvador Tucano 15
+Feira_de_Santana Cruz_das_Almas 43
+Feira_de_Santana Irara 6
+Feira_de_Santana Luis_Eduardo_Magalhaes 7
+Feira_de_Santana Alagoinhas 32
+Vitoria_da_Conquista Camacari 4
+Vitoria_da_Conquista Serrinha 23
+Vitoria_da_Conquista Feira_de_Santana 53
+Vitoria_da_Conquista Eunapolis 47
+Camacari Ilheus 11
+Camacari Salvador 10
+Camacari Araci 22
+Camacari Itamaraju 35
+Juazeiro Lauro_de_Freitas 21
+Juazeiro Ribeira_do_Pombal 42
+Juazeiro Pocoes 36
+Juazeiro Xique_Xique 7
+Itabuna Barreiras 60
+Itabuna Macaubas 22
+Itabuna Caetite 24
+Itabuna Ribeira_do_Pombal 12
+Lauro_de_Freitas Jaguaquara 9
+Lauro_de_Freitas Conceicao_do_Coite 17
+Lauro_de_Freitas Bom_Jesus_da_Lapa 30
+Lauro_de_Freitas Senhor_do_Bonfim 18
+Ilheus Valenca 40
+Ilheus Candeias 12
+Ilheus Ipira 33
+Ilheus Serrinha 24
+Jequie Teixeira_de_Freitas 17
+Jequie Guanambi 5
+Jequie Catu 27
+Jequie Itaberaba 40
+Teixeira_de_Freitas Irara 9
+Teixeira_de_Freitas Barra 34
+Teixeira_de_Freitas Irece 10
+Barreiras Eunapolis 16
+Barreiras Paulo_Afonso 22
+Barreiras Campo_Formoso 37
+Barreiras Casa_Nova 22
+Alagoinhas Euclides_da_Cunha 45
+Alagoinhas Santo_Amaro 13
+Alagoinhas Monte_Santo 60
+Alagoinhas Jacobina 72
+Porto_Seguro Simoes_Filho 51
+Porto_Seguro Itapetinga 15
+Porto_Seguro Brumado 4
+Porto_Seguro Santo_Estevao 29
+Simoes_Filho Valenca 45
+Simoes_Filho Irece 34
+Simoes_Filho Catu 20
+Paulo_Afonso Serrinha 50
+Paulo_Afonso Euclides_da_Cunha 15
+Paulo_Afonso Barra 30
+Eunapolis Guanambi 7
+Eunapolis Irara 10
+Santo_Antonio_de_Jesus Irara 14
+Santo_Antonio_de_Jesus Xique_Xique 72
+Santo_Antonio_de_Jesus Bom_Jesus_da_Lapa 36
+Valenca Salvador 44
+Valenca Cruz_das_Almas 53
+Candeias Tucano 12
+Candeias Araci 47
+Candeias Luis_Eduardo_Magalhaes 30
+Guanambi Pocoes 18
+Guanambi Macaubas 56
+Jacobina Serrrinha 18
+Jacobina Ipira 25
+Jacobina Jaguaquara 10
+Luis_Eduardo_Magalhaes Conceicao_do_Coite 11
+Luis_Eduardo_Magalhaes Caetite 13
+Luis_Eduardo_Magalhaes Pocoes 41
+Luis_Eduardo_Magalhaes Casa_Nova 62
+Serrinha Irara 16
+Senhor_do_Bonfim Salvador 34
+Senhor_do_Bonfim Araci 28
+Irara Itapetinga 32
+Itapetinga Bom_Jesus_da_Lapa 20
+Itapetinga Guanambi 10
+Itapetinga Brumado 41
+Irece Santo_Amaro 9
+Irece Tucano 11
+Irece Itaberaba 34
+Campo_Formoso Casa_Nova 22
+Campo_Formoso Irara 17
+Casa_Nova Porto_Seguro 29
+Casa_Nova Caetite 63
+Casa_Nova Senhor_do_Bonfim 38
+Bom_Jesus_da_Lapa Ribeira_do_Pombal 12
+Bom_Jesus_da_Lapa Feira_de_Santana 47
+Brumado Serrinha 48
+Brumado Valenca 29
+Conceicao_do_Coite Serrinha 30
+Conceicao_do_Coite Monte_Santo 5
+Conceicao_do_Coite Ipira 18
+Conceicao_do_Coite Guanambi 7
+Itamaraju Salvador 35
+Itamaraju Araci 42
+Itamaraju Campo_Formoso 48
+Itaberaba Jaguaquara 27
+Cruz_das_Almas Barra 18
+Cruz_das_Almas Ribeira_do_Pombal 65
+Ipira Tucano 55
+Ipira Santo_Estevao 32
+Santo_Amaro Tucano 14
+Euclides_da_Cunha Irece 39
+Catu Brumado 30
+Catu Pocoes 20
+Jaguaquara Monte_Santo 48
+Barra Macaubas 58
+Santo_Estevao Xique_Xique 21
+Santo_Estevao Irara 33
+Caetite Monte_Santo 49
+Macaubas Pocoes 33
+Xique_Xique Brumado 17
+Xique_Xique Ipira 26
