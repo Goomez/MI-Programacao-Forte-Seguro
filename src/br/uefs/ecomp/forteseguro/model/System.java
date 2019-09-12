@@ -25,6 +25,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * Classe responsável por gerenciar todo o sistema (classes e objetos) do 
@@ -58,8 +60,9 @@ public class System {
         try{
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            String leitura = null;
             
+            String leitura = null;
+            int oi = 0;
             /*Lê a parte do arquivo que estão os vértices*/
             while(!"[Arestas]".equals(leitura = br.readLine())){
                 if(leitura.equals("[Vertices]"))
@@ -69,15 +72,17 @@ public class System {
                 String identificador = subString[0];
                  //Tipo: 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
                 int tipo = Integer.parseInt(subString[1]);
-                //int x = Integer.parseInt(subString[2]);
-                //int y = Integer.parseInt(subString[3]);
+                int x = Integer.parseInt(subString[2]);
+                int y = Integer.parseInt(subString[3]);
                 try{
-                    this.grafo.inserir(identificador, tipo);
+                    this.grafo.inserir(identificador, tipo, x, y);
                     contador++;
                 }
                 catch(VerticeDuplicadoException v){
                     v.toString();
                 }
+                oi++;
+                //JOptionPane.showMessageDialog(new JLabel("oi"),oi);
             }
             /*Lê a parte do arquivo que estão as arestas*/
             while((leitura = br.readLine()) != null){

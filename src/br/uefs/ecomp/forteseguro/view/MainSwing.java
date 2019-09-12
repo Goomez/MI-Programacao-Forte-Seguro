@@ -10,14 +10,20 @@ import br.uefs.ecomp.forteseguro.util.Vertice;
 import java.util.Iterator;
 import javax.swing.JPopupMenu;
 import br.uefs.ecomp.forteseguro.model.System;
+import br.uefs.ecomp.forteseguro.util.AlgoritmoDijkstra;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -26,7 +32,7 @@ import javax.swing.JTextField;
 public class MainSwing extends javax.swing.JFrame {
 
     private System controller = new System();
-    private String arquivoGrafos = "grafoss.txt";
+    private String arquivoGrafos = "grafos.txt";
     private List<String> listaLigacoes = new ArrayList<>();
     private List<Integer> pesoLigacoes = new ArrayList<>();
     private boolean msgEstacionamento = false;
@@ -543,6 +549,11 @@ public class MainSwing extends javax.swing.JFrame {
 
         calcularButtonCalcular.setBackground(new java.awt.Color(255, 255, 255));
         calcularButtonCalcular.setText("Calcular");
+        calcularButtonCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calcularButtonCalcularMouseClicked(evt);
+            }
+        });
         calcularButtonCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 calcularButtonCalcularActionPerformed(evt);
@@ -748,12 +759,16 @@ public class MainSwing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        javax.swing.JLabel label = new javax.swing.JLabel("OIOIOI");
-        label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
-        label.setBounds(208, 115, 10, 10);
+//        javax.swing.JLabel label = new javax.swing.JLabel("OIOIOI");
+//        label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+//        label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
+//        label.setBounds(208, 115, 10, 10);
 
-        this.calcularPainelPrincipal.add(label);
+//        Icon icon = new ImageIcon("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png");
+//        this.cadastrarButtonCadastrar.setRolloverIcon(icon);
+//        this.calcularPainelPrincipal.add(label);
+        
+        
         this.removerComboBoxLigacoes2.setEnabled(false);
         this.onOffAbas(-1, false);
         while (true) {
@@ -940,6 +955,29 @@ public class MainSwing extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, msg);
     }//GEN-LAST:event_inicialMenuSobreMouseClicked
 
+    private void calcularButtonCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseClicked
+        ///verificar se os pontos escolhidos tem grau maior que 0
+//        String coleta = (String) this.calcularComboBoxLugarColeta.getSelectedItem();
+//        String banco = (String) this.calcularComboBoxBanco.getSelectedItem();
+//        Vertice<String> vcoleta = this.controller.getGrafo().buscarVertice(coleta);
+//        Vertice<String> vbanco = this.controller.getGrafo().buscarVertice(banco);
+//        this.controller.getGrafo().menorCaminho().executar(this.controller.getEstacionamento());
+//        List<List<Vertice<String>>> menorcaminho = this.controller.getGrafo()
+//                .menorCaminho().getCaminho(null, this.controller.getEstacionamento());
+//        String nome = "";
+//        for (List<Vertice<String>> auxList1 : menorcaminho) {
+//            for (Vertice<String> auxVertice : auxList1) {
+//                nome+=auxVertice.getObj();
+//                this.calcularLabelMenorCaminho.setText(nome);
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(MainSwing.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        }
+    }//GEN-LAST:event_calcularButtonCalcularMouseClicked
+
     /**
      * SE O GRAU DO PONTO FOR 0, NOTIFICAMOS ISSO AO USUARIO, SE ELE TENTAR
      * CALCULAR ALGO COM ELE, AVISAMOS TAMBEM
@@ -975,6 +1013,28 @@ public class MainSwing extends javax.swing.JFrame {
     public void limpaPainelCalcula() {
         this.calcularComboBoxBanco.setSelectedIndex(0);
         this.calcularComboBoxLugarColeta.setSelectedIndex(0);
+        this.deletaDesenho();
+        this.carregaDesenho();
+    }
+
+    public void carregaDesenho() {
+        Iterator<Vertice<String>> it = this.controller.getNomesVertices();
+        while (it.hasNext()) {
+            Vertice<String> vertice = it.next();
+            JLabel ponto = new JLabel();
+            ponto.setText(vertice.getObj());
+            ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+            
+//            ponto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
+//            ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+//            ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+            
+            ponto.setBounds(vertice.getPosX(), vertice.getPosY(), 100, 100);
+            this.calcularPainelPrincipal.add(ponto);
+        }
+    }
+    public void deletaDesenho(){
+        this.calcularPainelPrincipal.removeAll();
     }
 
     public void limpaPainelAltera() {

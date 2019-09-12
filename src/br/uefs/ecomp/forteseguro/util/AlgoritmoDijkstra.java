@@ -1,4 +1,3 @@
-
 package br.uefs.ecomp.forteseguro.util;
 
 import java.util.ArrayList;
@@ -11,12 +10,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
+ *
  * @author Kevin Cerqueira.
  * @author Allan Capistrano.
  * @param <T>
  */
-public class AlgoritmoDijkstra<T>{
+public class AlgoritmoDijkstra<T> {
 
     private final List<Aresta<T>> listaArestas;
     private List<List<Vertice<T>>> listaResultados;
@@ -56,46 +55,48 @@ public class AlgoritmoDijkstra<T>{
                 auxList.add(vertice);
                 this.antecessores.put(auxVertice, auxList);
                 this.verticesNaoVisitados.add(auxVertice);
-            }else if(this.getMenorDistancia(auxVertice) == this.getMenorDistancia(vertice) + this.getDistancia(vertice, auxVertice))
+            } else if (this.getMenorDistancia(auxVertice) == this.getMenorDistancia(vertice) + this.getDistancia(vertice, auxVertice)) {
                 this.antecessores.get(auxVertice).add(vertice);
+            }
         }
 
     }
 
     private int getDistancia(Vertice<T> vertice1, Vertice<T> vertice2) {
-        for (Aresta auxAresta : this.listaArestas) 
-            if (auxAresta.getVertice1().equals(vertice1) && auxAresta.getVertice2().equals(vertice2))
+        for (Aresta auxAresta : this.listaArestas) {
+            if (auxAresta.getVertice1().equals(vertice1) && auxAresta.getVertice2().equals(vertice2)) {
                 return auxAresta.getPeso();
+            }
+        }
         throw new RuntimeException("Should not happen");
     }
 
     private List<Vertice> getVizinhos(Vertice vertice) {
-            List<Vertice> adjacentes = new ArrayList<>();
+        List<Vertice> adjacentes = new ArrayList<>();
 
-            this.listaArestas.stream().filter((auxAresta) -> (auxAresta.getVertice1().equals(vertice) 
-                    && !isVisitado(auxAresta.getVertice2()))).forEachOrdered((auxAresta) -> {
-                adjacentes.add(auxAresta.getVertice2());
-            });
+        this.listaArestas.stream().filter((auxAresta) -> (auxAresta.getVertice1().equals(vertice)
+                && !isVisitado(auxAresta.getVertice2()))).forEachOrdered((auxAresta) -> {
+            adjacentes.add(auxAresta.getVertice2());
+        });
 
-            //isso ai em cima é o mesmo disso aqui em baixo
-            /*
+        //isso ai em cima é o mesmo disso aqui em baixo
+        /*
             for(Aresta<T> auxAresta : this.listaArestas) {
                 if (auxAresta.getVertice1().equals(vertice) && !isVisitado(auxAresta.getVertice2()))
                     adjacentes.add(auxAresta.getVertice2());
             }
-             */
-
-            return adjacentes;
+         */
+        return adjacentes;
     }
 
     private Vertice<T> getVerticeDaMenorDistancia(Set<Vertice<T>> vertices) {
         Vertice<T> minimo = null;
         for (Vertice auxVertice : vertices) {
-            if (minimo == null) 
+            if (minimo == null) {
                 minimo = auxVertice;
-            else
-                if (this.getMenorDistancia(auxVertice) < this.getMenorDistancia(minimo))
-                    minimo = auxVertice;
+            } else if (this.getMenorDistancia(auxVertice) < this.getMenorDistancia(minimo)) {
+                minimo = auxVertice;
+            }
         }
         return minimo;
     }
@@ -106,30 +107,32 @@ public class AlgoritmoDijkstra<T>{
 
     private int getMenorDistancia(Vertice<T> vertice) {
         Integer distancia = peso.get(vertice);
-        if (distancia == null)
+        if (distancia == null) {
             return Integer.MAX_VALUE;
-        else
+        } else {
             return distancia;
+        }
     }
 
-
     public List<List<Vertice<T>>> getCaminho(ArrayList<Vertice<T>> listVertices, Vertice<T> vertice) {
-        if(listVertices == null)
+        if (listVertices == null) {
             listVertices = new ArrayList<>();
+        }
         ArrayList<Vertice<T>> caminho = new ArrayList<>(listVertices);
         Vertice<T> auxVertice = vertice;
         ArrayList<Vertice<T>> auxListVertice;
 
-        if (this.antecessores.get(auxVertice) == null) 
+        if (this.antecessores.get(auxVertice) == null) {
             return null;
+        }
 
         caminho.add(auxVertice);
         while (this.antecessores.get(auxVertice) != null) {
 
             auxListVertice = this.antecessores.get(auxVertice);
 
-            if(auxListVertice.size() > 1){
-                for(int i = 1; i < auxListVertice.size(); i++){
+            if (auxListVertice.size() > 1) {
+                for (int i = 1; i < auxListVertice.size(); i++) {
                     auxVertice = auxListVertice.get(i);
                     this.getCaminho(caminho, auxVertice);
                 }
@@ -143,4 +146,4 @@ public class AlgoritmoDijkstra<T>{
         return this.listaResultados;
     }
 
-} 
+}
