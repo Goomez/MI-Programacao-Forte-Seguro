@@ -11,6 +11,8 @@ import java.util.Iterator;
 import javax.swing.JPopupMenu;
 import br.uefs.ecomp.forteseguro.model.System;
 import br.uefs.ecomp.forteseguro.util.AlgoritmoDijkstra;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +24,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -514,6 +517,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png"))); // NOI18N
         jLabel7.setText("Lugar de Coleta: ");
 
         calcularComboBoxLugarColeta.setForeground(new java.awt.Color(255, 255, 255));
@@ -521,6 +525,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png"))); // NOI18N
         jLabel8.setText("Banco:");
 
         calcularComboBoxBanco.setForeground(new java.awt.Color(255, 255, 255));
@@ -563,6 +568,7 @@ public class MainSwing extends javax.swing.JFrame {
         calculaLabelEstacionamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         calculaLabelEstacionamento.setForeground(new java.awt.Color(255, 255, 255));
         calculaLabelEstacionamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        calculaLabelEstacionamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png"))); // NOI18N
         calculaLabelEstacionamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         calculaLabelEstacionamento.setMinimumSize(new java.awt.Dimension(28, 20));
         calculaLabelEstacionamento.setPreferredSize(new java.awt.Dimension(28, 20));
@@ -605,7 +611,7 @@ public class MainSwing extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calculaLabelEstacionamento, javax.swing.GroupLayout.PREFERRED_SIZE, 19, Short.MAX_VALUE)
+                .addComponent(calculaLabelEstacionamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calcularButtonCalcular)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -631,7 +637,7 @@ public class MainSwing extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCalcularLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         tabbedPaneInicial.addTab("Calcular Caminho", panelCalcular);
@@ -767,8 +773,6 @@ public class MainSwing extends javax.swing.JFrame {
 //        Icon icon = new ImageIcon("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png");
 //        this.cadastrarButtonCadastrar.setRolloverIcon(icon);
 //        this.calcularPainelPrincipal.add(label);
-        
-        
         this.removerComboBoxLigacoes2.setEnabled(false);
         this.onOffAbas(-1, false);
         while (true) {
@@ -1023,17 +1027,53 @@ public class MainSwing extends javax.swing.JFrame {
             Vertice<String> vertice = it.next();
             JLabel ponto = new JLabel();
             ponto.setText(vertice.getObj());
+//            java.awt.Font oi = new java.awt.Font("Tahoma", 0, 10);
+//            oi
             ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+            switch (vertice.getTipo()) {
+                case 3:
+                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png")));
+                    break;
+                case 2:
+                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png")));
+                    break;
+                case 1:
+                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png")));
+                    break;
+                default:
+                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_branco.png")));
+                    break;
+            }
+
+            //this.calcularPainelPrincipal.paint();
+            ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+            ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
             
-//            ponto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
-//            ponto.setHorizontalTextPosition(SwingConstants.CENTER);
-//            ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+//            Vertice<String> vertice1 = this.controller.getEstacionamento();
+//            Vertice<String> vertice2 = this.controller.getGrafo().getVertices().get(4);
+//            Desenhar desenhar = new Desenhar(vertice1.getPosX(), vertice1.getPosY(), vertice2.getPosX(), vertice2.getPosY());
+//            this.calcularPainelPrincipal.add(desenhar);
             
             ponto.setBounds(vertice.getPosX(), vertice.getPosY(), 100, 100);
             this.calcularPainelPrincipal.add(ponto);
         }
     }
-    public void deletaDesenho(){
+
+//    @Override
+//    public void paint(Graphics g) {
+//        //super.paint(g);
+//        Vertice<String> vertice1 = this.controller.getEstacionamento();
+//        Vertice<String> vertice2 = this.controller.getGrafo().getVertices().get(4);
+//        g.setColor(Color.black);
+//        g.drawLine(vertice1.getPosX(), vertice1.getPosY(), vertice2.getPosX(), vertice2.getPosY());
+//        this.calcularPainelPrincipal.paint();
+//    }
+    public void deletaDesenho() {
         this.calcularPainelPrincipal.removeAll();
     }
 
