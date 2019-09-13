@@ -279,6 +279,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoNomeVertice">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Caso o nome seja composto, utilizar underline para separar as palavras &lt;br&gt;&lt;strong&gt;Ex: Feira_de_Santana"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -468,6 +471,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="cadastrarCampoPeso">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -483,8 +489,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoCoordenadaY">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoCoordenadaX">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
@@ -831,7 +843,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                      <EmptySpace pref="21" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -885,7 +897,7 @@
                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                           <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="calculaLabelEstacionamento" pref="19" max="32767" attributes="0"/>
+                          <Component id="calculaLabelEstacionamento" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="calcularButtonCalcular" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -907,6 +919,9 @@
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Lugar de Coleta: "/>
                   </Properties>
@@ -933,6 +948,9 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Banco:"/>
                   </Properties>
                 </Component>
@@ -955,6 +973,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/icon_forteseguro_branco.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&lt;strong&gt;Forte Seguro, cuidando da sua seguran&#xe7;a"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="calcularLabelMenorCaminho">
@@ -1024,6 +1043,9 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png"/>
+                    </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder>

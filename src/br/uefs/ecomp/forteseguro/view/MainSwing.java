@@ -160,6 +160,8 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarLabelNomeVertice.setForeground(new java.awt.Color(255, 255, 255));
         cadastrarLabelNomeVertice.setText("Nome do novo ponto:");
 
+        cadastrarCampoNomeVertice.setToolTipText("<html>Caso o nome seja composto, utilizar underline para separar as palavras <br><strong>Ex: Feira_de_Santana");
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Tipo de ponto:");
@@ -213,6 +215,8 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Peso:");
 
+        cadastrarCampoPeso.setToolTipText("Apenas números inteiros");
+
         javax.swing.GroupLayout cadastrarPanelLigacoesPontosLayout = new javax.swing.GroupLayout(cadastrarPanelLigacoesPontos);
         cadastrarPanelLigacoesPontos.setLayout(cadastrarPanelLigacoesPontosLayout);
         cadastrarPanelLigacoesPontosLayout.setHorizontalGroup(
@@ -249,6 +253,10 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Coordenada (X,Y) do ponto:");
+
+        cadastrarCampoCoordenadaY.setToolTipText("Apenas números inteiros");
+
+        cadastrarCampoCoordenadaX.setToolTipText("Apenas números inteiros");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -533,6 +541,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/icon_forteseguro_branco.png"))); // NOI18N
+        jLabel9.setToolTipText("<html><strong>Forte Seguro, cuidando da sua segurança");
 
         calcularLabelMenorCaminho.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         calcularLabelMenorCaminho.setForeground(new java.awt.Color(255, 0, 51));

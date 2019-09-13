@@ -279,6 +279,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoNomeVertice">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Caso o nome seja composto, utilizar underline para separar as palavras &lt;br&gt;&lt;strong&gt;Ex: Feira_de_Santana"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -468,6 +471,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="cadastrarCampoPeso">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -483,8 +489,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoCoordenadaY">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoCoordenadaX">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
@@ -961,6 +973,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/icon_forteseguro_branco.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&lt;strong&gt;Forte Seguro, cuidando da sua seguran&#xe7;a"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="calcularLabelMenorCaminho">
