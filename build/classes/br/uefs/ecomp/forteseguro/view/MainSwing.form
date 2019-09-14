@@ -51,6 +51,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Inicial"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="checkBoxTemaEscuro">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Tema Escuro"/>
+                <Property name="toolTipText" type="java.lang.String" value="Habilitar/Desabilitar o tema escuro"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkBoxTemaEscuroActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="inicialMenuSobre">
           <Properties>

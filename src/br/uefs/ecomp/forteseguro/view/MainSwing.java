@@ -123,6 +123,7 @@ public class MainSwing extends javax.swing.JFrame {
         alterarLabelLogAlteracao = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         inicialMenuInicial = new javax.swing.JMenu();
+        checkBoxTemaEscuro = new javax.swing.JCheckBoxMenuItem();
         inicialMenuSobre = new javax.swing.JMenu();
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -742,6 +743,16 @@ public class MainSwing extends javax.swing.JFrame {
         jMenuBar1.setBackground(new java.awt.Color(30, 144, 255));
 
         inicialMenuInicial.setText("Inicial");
+
+        checkBoxTemaEscuro.setText("Tema Escuro");
+        checkBoxTemaEscuro.setToolTipText("Habilitar/Desabilitar o tema escuro");
+        checkBoxTemaEscuro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxTemaEscuroActionPerformed(evt);
+            }
+        });
+        inicialMenuInicial.add(checkBoxTemaEscuro);
+
         jMenuBar1.add(inicialMenuInicial);
 
         inicialMenuSobre.setText("Sobre");
@@ -991,6 +1002,36 @@ public class MainSwing extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_calcularButtonCalcularMouseClicked
 
+    private void checkBoxTemaEscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxTemaEscuroActionPerformed
+        // TODO add your handling code here:
+        if (this.checkBoxTemaEscuro.isSelected()) {
+            Color color = new Color(24, 24, 30, 255);
+            Color color2 = new Color(33, 31, 38, 255);
+            this.jPanel7.setBackground(color);
+            this.jPanel8.setBackground(color);
+            this.jPanel6.setBackground(color);
+            this.jPanel1.setBackground(color);
+            this.calcularPainelPrincipal.setBackground(color2);
+            this.cadastrarPanelLigacoesPontos.setBackground(color);
+            //this.limpaPainelCalcula(true);
+            this.deletaDesenho();
+            this.carregaDesenho(true);
+        }
+        else{
+            Color color = new Color(30, 144, 255);
+            Color color2 = new Color(135, 206, 250);
+            this.jPanel7.setBackground(color);
+            this.jPanel8.setBackground(color);
+            this.jPanel6.setBackground(color);
+            this.jPanel1.setBackground(color);
+            this.calcularPainelPrincipal.setBackground(color2);
+            this.cadastrarPanelLigacoesPontos.setBackground(color);
+            //this.limpaPainelCalcula(false);
+            this.deletaDesenho();
+            this.carregaDesenho(false);
+        }
+    }//GEN-LAST:event_checkBoxTemaEscuroActionPerformed
+
     /**
      * SE O GRAU DO PONTO FOR 0, NOTIFICAMOS ISSO AO USUARIO, SE ELE TENTAR
      * CALCULAR ALGO COM ELE, AVISAMOS TAMBEM
@@ -1027,15 +1068,19 @@ public class MainSwing extends javax.swing.JFrame {
         this.calcularComboBoxBanco.setSelectedIndex(0);
         this.calcularComboBoxLugarColeta.setSelectedIndex(0);
         this.deletaDesenho();
-        this.carregaDesenho();
+        this.carregaDesenho(false);
     }
 
-    public void carregaDesenho() {
+    public void carregaDesenho(boolean flag) {
         Iterator<Vertice<String>> it = this.controller.getNomesVertices();
         while (it.hasNext()) {
             Vertice<String> vertice = it.next();
             JLabel ponto = new JLabel();
             ponto.setText(vertice.getObj());
+            if(flag){
+                Color color = new Color(220, 220, 220);
+                ponto.setForeground(color);
+            }
 //            java.awt.Font oi = new java.awt.Font("Tahoma", 0, 10);
 //            oi
             ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
@@ -1227,6 +1272,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel calcularLabelMenorCaminho;
     private javax.swing.JPanel calcularPainelPrincipal;
     private javax.swing.JProgressBar calcularProgressBar;
+    private javax.swing.JCheckBoxMenuItem checkBoxTemaEscuro;
     private javax.swing.JMenu inicialMenuInicial;
     private javax.swing.JMenu inicialMenuSobre;
     private javax.swing.JComboBox<String> jComboBox3;
