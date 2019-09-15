@@ -1,5 +1,6 @@
 package br.uefs.ecomp.forteseguro.model;
 
+import br.uefs.ecomp.forteseguro.controller.Controller;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -10,10 +11,10 @@ import br.uefs.ecomp.forteseguro.util.Aresta;
 import br.uefs.ecomp.forteseguro.util.Vertice;
 
 /**
- * Testes de unidade para a classe ({@link System}).
+ * Testes de unidade para a classe ({@link Controller}).
  */
 public class SystemTest {
-    private System sys;
+    private Controller sys;
     private Vertice<String> vertice1, vertice2, vertice3, vertice4, vertice5, vertice6, vertice7;
     private Aresta aresta1, aresta2, aresta3, aresta4;
     
@@ -24,7 +25,7 @@ public class SystemTest {
      */
     @Before
     public void setUp() throws Exception{
-        sys = new System();
+        sys = new Controller();
         vertice1 = new Vertice("Feira_de_Santana", 0);
         vertice2 = new Vertice("Serrinha", 0);
         vertice3 = new Vertice("Irara", 2);

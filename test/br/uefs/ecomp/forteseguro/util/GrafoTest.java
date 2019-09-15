@@ -3,16 +3,15 @@
  * Autores: <Kevin Cerqueira Gomes e Allan Capistrano de Santana Santos>
  * Data: <31/08/2019>
  *
- * Declaro que este código foi elaborado por nós de forma individual e
- * não contém nenhum trecho de código de outro colega ou de outro autor, 
- * tais como provindos de livros e apostilas, e páginas ou documentos 
- * eletrônicos da Internet. Qualquer trecho de código de outra autoria que
- * uma citação para o  não a minha está destacado com  autor e a fonte do
- * código, e estou ciente que estes trechos não serão considerados para fins
- * de avaliação. Alguns trechos do código podem coincidir com de outros
- * colegas pois estes foram discutidos em sessões tutorias.
+ * Declaro que este código foi elaborado por nós de forma individual e não
+ * contém nenhum trecho de código de outro colega ou de outro autor, tais como
+ * provindos de livros e apostilas, e páginas ou documentos eletrônicos da
+ * Internet. Qualquer trecho de código de outra autoria que uma citação para o
+ * não a minha está destacado com autor e a fonte do código, e estou ciente que
+ * estes trechos não serão considerados para fins de avaliação. Alguns trechos
+ * do código podem coincidir com de outros colegas pois estes foram discutidos
+ * em sessões tutorias.
  */
-
 package br.uefs.ecomp.forteseguro.util;
 
 import br.uefs.ecomp.forteseguro.util.Grafo;
@@ -28,10 +27,12 @@ import org.junit.Test;
 
 /**
  * Testes de unidade para a classe ({@link Grafo}).
+ *
  * @author Kevin Cerqueira
  * @author Allan Capistrano
  */
 public class GrafoTest {
+
     Boolean flag;
     Grafo<String> grafo;
     AlgoritmoDijkstra dijkstra;
@@ -96,20 +97,22 @@ public class GrafoTest {
 
     private void comparar(ArrayList<ArrayList<Vertice<String>>> caminhosEsperados, List<List<Vertice<String>>> caminhos) {
         assertEquals(caminhosEsperados.size(), caminhos.size());
-        for(List<Vertice<String>> caminho : caminhos){
+        for (List<Vertice<String>> caminho : caminhos) {
             assertNotNull(caminho);
             assertTrue(caminho.size() > 0);
             assertEquals(caminhosEsperados.size(), caminhos.size());
 
             flag = false;
-            for(ArrayList<Vertice<String>> camEsperado : caminhosEsperados){
-                    if(!flag && camEsperado.equals(caminho))flag = true;
+            for (ArrayList<Vertice<String>> camEsperado : caminhosEsperados) {
+                if (!flag && camEsperado.equals(caminho)) {
+                    flag = true;
+                }
             }
             assertTrue(flag);
         }
 
     }
-    
+
     @Test
     public void Caminho1_1Test() throws Exception {
         dijkstra.executar(vert1);
@@ -124,7 +127,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho1_2Test() throws Exception {
         dijkstra.executar(vert7);
@@ -140,7 +143,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho2_1Test() throws Exception {
         dijkstra.executar(vert2);
@@ -156,7 +159,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho2_2Test() throws Exception {
         dijkstra.executar(vert7);
@@ -171,7 +174,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho3_1Test() throws Exception {
         dijkstra.executar(vert4);
@@ -199,7 +202,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho3_2Test() throws Exception {
         dijkstra.executar(vert7);
@@ -215,7 +218,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho4_1Test() throws Exception {
         dijkstra.executar(vert11);
@@ -232,7 +235,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho4_2Test() throws Exception {
         dijkstra.executar(vert6);
@@ -248,7 +251,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho5_1Test() throws Exception {
         dijkstra.executar(vert3);
@@ -266,7 +269,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho5_2Test() throws Exception {
         dijkstra.executar(vert11);
@@ -281,7 +284,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho6_1Test() throws Exception {
         dijkstra.executar(vert8);
@@ -296,7 +299,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho6_2Test() throws Exception {
         dijkstra.executar(vert9);
@@ -311,7 +314,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho7_1Test() throws Exception {
         dijkstra.executar(vert6);
@@ -326,7 +329,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho7_2Test() throws Exception {
         dijkstra.executar(vert5);
@@ -341,7 +344,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho8_1Test() throws Exception {
         dijkstra.executar(vert9);
@@ -357,7 +360,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho8_2Test() throws Exception {
         dijkstra.executar(vert3);
@@ -373,7 +376,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho9_1Test() throws Exception {
         dijkstra.executar(vert4);
@@ -387,7 +390,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho9_2Test() throws Exception {
         dijkstra.executar(vert2);
@@ -401,7 +404,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho10_1Test() throws Exception {
         dijkstra.executar(vert5);
@@ -417,7 +420,7 @@ public class GrafoTest {
         caminhosEsperados.add(caminhoEsperado);
         comparar(caminhosEsperados, caminhos);
     }
-    
+
     @Test
     public void Caminho10_2Test() throws Exception {
         dijkstra.executar(vert3);
