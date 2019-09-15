@@ -569,6 +569,8 @@ public class MainSwing extends javax.swing.JFrame {
             }
         });
 
+        calcularProgressBar.setStringPainted(true);
+
         calculaLabelEstacionamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         calculaLabelEstacionamento.setForeground(new java.awt.Color(255, 255, 255));
         calculaLabelEstacionamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -649,7 +651,7 @@ public class MainSwing extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCalcularLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         tabbedPaneInicial.addTab("Calcular Caminho", panelCalcular);
@@ -753,6 +755,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         menuAlterarArquivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         menuAlterarArquivo.setText("Alterar arquivo de leitura");
+        menuAlterarArquivo.setToolTipText("Alterar o arquivo grafo (.txt) que será lido pelo programa");
         menuAlterarArquivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuAlterarArquivoActionPerformed(evt);
@@ -762,6 +765,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         menuAtualizaPaineis.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
         menuAtualizaPaineis.setText("Atualizar Painéis");
+        menuAtualizaPaineis.setToolTipText("Atualizar todos os painéis do programa");
         menuAtualizaPaineis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuAtualizaPaineisActionPerformed(evt);
@@ -868,7 +872,6 @@ public class MainSwing extends javax.swing.JFrame {
     }//GEN-LAST:event_inicialMenuSobreMouseClicked
 
     private void menuTemaEscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTemaEscuroActionPerformed
-        // TODO add your handling code here:
         if (this.menuTemaEscuro.isSelected()) {
             Color temaEscuro = new Color(24, 24, 30, 255);
             Color temaEscuroMapa = new Color(33, 31, 38, 255);
@@ -879,9 +882,8 @@ public class MainSwing extends javax.swing.JFrame {
             this.calcularPainelPrincipal.setBackground(temaEscuroMapa);
             this.cadastrarPanelLigacoesPontos.setBackground(temaEscuro);
             this.calcularTextMenorCaminho.setBackground(temaEscuro);
-            //this.limpaPainelCalcula(true);
             this.deletaDesenho();
-            this.carregaDesenho(true);
+            this.carregaDesenho();
         } else {
             Color corPadrao = new Color(30, 144, 255);
             Color corPadraoMapa = new Color(135, 206, 250);
@@ -892,9 +894,8 @@ public class MainSwing extends javax.swing.JFrame {
             this.calcularPainelPrincipal.setBackground(corPadraoMapa);
             this.cadastrarPanelLigacoesPontos.setBackground(corPadrao);
             this.calcularTextMenorCaminho.setBackground(corPadrao);
-            //this.limpaPainelCalcula(false);
             this.deletaDesenho();
-            this.carregaDesenho(false);
+            this.carregaDesenho();
         }
     }//GEN-LAST:event_menuTemaEscuroActionPerformed
 
@@ -957,7 +958,7 @@ public class MainSwing extends javax.swing.JFrame {
                 i++;
             }
         }
-
+        this.calcularProgressBar.setValue(100);
         this.calcularTextMenorCaminho.setText(caminhoFinal);
     }//GEN-LAST:event_calcularButtonCalcularMouseClicked
 
@@ -1161,14 +1162,14 @@ public class MainSwing extends javax.swing.JFrame {
         this.deletaDesenho();
     }
 
-    public void carregaDesenho(boolean flag) {
+    public void carregaDesenho() {
         Iterator<Vertice<String>> it = this.controller.getNomesVertices();
         while (it.hasNext()) {
             Vertice<String> vertice = it.next();
             JLabel ponto = new JLabel();
             ponto.setText(vertice.getObj());
 
-            if (flag) {
+            if (this.menuTemaEscuro.isSelected() ) {
                 Color color = new Color(220, 220, 220);
                 ponto.setForeground(color);
             }
@@ -1268,6 +1269,7 @@ public class MainSwing extends javax.swing.JFrame {
         this.limpaPainelCalcula();
         this.calcularComboBoxBanco.removeAllItems();
         this.calcularComboBoxLugarColeta.removeAllItems();
+        this.calcularProgressBar.setValue(0);
         Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
         while (itVertices.hasNext()) {
             Vertice vertice = ((Vertice<String>) itVertices.next());
@@ -1280,7 +1282,7 @@ public class MainSwing extends javax.swing.JFrame {
         if (this.controller.existeEstacionamento()) {
             this.calculaLabelEstacionamento.setText(this.controller.getEstacionamento().getObj());
         }
-        this.carregaDesenho(false);
+        this.carregaDesenho();
     }
 
     private void atualizaAlterar() {

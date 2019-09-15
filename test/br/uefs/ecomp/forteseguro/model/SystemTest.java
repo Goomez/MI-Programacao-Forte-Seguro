@@ -26,7 +26,7 @@ public class SystemTest {
     @Before
     public void setUp() throws Exception{
         sys = new Controller();
-        vertice1 = new Vertice("Feira_de_Santana", 0);
+        vertice1 = new Vertice("Feira_de_Santana", 1);
         vertice2 = new Vertice("Serrinha", 0);
         vertice3 = new Vertice("Irara", 2);
         vertice4 = new Vertice("Ipiau", 2);

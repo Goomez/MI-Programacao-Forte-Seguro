@@ -61,6 +61,7 @@
                   <KeyStroke key="Ctrl+N"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Alterar arquivo de leitura"/>
+                <Property name="toolTipText" type="java.lang.String" value="Alterar o arquivo grafo (.txt) que ser&#xe1; lido pelo programa"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAlterarArquivoActionPerformed"/>
@@ -72,6 +73,7 @@
                   <KeyStroke key="F5"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Atualizar Pain&#xe9;is"/>
+                <Property name="toolTipText" type="java.lang.String" value="Atualizar todos os pain&#xe9;is do programa"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAtualizaPaineisActionPerformed"/>
@@ -882,7 +884,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="25" max="32767" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1043,6 +1045,9 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JProgressBar" name="calcularProgressBar">
+                  <Properties>
+                    <Property name="stringPainted" type="boolean" value="true"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="calculaLabelEstacionamento">
                   <Properties>
