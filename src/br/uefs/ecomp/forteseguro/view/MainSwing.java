@@ -13,6 +13,7 @@ import br.uefs.ecomp.forteseguro.controller.Controller;
 import br.uefs.ecomp.forteseguro.util.AlgoritmoDijkstra;
 import br.uefs.ecomp.forteseguro.util.Grafo;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.io.File;
@@ -30,6 +31,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
@@ -815,14 +817,6 @@ public class MainSwing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-//        javax.swing.JLabel label = new javax.swing.JLabel("OIOIOI");
-//        label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-//        label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
-//        label.setBounds(208, 115, 10, 10);
-
-//        Icon icon = new ImageIcon("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png");
-//        this.cadastrarButtonCadastrar.setRolloverIcon(icon);
-//        this.calcularPainelPrincipal.add(label);
         this.removerComboBoxLigacoes2.setEnabled(false);
         this.onOffAbas(-1, false);
         while (true) {
@@ -923,6 +917,7 @@ public class MainSwing extends javax.swing.JFrame {
     private void calcularButtonCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseClicked
         ///verificar se os pontos escolhidos tem grau maior que 0
         this.calcularTextMenorCaminho.setText("");
+        this.calcularTextMenorCaminho.setFont(new Font("Tahoma",Font.PLAIN ,10));
 
         Vertice<String> pontoColeta = this.controller.getGrafo().buscarVertice(((String) this.calcularComboBoxLugarColeta.getSelectedItem()));
         Vertice<String> pontoBanco = this.controller.getGrafo().buscarVertice(((String) this.calcularComboBoxBanco.getSelectedItem()));
@@ -930,12 +925,19 @@ public class MainSwing extends javax.swing.JFrame {
         AlgoritmoDijkstra<String> dijkstra1 = this.controller.getGrafo().menorCaminho();
         dijkstra1.executar(this.controller.getEstacionamento());
         List<List<Vertice<String>>> menorCaminhoColeta = dijkstra1.getCaminho(null, pontoColeta);
+        if(menorCaminhoColeta == null){
+            this.calcularTextMenorCaminho.setFont(new Font("Tahoma",Font.BOLD ,12));
+            this.calcularTextMenorCaminho.setText("O PONTO DE COLETA É INACESSÍVEL PELO ESTACIONAMENTO");
+            return;
+        }
 
         String caminhoFinal = "• Estacion. para a Coleta:\n - ";
 
         int i = 0;
         for (List<Vertice<String>> caminhos : menorCaminhoColeta) {
+            
             for (Vertice<String> vertice : caminhos) {
+                this.calcularTextMenorCaminho.setText(vertice.getObj());
                 caminhoFinal += vertice.getObj();
                 if (menorCaminhoColeta.get(0).size() - 1 > i) {
                     caminhoFinal += " -> ";
@@ -946,7 +948,11 @@ public class MainSwing extends javax.swing.JFrame {
         AlgoritmoDijkstra<String> dijkstra2 = this.controller.getGrafo().menorCaminho();
         dijkstra2.executar(pontoColeta);
         List<List<Vertice<String>>> menorCaminhoBanco = dijkstra2.getCaminho(null, pontoBanco);
-
+        if(menorCaminhoBanco == null){
+            this.calcularTextMenorCaminho.setFont(new Font("Tahoma",Font.BOLD ,12));
+            this.calcularTextMenorCaminho.setText("O BANCO É INACESSÍVEL PELO PONTO DE COLETA");
+            return;
+        }
         caminhoFinal += "\n• Coleta para Banco:\n - ";
         i = 0;
         for (List<Vertice<String>> caminhos : menorCaminhoBanco) {
@@ -960,6 +966,7 @@ public class MainSwing extends javax.swing.JFrame {
         }
         this.calcularProgressBar.setValue(100);
         this.calcularTextMenorCaminho.setText(caminhoFinal);
+
     }//GEN-LAST:event_calcularButtonCalcularMouseClicked
 
     private void removerButtonRemoverPontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverPontoMouseClicked
@@ -1064,6 +1071,8 @@ public class MainSwing extends javax.swing.JFrame {
                     int i = 0;
                     for (String auxLista : this.listaLigacoes) {
                         this.controller.adicionarLigacao(nomeVertice, auxLista, this.pesoLigacoes.get(i));
+                        this.controller.adicionarLigacao(auxLista, nomeVertice, this.pesoLigacoes.get(i));
+                        
                         i++;
                     }
                 }
@@ -1082,6 +1091,8 @@ public class MainSwing extends javax.swing.JFrame {
     private void menuAtualizaPaineisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAtualizaPaineisActionPerformed
         // TODO add your handling code here:
         this.atualizaPaineis();
+        String foi = "oi";
+        //this.cadastrarCampoNomeVertice.getSelectedText();
     }//GEN-LAST:event_menuAtualizaPaineisActionPerformed
 
     private void menuAlterarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAlterarArquivoActionPerformed
@@ -1169,7 +1180,7 @@ public class MainSwing extends javax.swing.JFrame {
             JLabel ponto = new JLabel();
             ponto.setText(vertice.getObj());
 
-            if (this.menuTemaEscuro.isSelected() ) {
+            if (this.menuTemaEscuro.isSelected()) {
                 Color color = new Color(220, 220, 220);
                 ponto.setForeground(color);
             }
