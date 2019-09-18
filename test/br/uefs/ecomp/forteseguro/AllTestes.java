@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SystemTest.class,
+   ControllerTest.class,
     GrafoTest.class,
 })
 
