@@ -63,22 +63,26 @@ public class Controller {
             
             String leitura = null;
             /*Lê a parte do arquivo que estão os vértices*/
-            while(!"[Arestas]".equals(leitura = br.readLine())){
-                if(leitura.equals("[Vertices]"))
-                    continue;
-                int contador = 0;
-                String[] subString = leitura.split(" ");
-                String identificador = subString[0];
-                 //Tipo: 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
-                int tipo = Integer.parseInt(subString[1]);
-                int x = Integer.parseInt(subString[2]);
-                int y = Integer.parseInt(subString[3]);
-                try{
-                    this.grafo.inserir(identificador, tipo, x, y);
-                    contador++;
-                }
-                catch(VerticeDuplicadoException v){
-                    v.toString();
+            while (!"[Arestas]".equals(leitura = br.readLine())) {
+                try {
+                    if (leitura.equals("[Vertices]")) {
+                        continue;
+                    }
+                    int contador = 0;
+                    String[] subString = leitura.split(" ");
+                    String identificador = subString[0];
+                    //Tipo: 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
+                    int tipo = Integer.parseInt(subString[1]);
+                    int x = Integer.parseInt(subString[2]);
+                    int y = Integer.parseInt(subString[3]);
+                    try {
+                        this.grafo.inserir(identificador, tipo, x, y);
+                        contador++;
+                    } catch (VerticeDuplicadoException v) {
+                        v.toString();
+                    }
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    return "Erro na leitura do arquivo: Dados inválidos.";
                 }
             }
             /*Lê a parte do arquivo que estão as arestas*/

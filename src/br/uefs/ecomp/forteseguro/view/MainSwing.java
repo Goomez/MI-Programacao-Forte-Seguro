@@ -833,7 +833,7 @@ public class MainSwing extends javax.swing.JFrame {
                         janelaSeletora.showDialog(this, "Selecione um novo arquivo");
                         this.arquivoGrafos = janelaSeletora.getSelectedFile().getAbsolutePath();
                         break;
-                    } catch (HeadlessException | NullPointerException e) {
+                    } catch (Exception e) {
                         this.cadastrarLabelLogInsercao.setText("Error na seleção do arquivo!");
                     }
                 }
