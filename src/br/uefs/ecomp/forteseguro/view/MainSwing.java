@@ -1,60 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Componente Curricular: Módulo Integrado de Programação II
+ * Autores: <Kevin Cerqueira Gomes e Allan Capistrano de Santana Santos>
+ * Data: <06/09/2019>
+ *
+ * Declaro que este código foi elaborado por nós de forma individual e não
+ * contém nenhum trecho de código de outro colega ou de outro autor, tais como
+ * provindos de livros e apostilas, e páginas ou documentos eletrônicos da
+ * Internet. Qualquer trecho de código de outra autoria que uma citação para o
+ * não a minha está destacado com autor e a fonte do código, e estou ciente que
+ * estes trechos não serão considerados para fins de avaliação. Alguns trechos
+ * do código podem coincidir com de outros colegas pois estes foram discutidos
+ * em sessões tutorias.
  */
 package br.uefs.ecomp.forteseguro.view;
 
-import br.uefs.ecomp.forteseguro.util.Aresta;
-import br.uefs.ecomp.forteseguro.util.Vertice;
-import java.util.Iterator;
-import javax.swing.JPopupMenu;
 import br.uefs.ecomp.forteseguro.controller.Controller;
-import br.uefs.ecomp.forteseguro.util.AlgoritmoDijkstra;
-import br.uefs.ecomp.forteseguro.util.Grafo;
+
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.HeadlessException;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileSystemView;
 
 /**
+ * Classe responsável pela interface gráfica do programa.
  *
- * @author Kevin
+ * @author Kevin Cerqueira
+ * @author Allan Capistrano
  */
 public class MainSwing extends javax.swing.JFrame {
 
-    private Controller controller = new Controller();
-    private String arquivoGrafos = "grafsos.txt";
-    private List<String> listaLigacoes = new ArrayList<>();
-    private List<Integer> pesoLigacoes = new ArrayList<>();
-    private boolean msgEstacionamento = false;
-    private boolean programaPronto = false;
+    private Controller controller; // Controlador da classe.
+    private String arquivoGrafos; // Nome do arquivo padrão de leitura dos vertíces e arestas.
+
+    // Lista usada para capturar os pontos de ligação que o usuario inserir no
+    // momento de cadastro de pontos.
+    private List<String> listaLigacoes;
+
+    // Lista usada para capturar os pesos de ligação que o usuario inserir no
+    // momento de cadastro de pontos.
+    private List<Integer> pesoLigacoes;
+
+    // Variável de controle, usada para informar qual a situação do
+    // estacionamento, se ele está presente ou foi removido.
+    private boolean situacaoEstacionamento;
+    private boolean situacaoBanco;
+    private boolean situacaoColeta;
+
+    // Variável de controle, usada para informar se o programa está pronto para
+    // fazer determinadas atualizações, como: carregar pontos nas combo box.
+    private boolean programaPronto;
+
+    private boolean nenhumPonto;
 
     /**
-     * Creates new form MainSwing
+     * Construtor da classe. Inicializa as variáveis.
      */
     public MainSwing() {
-
+        this.controller = new Controller();
+        this.arquivoGrafos = "grafos.txt";
+        this.listaLigacoes = new ArrayList<>();
+        this.pesoLigacoes = new ArrayList<>();
+        this.situacaoEstacionamento = false;
+        this.situacaoBanco = false;
+        this.situacaoColeta = false;
+        this.programaPronto = false;
+        this.nenhumPonto = false;
         initComponents();
-
     }
 
     /**
@@ -744,16 +761,11 @@ public class MainSwing extends javax.swing.JFrame {
                 .addGap(52, 52, 52))
         );
 
-        tabbedPaneInicial.addTab("Alterar pontos", panelAlterar);
+        tabbedPaneInicial.addTab("Alterar Pontos", panelAlterar);
 
         jMenuBar1.setBackground(new java.awt.Color(30, 144, 255));
 
         inicialMenuInicial.setText("Configurações");
-        inicialMenuInicial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inicialMenuInicialActionPerformed(evt);
-            }
-        });
 
         menuAlterarArquivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         menuAlterarArquivo.setText("Alterar arquivo de leitura");
@@ -815,7 +827,12 @@ public class MainSwing extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Metódo que é chamado quando a janela principal é aberta, ou seja, quando
+     * o programa é iniciado.
+     *
+     * @param evt evento disparado pela abertuda da janela principal.
+     */
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.removerComboBoxLigacoes2.setEnabled(false);
         this.onOffAbas(-1, false);
@@ -842,6 +859,11 @@ public class MainSwing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowOpened
 
+    /**
+     * Cria uma caixa de menssagem com informações sobre o software.
+     *
+     * @param evt evento disparado.
+     */
     private void inicialMenuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicialMenuSobreMouseClicked
         String msg = "> Componente Curricular: Módulo Integrado de Programação II\n"
                 + "Data:  <12/09/2019>\n"
@@ -865,6 +887,11 @@ public class MainSwing extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, msg);
     }//GEN-LAST:event_inicialMenuSobreMouseClicked
 
+    /**
+     * Altera o tema do programa (Tema padrão ou tema escuro).
+     *
+     * @param evt evento disparado.
+     */
     private void menuTemaEscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTemaEscuroActionPerformed
         if (this.menuTemaEscuro.isSelected()) {
             Color temaEscuro = new Color(24, 24, 30, 255);
@@ -893,104 +920,93 @@ public class MainSwing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuTemaEscuroActionPerformed
 
+    /**
+     * Altera o vertíce para outro tipo de ponto na aba de "Alterar Pontos".
+     *
+     * @param evt evento disparado.
+     */
     private void alterarButtonAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarButtonAlterarMouseClicked
         String ponto = (String) this.alterarComboBoxEscolhaPonto.getSelectedItem();
         int novoTipo = this.alterarComboBoxAlterarPara.getSelectedIndex();
         if (novoTipo == 3) {
             if (!this.controller.existeEstacionamento()) {
-                this.controller.getGrafo().buscarVertice(ponto).setTipo(3);
+                this.controller.alterarTipoCruzamento(ponto, novoTipo);
                 this.atualizaPaineis();
                 this.alterarLabelLogAlteracao.setText(ponto + " agora é o estacionamento!");
             } else {
                 this.controller.getEstacionamento().setTipo(0);
-                this.controller.getGrafo().buscarVertice(ponto).setTipo(3);
+                this.controller.alterarTipoCruzamento(ponto, novoTipo);
                 this.atualizaPaineis();
                 this.alterarLabelLogAlteracao.setText("Estacionamento alterado para: " + ponto);
             }
         } else {
-            this.controller.getGrafo().buscarVertice(ponto).setTipo(novoTipo);
+            this.controller.alterarTipoCruzamento(ponto, novoTipo);
             this.atualizaPaineis();
             this.alterarLabelLogAlteracao.setText(ponto + " foi alterado!");
         }
     }//GEN-LAST:event_alterarButtonAlterarMouseClicked
 
+    /**
+     * Calcula o menor caminho entre os pontos escolhidos pelas combo box na aba
+     * de "Calcular Caminho".
+     *
+     * @param evt evento disparado.
+     */
     private void calcularButtonCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseClicked
         ///verificar se os pontos escolhidos tem grau maior que 0
         this.calcularTextMenorCaminho.setText("");
-        this.calcularTextMenorCaminho.setFont(new Font("Tahoma",Font.PLAIN ,10));
-
-        Vertice<String> pontoColeta = this.controller.getGrafo().buscarVertice(((String) this.calcularComboBoxLugarColeta.getSelectedItem()));
-        Vertice<String> pontoBanco = this.controller.getGrafo().buscarVertice(((String) this.calcularComboBoxBanco.getSelectedItem()));
-
-        AlgoritmoDijkstra<String> dijkstra1 = this.controller.getGrafo().menorCaminho();
-        dijkstra1.executar(this.controller.getEstacionamento());
-        List<List<Vertice<String>>> menorCaminhoColeta = dijkstra1.getCaminho(null, pontoColeta);
-        if(menorCaminhoColeta == null){
-            this.calcularTextMenorCaminho.setFont(new Font("Tahoma",Font.BOLD ,12));
-            this.calcularTextMenorCaminho.setText("O PONTO DE COLETA É INACESSÍVEL PELO ESTACIONAMENTO");
-            return;
-        }
-
-        String caminhoFinal = "• Estacion. para a Coleta:\n - ";
-
-        int i = 0;
-        for (List<Vertice<String>> caminhos : menorCaminhoColeta) {
-            
-            for (Vertice<String> vertice : caminhos) {
-                this.calcularTextMenorCaminho.setText(vertice.getObj());
-                caminhoFinal += vertice.getObj();
-                if (menorCaminhoColeta.get(0).size() - 1 > i) {
-                    caminhoFinal += " -> ";
-                }
-                i++;
-            }
-        }
-        AlgoritmoDijkstra<String> dijkstra2 = this.controller.getGrafo().menorCaminho();
-        dijkstra2.executar(pontoColeta);
-        List<List<Vertice<String>>> menorCaminhoBanco = dijkstra2.getCaminho(null, pontoBanco);
-        if(menorCaminhoBanco == null){
-            this.calcularTextMenorCaminho.setFont(new Font("Tahoma",Font.BOLD ,12));
-            this.calcularTextMenorCaminho.setText("O BANCO É INACESSÍVEL PELO PONTO DE COLETA");
-            return;
-        }
-        caminhoFinal += "\n• Coleta para Banco:\n - ";
-        i = 0;
-        for (List<Vertice<String>> caminhos : menorCaminhoBanco) {
-            for (Vertice<String> vertices : caminhos) {
-                caminhoFinal += vertices.getObj();
-                if (menorCaminhoBanco.get(0).size() - 1 > i) {
-                    caminhoFinal += " -> ";
-                }
-                i++;
-            }
-        }
-        this.calcularProgressBar.setValue(100);
+        this.calcularTextMenorCaminho.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        this.calcularProgressBar.setValue(this.calcularProgressBar.getValue() + 25);
+        String caminhoFinal = this.controller.calculaCaminho(((String) this.calcularComboBoxLugarColeta.getSelectedItem()),
+                ((String) this.calcularComboBoxBanco.getSelectedItem()));
+        this.calcularProgressBar.setValue(this.calcularProgressBar.getValue() + 25);
+        this.calcularProgressBar.setValue(this.calcularProgressBar.getValue() + 50);
         this.calcularTextMenorCaminho.setText(caminhoFinal);
 
     }//GEN-LAST:event_calcularButtonCalcularMouseClicked
 
+    /**
+     * Remove o vertíce escolhido na combo box da aba "Remover pontos e/ou
+     * ligações".
+     *
+     * @param evt evento disparado.
+     */
     private void removerButtonRemoverPontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverPontoMouseClicked
         String pontoRemover = (String) this.removerComboBoxPontos.getSelectedItem();
         this.controller.removerCruzamento(pontoRemover);
         this.removerLabelLogRemocao.setText(pontoRemover + " foi removido com sucesso!");
+
         this.atualizaPaineis();
     }//GEN-LAST:event_removerButtonRemoverPontoMouseClicked
 
+    /**
+     * Remove a ligação escolhida nas combo boxs da aba "Remover pontos e/ou
+     * ligações".
+     *
+     * @param evt evento disparado.
+     */
     private void removerButtonRemoverLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoMouseClicked
         if (((String) this.removerComboBoxLigacoes1.getSelectedItem()).equals("")) {
             this.removerLabelLogRemocao.setText("Por favor, selecione uma ligação!");
         } else if (this.removerComboBoxLigacoes2.getItemCount() == 0) {
             this.removerLabelLogRemocao.setText(((String) this.removerComboBoxLigacoes1.getSelectedItem()) + " não possue ligações!");
         } else {
-            String vertice1 = (String) this.removerComboBoxLigacoes1.getSelectedItem();
-            String vertice2 = (String) this.removerComboBoxLigacoes2.getSelectedItem();
-            this.controller.getGrafo().removerAresta(this.controller.getGrafo().buscarAresta(vertice1, vertice2));
+            this.controller.removerAresta((String) this.removerComboBoxLigacoes1.getSelectedItem(),
+                    (String) this.removerComboBoxLigacoes2.getSelectedItem());
+            this.controller.removerAresta((String) this.removerComboBoxLigacoes2.getSelectedItem(),
+                    (String) this.removerComboBoxLigacoes1.getSelectedItem());
             this.atualizaPaineis();
             this.removerComboBoxLigacoes2.setEnabled(false);
             this.removerLabelLogRemocao.setText("Ligação removida com sucesso!");
         }
     }//GEN-LAST:event_removerButtonRemoverLigacaoMouseClicked
 
+    /**
+     * Mostra todas as ligações do vertíce escolhido na combo box selecionada em
+     * outra combo box na aba de "Remover pontos e/ou ligações".
+     *
+     * @param evt evento disparado.
+     */
     private void removerComboBoxLigacoes1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_removerComboBoxLigacoes1ItemStateChanged
         if (this.programaPronto) {
             this.removerComboBoxLigacoes2.removeAllItems();
@@ -999,19 +1015,22 @@ public class MainSwing extends javax.swing.JFrame {
             } else {
                 this.removerComboBoxLigacoes2.setEnabled(true);
                 String pontoLigacao = (String) this.removerComboBoxLigacoes1.getSelectedItem();
-                if (this.controller.getGrafo().arestasIncidentes(pontoLigacao) == null) {
+                if (!this.controller.existeLigacoes(pontoLigacao)) {
                     this.removerComboBoxLigacoes2.removeAllItems();
                 } else {
-                    for (Aresta<String> arestas : this.controller.getGrafo().arestasIncidentes(pontoLigacao)) {
-                        if (arestas.getVertice1().equals(pontoLigacao)) {
-                            this.removerComboBoxLigacoes2.addItem(arestas.getVertice2().getObj());
-                        }
+                    for (String pontos : this.controller.listaArestasIncidentes(pontoLigacao)) {
+                        this.removerComboBoxLigacoes2.addItem(pontos);
                     }
                 }
             }
         }
     }//GEN-LAST:event_removerComboBoxLigacoes1ItemStateChanged
 
+    /**
+     * Armazena todas as ligações que o usuario inseriu na aba de "Cadastrar".
+     *
+     * @param evt evento disparado.
+     */
     private void cadastrarButtonAdicionarLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonAdicionarLigacaoMouseClicked
         if (this.cadastrarComboBoxLigacoesPonto.getSelectedItem() == "") {
             this.cadastrarLabelLogInsercao.setText("Por favor, selecione um ponto de ligação!");
@@ -1024,8 +1043,6 @@ public class MainSwing extends javax.swing.JFrame {
                     this.cadastrarLabelLogInsercao.setText("Por favor, insira somente numeros positivos no campo de peso!");
                     this.cadastrarLabelLogInsercao.setText("");
                 } else {
-                    //Caso o usuario tente inserir uma mesma liçacao duas vezes. O que vai acontecer é que
-                    //ele só mudará o  peso da ligaçao
                     if (this.listaLigacoes.contains((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem())) {
                         int pos = 0;
                         String aux = this.listaLigacoes.get(0);
@@ -1053,6 +1070,11 @@ public class MainSwing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cadastrarButtonAdicionarLigacaoMouseClicked
 
+    /**
+     * Cadastra um novo ponto ao programa, e atualiza todas as abas em seguida.
+     *
+     * @param evt evento disparado.
+     */
     private void cadastrarButtonCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonCadastrarMouseClicked
         String nomeVertice = this.cadastrarCampoNomeVertice.getText();
         if (nomeVertice.equals("")) {
@@ -1072,7 +1094,7 @@ public class MainSwing extends javax.swing.JFrame {
                     for (String auxLista : this.listaLigacoes) {
                         this.controller.adicionarLigacao(nomeVertice, auxLista, this.pesoLigacoes.get(i));
                         this.controller.adicionarLigacao(auxLista, nomeVertice, this.pesoLigacoes.get(i));
-                        
+
                         i++;
                     }
                 }
@@ -1088,13 +1110,21 @@ public class MainSwing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cadastrarButtonCadastrarMouseClicked
 
+    /**
+     * Atualiza todas as abas.
+     *
+     * @param evt
+     */
     private void menuAtualizaPaineisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAtualizaPaineisActionPerformed
-        // TODO add your handling code here:
         this.atualizaPaineis();
-        String foi = "oi";
-        //this.cadastrarCampoNomeVertice.getSelectedText();
     }//GEN-LAST:event_menuAtualizaPaineisActionPerformed
 
+    /**
+     * Abre um seletor de arquivos para o usuario escolher um novo arquivo de
+     * leitura.
+     *
+     * @param evt evento disparado.
+     */
     private void menuAlterarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAlterarArquivoActionPerformed
         String backupArquivo = this.arquivoGrafos;
         try {
@@ -1104,81 +1134,152 @@ public class MainSwing extends javax.swing.JFrame {
 
             this.arquivoGrafos = janelaSeletora.getSelectedFile().getAbsolutePath();
             if (this.controller.criarNovoGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
+                this.cadastrarLabelLogInsercao.setText("Arquivo inserido com sucesso");
                 this.atualizaPaineis();
             } else {
-                JOptionPane.showMessageDialog(this, "Arquivo inválido!");
                 this.arquivoGrafos = backupArquivo;
             }
-        } catch (HeadlessException | NullPointerException e) {
+        } catch (Exception e) {
+            this.cadastrarLabelLogInsercao.setText("Arquivo inválido!");
             this.arquivoGrafos = backupArquivo;
         }
     }//GEN-LAST:event_menuAlterarArquivoActionPerformed
 
-    private void inicialMenuInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inicialMenuInicialActionPerformed
-        // TODO add your handling code here:
-//        this.removerComboBoxLigacoes2.setEnabled(false);
-//        this.onOffAbas(-1, false);
-//        while (true) {
-//            if (this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
-//                this.onOffAbas(-1, true);
-//                this.atualizaPaineis();
-//                break;
-//            } else {
-//                this.arquivoGrafos = JOptionPane.showInputDialog("Não foi possível ler o arquivo de leitura.\nPor favor "
-//                        + "insira um novo endereço com o arquivo:");
-//                if (this.arquivoGrafos == null) {
-//                    this.arquivoGrafos = "";
-//                }
-//            }
-//        }
-
-    }//GEN-LAST:event_inicialMenuInicialActionPerformed
-
     /**
-     * SE O GRAU DO PONTO FOR 0, NOTIFICAMOS ISSO AO USUARIO, SE ELE TENTAR
-     * CALCULAR ALGO COM ELE, AVISAMOS TAMBEM
+     * Desabilita e habilita as abas da janela principal.
      *
-     * @param aba
-     * @param onOff
+     * @param aba número da aba que será desabilitada/habilitada. Caso seja -1,
+     * a modificação será feita para todas.
+     * @param onOff true, para habilitar a aba, false, para desabilitar a aba.
      */
-    public void onOffAbas(int aba, boolean onOff) {// aba: a aba que será mudada, onOff: se habilitará ou desabilitará a aba
-        if (aba == -1) {//se o valor for -1, se aplicara a todas as abas
+    public void onOffAbas(int aba, boolean onOff) {
+        if (aba == -1) {
             this.tabbedPaneInicial.setEnabledAt(0, onOff);
             this.tabbedPaneInicial.setEnabledAt(1, onOff);
             this.tabbedPaneInicial.setEnabledAt(2, onOff);
             this.tabbedPaneInicial.setEnabledAt(3, onOff);
             return;
         }
-        // caso nao, somente a uma
         this.tabbedPaneInicial.setEnabledAt(aba, onOff);
     }
 
+    /**
+     * Limpa todos os campos de texto da aba "Cadastrar".
+     */
     public void limpaPainelCadastro() {
         this.cadastrarCampoCoordenadaX.setText("");
         this.cadastrarCampoCoordenadaY.setText("");
         this.cadastrarCampoNomeVertice.setText("");
         this.cadastrarCampoPeso.setText("");
-        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+        if (!this.controller.existePontos()) {
+            this.cadastrarComboBoxLigacoesPonto.setEnabled(false);
+            this.cadastrarCampoPeso.setEnabled(false);
+            this.cadastrarButtonAdicionarLigacao.setEnabled(false);
+        } else {
+            this.cadastrarComboBoxLigacoesPonto.setEnabled(true);
+            this.cadastrarCampoPeso.setEnabled(true);
+            this.cadastrarButtonAdicionarLigacao.setEnabled(true);
+        }
     }
 
+    /**
+     * Limpa todas as combo box da aba "Remover pontos/ligações".
+     */
     public void limpaPainelRemove() {
-        this.removerComboBoxPontos.setSelectedIndex(0);
-        this.removerComboBoxLigacoes1.setSelectedIndex(0);
+        if (!this.nenhumPonto) {
+            this.removerComboBoxPontos.setSelectedIndex(0);
+            this.removerComboBoxLigacoes1.setSelectedIndex(0);
+        }
     }
 
-    public void limpaPainelCalcula() {
-        this.calcularComboBoxBanco.setSelectedIndex(0);
-        this.calcularComboBoxLugarColeta.setSelectedIndex(0);
-        this.calcularTextMenorCaminho.setText("");
-        this.deletaDesenho();
+    /**
+     * Limpa todas as combo box da aba "Alterar pontos".
+     */
+    public void limpaPainelAltera() {
+        if (!this.nenhumPonto) {
+            this.alterarComboBoxAlterarPara.setSelectedIndex(0);
+            this.alterarComboBoxEscolhaPonto.setSelectedIndex(0);
+        }
     }
 
+    /**
+     * Carrega o desenho (os pontos e nomes dos pontos) do painel da aba
+     * "Calcula caminho".
+     */
     public void carregaDesenho() {
-        Iterator<Vertice<String>> it = this.controller.getNomesVertices();
-        while (it.hasNext()) {
-            Vertice<String> vertice = it.next();
+        //Bancos
+        if (this.controller.existeBanco()) {
+            for (String nomes : this.controller.getNomesVertices(1)) {
+                JLabel ponto = new JLabel();
+                ponto.setText(nomes);
+
+                if (this.menuTemaEscuro.isSelected()) {
+                    Color color = new Color(220, 220, 220);
+                    ponto.setForeground(color);
+                }
+                ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+                ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                        .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png")));
+
+                ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+                ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+                ponto.setBounds(this.controller.getPonto(nomes).getPosX(),
+                        this.controller.getPonto(nomes).getPosY(), 100, 100);
+                this.calcularPainelPrincipal.add(ponto);
+            }
+        }
+
+        //Pontos de Coleta
+        if (this.controller.existeColeta()) {
+            for (String nomes : this.controller.getNomesVertices(2)) {
+                JLabel ponto = new JLabel();
+                ponto.setText(nomes);
+
+                if (this.menuTemaEscuro.isSelected()) {
+                    Color color = new Color(220, 220, 220);
+                    ponto.setForeground(color);
+                }
+                ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+                ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                        .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png")));
+
+                ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+                ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+                ponto.setBounds(this.controller.getPonto(nomes).getPosX(),
+                        this.controller.getPonto(nomes).getPosY(), 100, 100);
+                this.calcularPainelPrincipal.add(ponto);
+            }
+        }
+
+        //Cruzamentos
+        if (this.controller.existeCruzamento()) {
+            for (String nomes : this.controller.getNomesVertices(0)) {
+                JLabel ponto = new JLabel();
+                ponto.setText(nomes);
+
+                if (this.menuTemaEscuro.isSelected()) {
+                    Color color = new Color(220, 220, 220);
+                    ponto.setForeground(color);
+                }
+                ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+                ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                        .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_branco.png")));
+
+                ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+                ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+                ponto.setBounds(this.controller.getPonto(nomes).getPosX(),
+                        this.controller.getPonto(nomes).getPosY(), 100, 100);
+                this.calcularPainelPrincipal.add(ponto);
+            }
+        }
+
+        //Estacionamento
+        if (this.controller.existeEstacionamento()) {
             JLabel ponto = new JLabel();
-            ponto.setText(vertice.getObj());
+            ponto.setText(this.controller.getEstacionamento().getObj());
 
             if (this.menuTemaEscuro.isSelected()) {
                 Color color = new Color(220, 220, 220);
@@ -1186,109 +1287,170 @@ public class MainSwing extends javax.swing.JFrame {
             }
             ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
 
-            switch (vertice.getTipo()) {
-                case 3:
-                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
-                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png")));
-                    break;
-                case 2:
-                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
-                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png")));
-                    break;
-                case 1:
-                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
-                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png")));
-                    break;
-                default:
-                    ponto.setIcon(new javax.swing.ImageIcon(getClass()
-                            .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_branco.png")));
-                    break;
-            }
+            ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                    .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png")));
+
             ponto.setHorizontalTextPosition(SwingConstants.CENTER);
             ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
-            ponto.setBounds(vertice.getPosX(), vertice.getPosY(), 100, 100);
+            ponto.setBounds(this.controller.getEstacionamento().getPosX(),
+                    this.controller.getEstacionamento().getPosY(), 100, 100);
             this.calcularPainelPrincipal.add(ponto);
         }
+
     }
 
-//    @Override
-//    public void paint(Graphics g) {
-//        //super.paint(g);
-//        Vertice<String> vertice1 = this.controller.getEstacionamento();
-//        Vertice<String> vertice2 = this.controller.getGrafo().getVertices().get(4);
-//        g.setColor(Color.black);
-//        g.drawLine(vertice1.getPosX(), vertice1.getPosY(), vertice2.getPosX(), vertice2.getPosY());
-//        
-//    }
+    /**
+     * Deleta o desenho do painel da aba de "Calcula caminho".
+     */
     public void deletaDesenho() {
         this.calcularPainelPrincipal.removeAll();
     }
 
-    public void limpaPainelAltera() {
-        this.alterarComboBoxAlterarPara.setSelectedIndex(0);
-        this.alterarComboBoxEscolhaPonto.setSelectedIndex(0);
-    }
-
+    /**
+     * Atualiza todas as abas da janela principal.
+     */
     public void atualizaPaineis() {
         this.programaPronto = false;
-        this.atualizaCadastro();
-        this.atualizaRemove();
+
         this.atualizaCalcula();
+        this.atualizaRemove();
         this.atualizaAlterar();
-        if (!this.controller.existeEstacionamento()) {
-            if (!this.msgEstacionamento) {
-                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! O estacionamento foi removido/alterado.\n"
-                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
-                        + "estacionamento ou altere um ponto já existente para estacionamento!");
-                this.onOffAbas(2, false);
-                this.cadastrarComboBoxTipoPonto.addItem("Estacionamento");
-                this.msgEstacionamento = true;
-            }
-        } else if ("Estacionamento".equals(this.cadastrarComboBoxTipoPonto.getItemAt(3))) {
-            this.onOffAbas(2, true);
-            this.cadastrarComboBoxTipoPonto.removeItemAt(3);
-            this.msgEstacionamento = false;
-        }
+        this.atualizaCadastro();
+        this.situacaoEstacionamento();
+        this.situacaoBanco();
+        this.situacaoColeta();
+        this.situacaoPontos();
+
         this.programaPronto = true;
     }
 
-    private void atualizaCadastro() {
-        this.limpaPainelCadastro();
-        this.cadastrarComboBoxLigacoesPonto.removeAllItems();
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            this.cadastrarComboBoxLigacoesPonto.addItem((String) vertice.getObj());
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha um
+     * estacionamento cadastrado.
+     */
+    public void situacaoEstacionamento() {
+        if (!this.controller.existeEstacionamento()) {
+            if (!this.situacaoEstacionamento) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! O estacionamento foi removido/alterado.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "estacionamento ou altere um ponto já existente para estacionamento!");
+                this.cadastrarComboBoxTipoPonto.addItem("Estacionamento");
+                this.situacaoEstacionamento = true;
+            }
+        } else if ("Estacionamento".equals(this.cadastrarComboBoxTipoPonto.getItemAt(3))) {
+            this.cadastrarComboBoxTipoPonto.removeItemAt(3);
+            this.situacaoEstacionamento = false;
         }
     }
 
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha pelo menos um
+     * banco cadastrado.
+     */
+    public void situacaoBanco() {
+        if (!this.controller.existeBanco()) {
+            if (!this.situacaoBanco) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! Não existe bancos cadastrados.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "banco ou altere um ponto já existente!");
+                this.situacaoBanco = true;
+            }
+
+        } else if (this.situacaoBanco) {
+            this.situacaoBanco = false;
+        }
+    }
+
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha pelo menos um
+     * ponto de coleta cadastrado.
+     */
+    public void situacaoColeta() {
+        if (!this.controller.existeColeta()) {
+            if (!this.situacaoColeta) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! Não existe pontos de coleta cadastrados.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "ponto de coleta ou altere um ponto já existente!");
+                this.situacaoColeta = true;
+            }
+
+        } else if (this.situacaoColeta) {
+            this.situacaoColeta = false;
+        }
+    }
+
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha nenhum ponto
+     * cadastrado.
+     */
+    public void situacaoPontos() {
+        if (!this.controller.existePontos()) {
+            if (!this.nenhumPonto) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! Não existe pontos cadastrados.\n"
+                        + "Para continuar usando o programa, por favor, cadastre novos pontos\n"
+                        + "ou insira um novo arquivo de leitura (ctrl + N)!");
+                this.tabbedPaneInicial.setSelectedIndex(0);
+                this.onOffAbas(1, false);
+                this.onOffAbas(3, false);
+                this.nenhumPonto = true;
+            }
+        } else if (this.nenhumPonto) {
+            this.onOffAbas(1, true);
+            this.onOffAbas(3, true);
+            this.nenhumPonto = false;
+        }
+    }
+
+    /**
+     * Atualiza a combo box que lista todos os vertíces disponíveis para fazer
+     * ligações.
+     */
+    private void atualizaCadastro() {
+        this.limpaPainelCadastro();
+        this.cadastrarComboBoxLigacoesPonto.removeAllItems();
+        for (String nomes : this.controller.getNomesVertices(-1)) {
+            this.cadastrarComboBoxLigacoesPonto.addItem(nomes);
+        }
+    }
+
+    /**
+     * Atualiza as combo box da aba "Remover ponto".
+     */
     private void atualizaRemove() {
         this.limpaPainelRemove();
         this.removerComboBoxPontos.removeAllItems();
         this.removerComboBoxLigacoes1.removeAllItems();
         this.removerComboBoxLigacoes2.removeAllItems();
         this.removerComboBoxLigacoes1.addItem("");
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            this.removerComboBoxPontos.addItem((String) vertice.getObj());
-            this.removerComboBoxLigacoes1.addItem((String) vertice.getObj());
+        for (String nomes : this.controller.getNomesVertices(-1)) {
+            this.removerComboBoxPontos.addItem(nomes);
+            this.removerComboBoxLigacoes1.addItem(nomes);
         }
     }
 
+    /**
+     * Atualiza as combo box da aba "Calcula caminho" e carrega o desenho do
+     * painel.
+     */
     private void atualizaCalcula() {
-        this.limpaPainelCalcula();
+        this.deletaDesenho();
         this.calcularComboBoxBanco.removeAllItems();
         this.calcularComboBoxLugarColeta.removeAllItems();
         this.calcularProgressBar.setValue(0);
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            if (vertice.getTipo() == 1) {
-                this.calcularComboBoxBanco.addItem((String) vertice.getObj());
-            } else if (vertice.getTipo() == 2) {
-                this.calcularComboBoxLugarColeta.addItem((String) vertice.getObj());
-            }
+        
+        if (this.controller.existeBanco() && this.controller.existeColeta()
+                && this.controller.existeEstacionamento()) {
+            this.onOffAbas(2, true);
+        } else {
+            this.onOffAbas(2, false);
+            return;
+        }
+        
+        for (String nomes : this.controller.getNomesVertices(1)) {
+            this.calcularComboBoxBanco.addItem(nomes);
+        }
+        for (String nomes : this.controller.getNomesVertices(2)) {
+            this.calcularComboBoxLugarColeta.addItem(nomes);
         }
         if (this.controller.existeEstacionamento()) {
             this.calculaLabelEstacionamento.setText(this.controller.getEstacionamento().getObj());
@@ -1296,17 +1458,20 @@ public class MainSwing extends javax.swing.JFrame {
         this.carregaDesenho();
     }
 
+    /**
+     * Atualiza a combo box da aba "Alterar ponto".
+     */
     private void atualizaAlterar() {
         this.limpaPainelAltera();
         this.alterarComboBoxEscolhaPonto.removeAllItems();
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            this.alterarComboBoxEscolhaPonto.addItem((String) vertice.getObj());
+        for (String nomes : this.controller.getNomesVertices(-1)) {
+            this.alterarComboBoxEscolhaPonto.addItem(nomes);
         }
     }
 
     /**
+     * Metódo principal da classe.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {

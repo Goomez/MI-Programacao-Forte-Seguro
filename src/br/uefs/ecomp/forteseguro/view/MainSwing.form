@@ -51,9 +51,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inicialMenuInicialActionPerformed"/>
-          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="menuAlterarArquivo">
               <Properties>
@@ -1132,8 +1129,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Alterar pontos">
-                <Property name="tabTitle" type="java.lang.String" value="Alterar pontos"/>
+              <JTabbedPaneConstraints tabName="Alterar Pontos">
+                <Property name="tabTitle" type="java.lang.String" value="Alterar Pontos"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>

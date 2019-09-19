@@ -172,6 +172,19 @@ public class Grafo<T>{
             return null;
         return arestasIncidentes;
     }
+    
+    public List<Aresta<T>> arestasIncidentes(Vertice<T> vertice){
+        List<Aresta<T>> arestasIncidentes = new ArrayList<>();
+        
+        this.listaArestas.stream().filter((auxAresta) -> (auxAresta.getVertice1().equals(vertice) 
+                || auxAresta.getVertice2().equals(vertice))).forEachOrdered((auxAresta) -> {
+            arestasIncidentes.add(auxAresta);
+        });
+        
+        if(arestasIncidentes.isEmpty())
+            return null;
+        return arestasIncidentes;
+    }
 
     public AlgoritmoDijkstra menorCaminho(){
         return new AlgoritmoDijkstra(this);
