@@ -1,3 +1,0 @@
-View:
-- View do cadastramento de ponto alterado;
-- View de Remoção de ponto e/ou ligações criado.
