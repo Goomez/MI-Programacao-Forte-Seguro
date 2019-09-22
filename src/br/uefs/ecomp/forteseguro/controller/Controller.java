@@ -50,7 +50,7 @@ public class Controller {
     /**
      * Retorna o Grafo
      *
-     * @return objeto do tipo Grafo<String>;
+     * @return objeto do tipo Grafo;
      */
     public Grafo<String> getGrafo() {
         return this.grafo;
@@ -194,8 +194,8 @@ public class Controller {
      * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 -
      * Estacionamento
      * @return Cruzamento adicionado com sucesso! - Caso o vértice seja
- adicionado com sucesso | Vértice já está adicionado no grafo! - caso
- ocorra algum problema ao tentar novoVertice determinado vértice.
+     * adicionado com sucesso | Vértice já está adicionado no grafo! - caso
+     * ocorra algum problema ao tentar novoVertice determinado vértice.
      */
     public String adicionarCruzamento(String cruzamento, int tipo) {
         try {
@@ -213,11 +213,11 @@ public class Controller {
      * adicionar.
      * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 -
      * Estacionamento
-     * @param x
-     * @param y
+     * @param x Posição X do vértice.
+     * @param y Posição Y do vértice.
      * @return Cruzamento adicionado com sucesso! - Caso o vértice seja
- adicionado com sucesso | Vértice já está adicionado no grafo! - caso
- ocorra algum problema ao tentar novoVertice determinado vértice.
+     * adicionado com sucesso | Vértice já está adicionado no grafo! - caso
+     * ocorra algum problema ao tentar novoVertice determinado vértice.
      */
     public String adicionarVertice(String cruzamento, int tipo, int x, int y) {
         try {
@@ -235,8 +235,8 @@ public class Controller {
      * @param v2 String - O outro vértice que faz parte da ligação.
      * @param distancia int - Distância entre os dois vértices formadoes.
      * @return Ligação adicionada com sucesso! - Caso a aresta seja adicionada
- com sucesso | Aresta já está adicionada no sistema! - Caso ocoorra algum
- problema ao tentar novoVertice determinada aresta.
+     * com sucesso | Aresta já está adicionada no sistema! - Caso ocoorra algum
+     * problema ao tentar novoVertice determinada aresta.
      */
     /*Por enquanto está com a distância definida pelo usuário*/
     public String adicionarLigacao(String v1, String v2, int distancia) {
