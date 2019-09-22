@@ -15,15 +15,17 @@
 
 package br.uefs.ecomp.forteseguro.exception;
 
-public class DuplicateKeyException extends Exception{
-    private static final long serialVersionUID = 12342L;
+public class ArestaNaoEncontradaException extends Exception{
+    private static final long serialVersionUID = 323421L;
+    private String msg;
     
-    public DuplicateKeyException(String mensagem){
-        //Acessa o contrutor de Exception (Classe Pai)
-        super(mensagem);
+    public ArestaNaoEncontradaException(String msg){
+        super();
+        this.msg = msg;
     }
     
-    public DuplicateKeyException(String mensagem, Throwable causa){
-        super(mensagem, causa);
+    @Override
+    public String toString(){
+        return msg;
     }
-}   
+}

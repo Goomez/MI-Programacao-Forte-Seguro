@@ -25,6 +25,21 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
     </Container>
+    <Container class="javax.swing.JPanel" name="jPanel2">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -34,13 +49,54 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="inicialMenuInicial">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Inicial"/>
+            <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuAlterarArquivo">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+N"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Alterar arquivo de leitura"/>
+                <Property name="toolTipText" type="java.lang.String" value="Alterar o arquivo grafo (.txt) que ser&#xe1; lido pelo programa"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAlterarArquivoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuAtualizaPaineis">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="F5"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Atualizar Pain&#xe9;is"/>
+                <Property name="toolTipText" type="java.lang.String" value="Atualizar todos os pain&#xe9;is do programa"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAtualizaPaineisActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menuTemaEscuro">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+F"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tema Escuro"/>
+                <Property name="toolTipText" type="java.lang.String" value="Habilitar/Desabilitar o tema escuro"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuTemaEscuroActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="inicialMenuSobre">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sobre"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="inicialMenuSobreMouseClicked"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>
@@ -261,6 +317,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoNomeVertice">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;Caso o nome seja composto, utilizar underline para separar as palavras &lt;br&gt;&lt;strong&gt;Ex: Feira_de_Santana"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -327,6 +386,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="cadastrarLabelLogInsercao">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="1"/>
+                    </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
@@ -447,6 +509,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="cadastrarCampoPeso">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -462,8 +527,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoCoordenadaY">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="cadastrarCampoCoordenadaX">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="Apenas n&#xfa;meros inteiros"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
@@ -705,6 +776,9 @@
                       <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;&quot; })" type="code"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="removerComboBoxLigacoes1ItemStateChanged"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -717,7 +791,7 @@
                     <Property name="text" type="java.lang.String" value="REMOVER LIGA&#xc7;&#xc3;O"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removerButtonRemoverLigacaoActionPerformed"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="removerButtonRemoverLigacaoMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="removerButtonRemoverPonto">
@@ -727,9 +801,19 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="REMOVER PONTO"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="removerButtonRemoverPontoMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="removerLabelLogRemocao">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                         <TitledBorder title="Log da remo&#xe7;&#xe3;o">
@@ -824,20 +908,21 @@
                               <Component id="calcularComboBoxLugarColeta" max="32767" attributes="0"/>
                               <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
                               <Component id="calcularComboBoxBanco" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabel9" alignment="0" pref="169" max="32767" attributes="0"/>
                               <Component id="jLabel7" max="32767" attributes="0"/>
-                              <Component id="calcularLabelMenorCaminho" max="32767" attributes="0"/>
                               <Component id="calcularButtonCalcular" max="32767" attributes="0"/>
-                              <Component id="calcularProgressBar" alignment="0" max="32767" attributes="0"/>
+                              <Component id="calcularProgressBar" alignment="0" pref="177" max="32767" attributes="0"/>
+                              <Component id="calculaLabelEstacionamento" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel19" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="calcularPainelPrincipal" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -846,16 +931,19 @@
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="calcularComboBoxBanco" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="calcularButtonCalcular" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                          <Component id="calcularProgressBar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="calcularLabelMenorCaminho" min="-2" pref="61" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                          <Component id="jLabel9" pref="138" max="32767" attributes="0"/>
+                          <Component id="calculaLabelEstacionamento" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="calcularButtonCalcular" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="calcularProgressBar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" min="-2" pref="147" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Component id="calcularPainelPrincipal" alignment="1" max="32767" attributes="0"/>
+                      <Component id="calcularPainelPrincipal" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
@@ -867,6 +955,9 @@
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Lugar de Coleta: "/>
                   </Properties>
@@ -893,6 +984,9 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Banco:"/>
                   </Properties>
                 </Component>
@@ -908,23 +1002,6 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel9">
-                  <Properties>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/icon_forteseguro_branco.png"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="calcularLabelMenorCaminho">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Menor Caminho"/>
-                      </Border>
-                    </Property>
-                  </Properties>
                 </Component>
                 <Container class="javax.swing.JPanel" name="calcularPainelPrincipal">
                   <Properties>
@@ -961,11 +1038,85 @@
                     <Property name="text" type="java.lang.String" value="Calcular"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="calcularButtonCalcularMouseEntered"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="calcularButtonCalcularMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JProgressBar" name="calcularProgressBar">
+                  <Properties>
+                    <Property name="stringPainted" type="boolean" value="true"/>
+                  </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="calculaLabelEstacionamento">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder>
+                          <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
+                        </LineBorder>
+                      </Border>
+                    </Property>
+                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[28, 20]"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[28, 20]"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel19">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Estacionamento:"/>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="calcularTextMenorCaminho">
+                      <Properties>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="90" red="1e" type="rgb"/>
+                        </Property>
+                        <Property name="columns" type="int" value="10"/>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Tahoma" size="11" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="lineWrap" type="boolean" value="true"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                            <TitledBorder title="Menor Caminho">
+                              <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
+                            </TitledBorder>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -978,8 +1129,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Alterar pontos">
-                <Property name="tabTitle" type="java.lang.String" value="Alterar pontos"/>
+              <JTabbedPaneConstraints tabName="Alterar Pontos">
+                <Property name="tabTitle" type="java.lang.String" value="Alterar Pontos"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1051,8 +1202,8 @@
                           <Component id="alterarComboBoxAlterarPara" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="alterarButtonAlterar" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="alterarLabelLogAlteracao" pref="42" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="alterarLabelLogAlteracao" pref="47" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1113,6 +1264,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="ALTERAR"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="alterarButtonAlterarMouseClicked"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="alterarLabelLogAlteracao">
                   <Properties>

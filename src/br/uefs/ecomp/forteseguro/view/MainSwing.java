@@ -1,38 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Componente Curricular: Módulo Integrado de Programação II
+ * Autores: <Kevin Cerqueira Gomes e Allan Capistrano de Santana Santos>
+ * Data: <06/09/2019>
+ *
+ * Declaro que este código foi elaborado por nós de forma individual e não
+ * contém nenhum trecho de código de outro colega ou de outro autor, tais como
+ * provindos de livros e apostilas, e páginas ou documentos eletrônicos da
+ * Internet. Qualquer trecho de código de outra autoria que uma citação para o
+ * não a minha está destacado com autor e a fonte do código, e estou ciente que
+ * estes trechos não serão considerados para fins de avaliação. Alguns trechos
+ * do código podem coincidir com de outros colegas pois estes foram discutidos
+ * em sessões tutorias.
  */
 package br.uefs.ecomp.forteseguro.view;
 
-import br.uefs.ecomp.forteseguro.util.Aresta;
-import br.uefs.ecomp.forteseguro.util.Vertice;
-import java.util.Iterator;
-import javax.swing.JPopupMenu;
-import br.uefs.ecomp.forteseguro.model.System;
+import br.uefs.ecomp.forteseguro.controller.Controller;
+
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
+ * Classe responsável pela interface gráfica do programa.
  *
- * @author Kevin
+ * @author Kevin Cerqueira
+ * @author Allan Capistrano
  */
 public class MainSwing extends javax.swing.JFrame {
 
-    private System controller = new System();
-    private String arquivoGrafos = "grafos.txt";
-    private List<String> listaLigacoes = new ArrayList<>();
-    private List<Integer> pesoLigacoes = new ArrayList<>();
+    private Controller controller; // Controlador da classe.
+    private String arquivoGrafos; // Nome do arquivo padrão de leitura dos vertíces e arestas.
+
+    // Lista usada para capturar os pontos de ligação que o usuario inserir no
+    // momento de cadastro de pontos.
+    private List<String> listaLigacoes;
+
+    // Lista usada para capturar os pesos de ligação que o usuario inserir no
+    // momento de cadastro de pontos.
+    private List<Integer> pesoLigacoes;
+
+    // Variável de controle, usada para informar qual a situação do
+    // estacionamento, se ele está presente ou foi removido.
+    private boolean situacaoEstacionamento;
+    private boolean situacaoBanco;
+    private boolean situacaoColeta;
+
+    // Variável de controle, usada para informar se o programa está pronto para
+    // fazer determinadas atualizações, como: carregar pontos nas combo box.
+    private boolean programaPronto;
+
+    private boolean nenhumPonto;
 
     /**
-     * Creates new form MainSwing
+     * Construtor da classe. Inicializa as variáveis.
      */
     public MainSwing() {
-
+        this.controller = new Controller();
+        this.arquivoGrafos = "grafos.txt";
+        this.listaLigacoes = new ArrayList<>();
+        this.pesoLigacoes = new ArrayList<>();
+        this.situacaoEstacionamento = false;
+        this.situacaoBanco = false;
+        this.situacaoColeta = false;
+        this.programaPronto = false;
+        this.nenhumPonto = false;
         initComponents();
-
     }
 
     /**
@@ -47,6 +86,7 @@ public class MainSwing extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jComboBox3 = new javax.swing.JComboBox<>();
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPanel2 = new javax.swing.JPanel();
         tabbedPaneInicial = new javax.swing.JTabbedPane();
         panelCadastrar = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -90,11 +130,13 @@ public class MainSwing extends javax.swing.JFrame {
         calcularComboBoxLugarColeta = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         calcularComboBoxBanco = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        calcularLabelMenorCaminho = new javax.swing.JLabel();
         calcularPainelPrincipal = new javax.swing.JPanel();
         calcularButtonCalcular = new javax.swing.JButton();
         calcularProgressBar = new javax.swing.JProgressBar();
+        calculaLabelEstacionamento = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        calcularTextMenorCaminho = new javax.swing.JTextArea();
         panelAlterar = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
@@ -105,9 +147,23 @@ public class MainSwing extends javax.swing.JFrame {
         alterarLabelLogAlteracao = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         inicialMenuInicial = new javax.swing.JMenu();
+        menuAlterarArquivo = new javax.swing.JMenuItem();
+        menuAtualizaPaineis = new javax.swing.JMenuItem();
+        menuTemaEscuro = new javax.swing.JCheckBoxMenuItem();
         inicialMenuSobre = new javax.swing.JMenu();
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Forte Seguro");
@@ -130,6 +186,8 @@ public class MainSwing extends javax.swing.JFrame {
         cadastrarLabelNomeVertice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cadastrarLabelNomeVertice.setForeground(new java.awt.Color(255, 255, 255));
         cadastrarLabelNomeVertice.setText("Nome do novo ponto:");
+
+        cadastrarCampoNomeVertice.setToolTipText("<html>Caso o nome seja composto, utilizar underline para separar as palavras <br><strong>Ex: Feira_de_Santana");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,6 +214,7 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/forte_seguro_logo.png"))); // NOI18N
 
+        cadastrarLabelLogInsercao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         cadastrarLabelLogInsercao.setForeground(new java.awt.Color(255, 255, 255));
         cadastrarLabelLogInsercao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cadastrarLabelLogInsercao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da inserção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -182,6 +241,8 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Peso:");
+
+        cadastrarCampoPeso.setToolTipText("Apenas números inteiros");
 
         javax.swing.GroupLayout cadastrarPanelLigacoesPontosLayout = new javax.swing.GroupLayout(cadastrarPanelLigacoesPontos);
         cadastrarPanelLigacoesPontos.setLayout(cadastrarPanelLigacoesPontosLayout);
@@ -219,6 +280,10 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Coordenada (X,Y) do ponto:");
+
+        cadastrarCampoCoordenadaY.setToolTipText("Apenas números inteiros");
+
+        cadastrarCampoCoordenadaX.setToolTipText("Apenas números inteiros");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -358,18 +423,31 @@ public class MainSwing extends javax.swing.JFrame {
         jLabel13.setText(" Selecione a ligação: ");
 
         removerComboBoxLigacoes1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        removerComboBoxLigacoes1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                removerComboBoxLigacoes1ItemStateChanged(evt);
+            }
+        });
 
         removerButtonRemoverLigacao.setBackground(new java.awt.Color(255, 255, 255));
         removerButtonRemoverLigacao.setText("REMOVER LIGAÇÃO");
-        removerButtonRemoverLigacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removerButtonRemoverLigacaoActionPerformed(evt);
+        removerButtonRemoverLigacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removerButtonRemoverLigacaoMouseClicked(evt);
             }
         });
 
         removerButtonRemoverPonto.setBackground(new java.awt.Color(255, 255, 255));
         removerButtonRemoverPonto.setText("REMOVER PONTO");
+        removerButtonRemoverPonto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removerButtonRemoverPontoMouseClicked(evt);
+            }
+        });
 
+        removerLabelLogRemocao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        removerLabelLogRemocao.setForeground(new java.awt.Color(255, 255, 255));
+        removerLabelLogRemocao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         removerLabelLogRemocao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Log da remoção", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
         removerComboBoxLigacoes2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
@@ -474,6 +552,7 @@ public class MainSwing extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png"))); // NOI18N
         jLabel7.setText("Lugar de Coleta: ");
 
         calcularComboBoxLugarColeta.setForeground(new java.awt.Color(255, 255, 255));
@@ -481,15 +560,11 @@ public class MainSwing extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png"))); // NOI18N
         jLabel8.setText("Banco:");
 
         calcularComboBoxBanco.setForeground(new java.awt.Color(255, 255, 255));
         calcularComboBoxBanco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/icon_forteseguro_branco.png"))); // NOI18N
-
-        calcularLabelMenorCaminho.setBorder(javax.swing.BorderFactory.createTitledBorder("Menor Caminho"));
 
         calcularPainelPrincipal.setBackground(new java.awt.Color(135, 206, 250));
         calcularPainelPrincipal.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Rotas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -508,10 +583,34 @@ public class MainSwing extends javax.swing.JFrame {
         calcularButtonCalcular.setBackground(new java.awt.Color(255, 255, 255));
         calcularButtonCalcular.setText("Calcular");
         calcularButtonCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                calcularButtonCalcularMouseEntered(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                calcularButtonCalcularMouseClicked(evt);
             }
         });
+
+        calcularProgressBar.setStringPainted(true);
+
+        calculaLabelEstacionamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        calculaLabelEstacionamento.setForeground(new java.awt.Color(255, 255, 255));
+        calculaLabelEstacionamento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        calculaLabelEstacionamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png"))); // NOI18N
+        calculaLabelEstacionamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        calculaLabelEstacionamento.setMinimumSize(new java.awt.Dimension(28, 20));
+        calculaLabelEstacionamento.setPreferredSize(new java.awt.Dimension(28, 20));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Estacionamento:");
+
+        calcularTextMenorCaminho.setEditable(false);
+        calcularTextMenorCaminho.setBackground(new java.awt.Color(30, 144, 255));
+        calcularTextMenorCaminho.setColumns(10);
+        calcularTextMenorCaminho.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        calcularTextMenorCaminho.setForeground(new java.awt.Color(255, 255, 255));
+        calcularTextMenorCaminho.setLineWrap(true);
+        calcularTextMenorCaminho.setRows(5);
+        calcularTextMenorCaminho.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menor Caminho", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        jScrollPane3.setViewportView(calcularTextMenorCaminho);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -523,12 +622,13 @@ public class MainSwing extends javax.swing.JFrame {
                     .addComponent(calcularComboBoxLugarColeta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularComboBoxBanco, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(calcularButtonCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(calcularProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(calcularProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                    .addComponent(calculaLabelEstacionamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -542,15 +642,18 @@ public class MainSwing extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(calcularComboBoxBanco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(calcularButtonCalcular)
-                .addGap(7, 7, 7)
-                .addComponent(calcularProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calcularLabelMenorCaminho, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, Short.MAX_VALUE))
-            .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(calculaLabelEstacionamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcularButtonCalcular)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calcularProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(calcularPainelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout panelCalcularLayout = new javax.swing.GroupLayout(panelCalcular);
@@ -594,6 +697,11 @@ public class MainSwing extends javax.swing.JFrame {
         alterarButtonAlterar.setBackground(new java.awt.Color(255, 255, 255));
         alterarButtonAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         alterarButtonAlterar.setText("ALTERAR");
+        alterarButtonAlterar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                alterarButtonAlterarMouseClicked(evt);
+            }
+        });
 
         alterarLabelLogAlteracao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         alterarLabelLogAlteracao.setForeground(new java.awt.Color(255, 255, 255));
@@ -631,8 +739,8 @@ public class MainSwing extends javax.swing.JFrame {
                 .addComponent(alterarComboBoxAlterarPara, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(alterarButtonAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(alterarLabelLogAlteracao, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(alterarLabelLogAlteracao, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -653,14 +761,50 @@ public class MainSwing extends javax.swing.JFrame {
                 .addGap(52, 52, 52))
         );
 
-        tabbedPaneInicial.addTab("Alterar pontos", panelAlterar);
+        tabbedPaneInicial.addTab("Alterar Pontos", panelAlterar);
 
         jMenuBar1.setBackground(new java.awt.Color(30, 144, 255));
 
-        inicialMenuInicial.setText("Inicial");
+        inicialMenuInicial.setText("Configurações");
+
+        menuAlterarArquivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        menuAlterarArquivo.setText("Alterar arquivo de leitura");
+        menuAlterarArquivo.setToolTipText("Alterar o arquivo grafo (.txt) que será lido pelo programa");
+        menuAlterarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAlterarArquivoActionPerformed(evt);
+            }
+        });
+        inicialMenuInicial.add(menuAlterarArquivo);
+
+        menuAtualizaPaineis.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        menuAtualizaPaineis.setText("Atualizar Painéis");
+        menuAtualizaPaineis.setToolTipText("Atualizar todos os painéis do programa");
+        menuAtualizaPaineis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAtualizaPaineisActionPerformed(evt);
+            }
+        });
+        inicialMenuInicial.add(menuAtualizaPaineis);
+
+        menuTemaEscuro.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        menuTemaEscuro.setText("Tema Escuro");
+        menuTemaEscuro.setToolTipText("Habilitar/Desabilitar o tema escuro");
+        menuTemaEscuro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuTemaEscuroActionPerformed(evt);
+            }
+        });
+        inicialMenuInicial.add(menuTemaEscuro);
+
         jMenuBar1.add(inicialMenuInicial);
 
         inicialMenuSobre.setText("Sobre");
+        inicialMenuSobre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inicialMenuSobreMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(inicialMenuSobre);
 
         setJMenuBar(jMenuBar1);
@@ -683,44 +827,211 @@ public class MainSwing extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Metódo que é chamado quando a janela principal é aberta, ou seja, quando
+     * o programa é iniciado.
+     *
+     * @param evt evento disparado pela abertuda da janela principal.
+     */
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        javax.swing.JLabel label = new javax.swing.JLabel("OIOIOI");
-        label.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice.png")));
-        label.setBounds(208, 115, 10, 10);
-
-        this.calcularPainelPrincipal.add(label);
-
         this.removerComboBoxLigacoes2.setEnabled(false);
-        this.tabbedPaneInicial.setEnabledAt(1, false);
-        this.tabbedPaneInicial.setEnabledAt(2, false);
-        this.tabbedPaneInicial.setEnabledAt(3, false);
-        if (this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
-            this.tabbedPaneInicial.setEnabledAt(1, true);
-            this.tabbedPaneInicial.setEnabledAt(2, true);
-            this.tabbedPaneInicial.setEnabledAt(3, true);
-            this.atualizaPaineis();
-        } else {
-            this.cadastrarLabelLogInsercao.setText(this.controller.criarGrafo(arquivoGrafos));
+        this.onOffAbas(-1, false);
+        while (true) {
+            if (this.controller.criarGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
+                this.onOffAbas(-1, true);
+                this.atualizaPaineis();
+                this.cadastrarLabelLogInsercao.setText("");
+                break;
+            } else {
+                while (true) {
+                    try {
+                        JFileChooser janelaSeletora = new JFileChooser();
+                        janelaSeletora.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt"));
+                        janelaSeletora.showDialog(this, "Selecione um novo arquivo");
+                        this.arquivoGrafos = janelaSeletora.getSelectedFile().getAbsolutePath();
+                        break;
+                    } catch (Exception e) {
+                        this.cadastrarLabelLogInsercao.setText("Error na seleção do arquivo!");
+                    }
+                }
+
+            }
         }
     }//GEN-LAST:event_formWindowOpened
 
-    private void removerButtonRemoverLigacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_removerButtonRemoverLigacaoActionPerformed
+    /**
+     * Cria uma caixa de menssagem com informações sobre o software.
+     *
+     * @param evt evento disparado.
+     */
+    private void inicialMenuSobreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inicialMenuSobreMouseClicked
+        String msg = "> Componente Curricular: Módulo Integrado de Programação II\n"
+                + "Data:  <12/09/2019>\n"
+                + "Declaro que este código foi elaborado por nós de forma individual e\n"
+                + "não contém nenhum trecho de código de outro colega ou de outro autor, \n"
+                + "tais como provindos de livros e apostilas, e páginas ou documentos \n"
+                + "eletrônicos da Internet. Qualquer trecho de código de outra autoria que\n"
+                + "uma citação para o  não a minha está destacado com  autor e a fonte do\n"
+                + "código, e estou ciente que estes trechos não serão considerados para fins\n"
+                + "de avaliação. Alguns trechos do código podem coincidir com de outros\n"
+                + "colegas pois estes foram discutidos em sessões tutorias."
+                + ""
+                + "\n\n# Autores:\n"
+                + "<Kevin Gomes>\n"
+                + "-- GitHub: Goomez"
+                + "\n\n"
+                + "<Allan Capistrano>\n"
+                + "-- GitHub: AllanCapistrano\n"
+                + "Código fonte: https://github.com/Goomez/MI-Programacao-Forte-Seguro";
 
-    private void calcularButtonCalcularMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseEntered
-        // TODO add your handling code here:
-        JPopupMenu oi = new JPopupMenu();
-        oi.add("oioioi");
-        oi.setBounds(WIDTH, WIDTH, WIDTH, WIDTH);
-        this.calcularButtonCalcular.add(oi);
+        JOptionPane.showMessageDialog(this, msg);
+    }//GEN-LAST:event_inicialMenuSobreMouseClicked
 
-    }//GEN-LAST:event_calcularButtonCalcularMouseEntered
+    /**
+     * Altera o tema do programa (Tema padrão ou tema escuro).
+     *
+     * @param evt evento disparado.
+     */
+    private void menuTemaEscuroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTemaEscuroActionPerformed
+        if (this.menuTemaEscuro.isSelected()) {
+            Color temaEscuro = new Color(24, 24, 30, 255);
+            Color temaEscuroMapa = new Color(33, 31, 38, 255);
+            this.jPanel7.setBackground(temaEscuro);
+            this.jPanel8.setBackground(temaEscuro);
+            this.jPanel6.setBackground(temaEscuro);
+            this.jPanel1.setBackground(temaEscuro);
+            this.calcularPainelPrincipal.setBackground(temaEscuroMapa);
+            this.cadastrarPanelLigacoesPontos.setBackground(temaEscuro);
+            this.calcularTextMenorCaminho.setBackground(temaEscuro);
+            this.deletaDesenho();
+            this.carregaDesenho();
+        } else {
+            Color corPadrao = new Color(30, 144, 255);
+            Color corPadraoMapa = new Color(135, 206, 250);
+            this.jPanel7.setBackground(corPadrao);
+            this.jPanel8.setBackground(corPadrao);
+            this.jPanel6.setBackground(corPadrao);
+            this.jPanel1.setBackground(corPadrao);
+            this.calcularPainelPrincipal.setBackground(corPadraoMapa);
+            this.cadastrarPanelLigacoesPontos.setBackground(corPadrao);
+            this.calcularTextMenorCaminho.setBackground(corPadrao);
+            this.deletaDesenho();
+            this.carregaDesenho();
+        }
+    }//GEN-LAST:event_menuTemaEscuroActionPerformed
 
+    /**
+     * Altera o vertíce para outro tipo de ponto na aba de "Alterar Pontos".
+     *
+     * @param evt evento disparado.
+     */
+    private void alterarButtonAlterarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alterarButtonAlterarMouseClicked
+        String ponto = (String) this.alterarComboBoxEscolhaPonto.getSelectedItem();
+        int novoTipo = this.alterarComboBoxAlterarPara.getSelectedIndex();
+        if (novoTipo == 3) {
+            if (!this.controller.existeEstacionamento()) {
+                this.controller.alterarTipoCruzamento(ponto, novoTipo);
+                this.atualizaPaineis();
+                this.alterarLabelLogAlteracao.setText(ponto + " agora é o estacionamento!");
+            } else {
+                this.controller.getEstacionamento().setId(0);
+                this.controller.alterarTipoCruzamento(ponto, novoTipo);
+                this.atualizaPaineis();
+                this.alterarLabelLogAlteracao.setText("Estacionamento alterado para: " + ponto);
+            }
+        } else {
+            this.controller.alterarTipoCruzamento(ponto, novoTipo);
+            this.atualizaPaineis();
+            this.alterarLabelLogAlteracao.setText(ponto + " foi alterado!");
+        }
+    }//GEN-LAST:event_alterarButtonAlterarMouseClicked
+
+    /**
+     * Calcula o menor caminho entre os pontos escolhidos pelas combo box na aba
+     * de "Calcular Caminho".
+     *
+     * @param evt evento disparado.
+     */
+    private void calcularButtonCalcularMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_calcularButtonCalcularMouseClicked
+        ///verificar se os pontos escolhidos tem grau maior que 0
+        this.calcularTextMenorCaminho.setText("");
+        this.calcularTextMenorCaminho.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        this.calcularProgressBar.setValue(this.calcularProgressBar.getValue() + 25);
+        String caminhoFinal = this.controller.calculaCaminho(((String) this.calcularComboBoxLugarColeta.getSelectedItem()),
+                ((String) this.calcularComboBoxBanco.getSelectedItem()));
+        this.calcularProgressBar.setValue(this.calcularProgressBar.getValue() + 25);
+        this.calcularProgressBar.setValue(this.calcularProgressBar.getValue() + 50);
+        this.calcularTextMenorCaminho.setText(caminhoFinal);
+
+    }//GEN-LAST:event_calcularButtonCalcularMouseClicked
+
+    /**
+     * Remove o vertíce escolhido na combo box da aba "Remover pontos e/ou
+     * ligações".
+     *
+     * @param evt evento disparado.
+     */
+    private void removerButtonRemoverPontoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverPontoMouseClicked
+        String pontoRemover = (String) this.removerComboBoxPontos.getSelectedItem();
+        this.controller.removerCruzamento(pontoRemover);
+        this.removerLabelLogRemocao.setText(pontoRemover + " foi removido com sucesso!");
+
+        this.atualizaPaineis();
+    }//GEN-LAST:event_removerButtonRemoverPontoMouseClicked
+
+    /**
+     * Remove a ligação escolhida nas combo boxs da aba "Remover pontos e/ou
+     * ligações".
+     *
+     * @param evt evento disparado.
+     */
+    private void removerButtonRemoverLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removerButtonRemoverLigacaoMouseClicked
+        if (((String) this.removerComboBoxLigacoes1.getSelectedItem()).equals("")) {
+            this.removerLabelLogRemocao.setText("Por favor, selecione uma ligação!");
+        } else if (this.removerComboBoxLigacoes2.getItemCount() == 0) {
+            this.removerLabelLogRemocao.setText(((String) this.removerComboBoxLigacoes1.getSelectedItem()) + " não possue ligações!");
+        } else {
+            this.controller.removerAresta((String) this.removerComboBoxLigacoes1.getSelectedItem(),
+                    (String) this.removerComboBoxLigacoes2.getSelectedItem());
+            this.controller.removerAresta((String) this.removerComboBoxLigacoes2.getSelectedItem(),
+                    (String) this.removerComboBoxLigacoes1.getSelectedItem());
+            this.atualizaPaineis();
+            this.removerComboBoxLigacoes2.setEnabled(false);
+            this.removerLabelLogRemocao.setText("Ligação removida com sucesso!");
+        }
+    }//GEN-LAST:event_removerButtonRemoverLigacaoMouseClicked
+
+    /**
+     * Mostra todas as ligações do vertíce escolhido na combo box selecionada em
+     * outra combo box na aba de "Remover pontos e/ou ligações".
+     *
+     * @param evt evento disparado.
+     */
+    private void removerComboBoxLigacoes1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_removerComboBoxLigacoes1ItemStateChanged
+        if (this.programaPronto) {
+            this.removerComboBoxLigacoes2.removeAllItems();
+            if (this.removerComboBoxLigacoes1.getSelectedItem().equals("")) {
+                this.removerComboBoxLigacoes2.setEnabled(false);
+            } else {
+                this.removerComboBoxLigacoes2.setEnabled(true);
+                String pontoLigacao = (String) this.removerComboBoxLigacoes1.getSelectedItem();
+                if (!this.controller.existeLigacoes(pontoLigacao)) {
+                    this.removerComboBoxLigacoes2.removeAllItems();
+                } else {
+                    for (String pontos : this.controller.listaArestasIncidentes(pontoLigacao)) {
+                        this.removerComboBoxLigacoes2.addItem(pontos);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_removerComboBoxLigacoes1ItemStateChanged
+
+    /**
+     * Armazena todas as ligações que o usuario inseriu na aba de "Cadastrar".
+     *
+     * @param evt evento disparado.
+     */
     private void cadastrarButtonAdicionarLigacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonAdicionarLigacaoMouseClicked
-        // TODO add your handling code here:
         if (this.cadastrarComboBoxLigacoesPonto.getSelectedItem() == "") {
             this.cadastrarLabelLogInsercao.setText("Por favor, selecione um ponto de ligação!");
         } else if ("".equals(this.cadastrarCampoPeso.getText())) {
@@ -728,25 +1039,28 @@ public class MainSwing extends javax.swing.JFrame {
         } else {
             try {
                 Integer.parseInt(this.cadastrarCampoPeso.getText());
-                //Caso o usuario tente inserir uma mesma liçacao duas vezes. O que vai acontecer é que
-                //ele só mudará o  peso da ligaçao
-                if (this.listaLigacoes.contains((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem())) {
-                    int pos = 0;
-                    String aux = this.listaLigacoes.get(0);
-                    while (!aux.equals(this.listaLigacoes.get(pos))) {
-                        aux = this.listaLigacoes.get(pos);
-                        pos++;
-                    }
-                    this.pesoLigacoes.set(pos, Integer.parseInt(this.cadastrarCampoPeso.getText()));
-                    this.cadastrarCampoPeso.setText("");
-                    this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
-                    this.cadastrarLabelLogInsercao.setText("Ligação recadastrada com sucesso! Novo peso: " + this.pesoLigacoes.get(pos));
+                if (0 > Integer.parseInt(this.cadastrarCampoPeso.getText())) {
+                    this.cadastrarLabelLogInsercao.setText("Por favor, insira somente numeros positivos no campo de peso!");
+                    this.cadastrarLabelLogInsercao.setText("");
                 } else {
-                    this.listaLigacoes.add((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem());
-                    this.pesoLigacoes.add(Integer.parseInt(this.cadastrarCampoPeso.getText()));
-                    this.cadastrarCampoPeso.setText("");
-                    this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
-                    this.cadastrarLabelLogInsercao.setText("Ligação cadastrada com sucesso!");
+                    if (this.listaLigacoes.contains((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem())) {
+                        int pos = 0;
+                        String aux = this.listaLigacoes.get(0);
+                        while (!aux.equals(this.listaLigacoes.get(pos))) {
+                            aux = this.listaLigacoes.get(pos);
+                            pos++;
+                        }
+                        this.pesoLigacoes.set(pos, Integer.parseInt(this.cadastrarCampoPeso.getText()));
+                        this.cadastrarCampoPeso.setText("");
+                        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+                        this.cadastrarLabelLogInsercao.setText("Ligação recadastrada com sucesso! Novo peso: " + this.pesoLigacoes.get(pos));
+                    } else {
+                        this.listaLigacoes.add((String) this.cadastrarComboBoxLigacoesPonto.getSelectedItem());
+                        this.pesoLigacoes.add(Integer.parseInt(this.cadastrarCampoPeso.getText()));
+                        this.cadastrarCampoPeso.setText("");
+                        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
+                        this.cadastrarLabelLogInsercao.setText("Ligação cadastrada com sucesso!");
+                    }
                 }
 
             } catch (NumberFormatException e) {
@@ -754,9 +1068,13 @@ public class MainSwing extends javax.swing.JFrame {
                 this.cadastrarCampoPeso.setText("");
             }
         }
-
     }//GEN-LAST:event_cadastrarButtonAdicionarLigacaoMouseClicked
 
+    /**
+     * Cadastra um novo ponto ao programa, e atualiza todas as abas em seguida.
+     *
+     * @param evt evento disparado.
+     */
     private void cadastrarButtonCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cadastrarButtonCadastrarMouseClicked
         String nomeVertice = this.cadastrarCampoNomeVertice.getText();
         if (nomeVertice.equals("")) {
@@ -775,6 +1093,8 @@ public class MainSwing extends javax.swing.JFrame {
                     int i = 0;
                     for (String auxLista : this.listaLigacoes) {
                         this.controller.adicionarLigacao(nomeVertice, auxLista, this.pesoLigacoes.get(i));
+                        this.controller.adicionarLigacao(auxLista, nomeVertice, this.pesoLigacoes.get(i));
+
                         i++;
                     }
                 }
@@ -788,88 +1108,370 @@ public class MainSwing extends javax.swing.JFrame {
                 this.cadastrarCampoCoordenadaY.setText("");
             }
         }
-
     }//GEN-LAST:event_cadastrarButtonCadastrarMouseClicked
+
+    /**
+     * Atualiza todas as abas.
+     *
+     * @param evt
+     */
+    private void menuAtualizaPaineisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAtualizaPaineisActionPerformed
+        this.atualizaPaineis();
+    }//GEN-LAST:event_menuAtualizaPaineisActionPerformed
+
+    /**
+     * Abre um seletor de arquivos para o usuario escolher um novo arquivo de
+     * leitura.
+     *
+     * @param evt evento disparado.
+     */
+    private void menuAlterarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAlterarArquivoActionPerformed
+        String backupArquivo = this.arquivoGrafos;
+        try {
+            JFileChooser janelaSeletora = new JFileChooser();
+            janelaSeletora.setFileFilter(new FileNameExtensionFilter("TEXT FILES", "txt"));
+            janelaSeletora.showDialog(this, "Selecione um novo arquivo");
+
+            this.arquivoGrafos = janelaSeletora.getSelectedFile().getAbsolutePath();
+            if (this.controller.criarNovoGrafo(this.arquivoGrafos).equals("Grafo criado com sucesso")) {
+                this.cadastrarLabelLogInsercao.setText("Arquivo inserido com sucesso");
+                this.atualizaPaineis();
+            } else {
+                this.arquivoGrafos = backupArquivo;
+            }
+        } catch (Exception e) {
+            this.cadastrarLabelLogInsercao.setText("Arquivo inválido!");
+            this.arquivoGrafos = backupArquivo;
+        }
+    }//GEN-LAST:event_menuAlterarArquivoActionPerformed
+
+    /**
+     * Desabilita e habilita as abas da janela principal.
+     *
+     * @param aba número da aba que será desabilitada/habilitada. Caso seja -1,
+     * a modificação será feita para todas.
+     * @param onOff true, para habilitar a aba, false, para desabilitar a aba.
+     */
+    public void onOffAbas(int aba, boolean onOff) {
+        if (aba == -1) {
+            this.tabbedPaneInicial.setEnabledAt(0, onOff);
+            this.tabbedPaneInicial.setEnabledAt(1, onOff);
+            this.tabbedPaneInicial.setEnabledAt(2, onOff);
+            this.tabbedPaneInicial.setEnabledAt(3, onOff);
+            return;
+        }
+        this.tabbedPaneInicial.setEnabledAt(aba, onOff);
+    }
+
+    /**
+     * Limpa todos os campos de texto da aba "Cadastrar".
+     */
     public void limpaPainelCadastro() {
         this.cadastrarCampoCoordenadaX.setText("");
         this.cadastrarCampoCoordenadaY.setText("");
         this.cadastrarCampoNomeVertice.setText("");
         this.cadastrarCampoPeso.setText("");
-        this.cadastrarComboBoxLigacoesPonto.setSelectedIndex(0);
-    }
-
-    public void limpaPainelRemove() {
-        this.removerComboBoxLigacoes1.setSelectedIndex(0);
-        this.removerComboBoxLigacoes2.setSelectedIndex(0);
-        this.removerComboBoxLigacoes2.setSelectedIndex(0);
-        this.removerLabelLogRemocao.setText("");
-    }
-
-    public void limpaPainelCalcula() {
-        this.calcularComboBoxBanco.setSelectedIndex(0);
-        this.calcularComboBoxLugarColeta.setSelectedIndex(0);
-    }
-
-    public void limpaPainelAltera() {
-        this.alterarComboBoxAlterarPara.setSelectedIndex(0);
-        this.alterarComboBoxEscolhaPonto.setSelectedIndex(0);
-    }
-
-    public void atualizaPaineis() {
-        this.atualizaCadastro();
-        this.atualizaRemove();
-        this.atualizaCalcula();
-        this.atualizaAlterar();
-    }
-
-    private void atualizaCadastro() {
-        this.limpaPainelCadastro();
-        this.cadastrarComboBoxLigacoesPonto.removeAllItems();
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            this.cadastrarComboBoxLigacoesPonto.addItem((String) vertice.getObj());
-        }
-    }
-
-    private void atualizaRemove() {
-        this.limpaPainelRemove();
-        this.removerComboBoxPontos.removeAllItems();
-        this.removerComboBoxLigacoes1.removeAllItems();
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            this.removerComboBoxPontos.addItem((String) vertice.getObj());
-            this.removerComboBoxLigacoes1.addItem((String) vertice.getObj());
-        }
-    }
-
-    private void atualizaCalcula() {
-        this.limpaPainelCalcula();
-        this.calcularComboBoxBanco.removeAllItems();
-        this.calcularComboBoxLugarColeta.removeAllItems();
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            if (vertice.getTipo() == 1) {
-                this.calcularComboBoxBanco.addItem((String) vertice.getObj());
-            } else if (vertice.getTipo() == 2) {
-                this.calcularComboBoxLugarColeta.addItem((String) vertice.getObj());
-            }
-        }
-    }
-
-    private void atualizaAlterar() {
-        this.limpaPainelAltera();
-        this.alterarComboBoxEscolhaPonto.removeAllItems();
-        Iterator<Vertice<String>> itVertices = this.controller.getNomesVertices();
-        while (itVertices.hasNext()) {
-            Vertice vertice = ((Vertice<String>) itVertices.next());
-            this.alterarComboBoxEscolhaPonto.addItem((String) vertice.getObj());
+        if (!this.controller.existePontos()) {
+            this.cadastrarComboBoxLigacoesPonto.setEnabled(false);
+            this.cadastrarCampoPeso.setEnabled(false);
+            this.cadastrarButtonAdicionarLigacao.setEnabled(false);
+        } else {
+            this.cadastrarComboBoxLigacoesPonto.setEnabled(true);
+            this.cadastrarCampoPeso.setEnabled(true);
+            this.cadastrarButtonAdicionarLigacao.setEnabled(true);
         }
     }
 
     /**
+     * Limpa todas as combo box da aba "Remover pontos/ligações".
+     */
+    public void limpaPainelRemove() {
+        if (!this.nenhumPonto) {
+            this.removerComboBoxPontos.setSelectedIndex(0);
+            this.removerComboBoxLigacoes1.setSelectedIndex(0);
+        }
+    }
+
+    /**
+     * Limpa todas as combo box da aba "Alterar pontos".
+     */
+    public void limpaPainelAltera() {
+        if (!this.nenhumPonto) {
+            this.alterarComboBoxAlterarPara.setSelectedIndex(0);
+            this.alterarComboBoxEscolhaPonto.setSelectedIndex(0);
+        }
+    }
+
+    /**
+     * Carrega o desenho (os pontos e nomes dos pontos) do painel da aba
+     * "Calcula caminho".
+     */
+    public void carregaDesenho() {
+        //Bancos
+        if (this.controller.existeBanco()) {
+            for (String nomes : this.controller.getNomesVertices(1)) {
+                JLabel ponto = new JLabel();
+                ponto.setText(nomes);
+
+                if (this.menuTemaEscuro.isSelected()) {
+                    Color color = new Color(220, 220, 220);
+                    ponto.setForeground(color);
+                }
+                ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+                ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                        .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_roxo.png")));
+
+                ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+                ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+                ponto.setBounds(this.controller.getPonto(nomes).getPosX(),
+                        this.controller.getPonto(nomes).getPosY(), 100, 100);
+                this.calcularPainelPrincipal.add(ponto);
+            }
+        }
+
+        //Pontos de Coleta
+        if (this.controller.existeColeta()) {
+            for (String nomes : this.controller.getNomesVertices(2)) {
+                JLabel ponto = new JLabel();
+                ponto.setText(nomes);
+
+                if (this.menuTemaEscuro.isSelected()) {
+                    Color color = new Color(220, 220, 220);
+                    ponto.setForeground(color);
+                }
+                ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+                ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                        .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_vermelho.png")));
+
+                ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+                ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+                ponto.setBounds(this.controller.getPonto(nomes).getPosX(),
+                        this.controller.getPonto(nomes).getPosY(), 100, 100);
+                this.calcularPainelPrincipal.add(ponto);
+            }
+        }
+
+        //Cruzamentos
+        if (this.controller.existeCruzamento()) {
+            for (String nomes : this.controller.getNomesVertices(0)) {
+                JLabel ponto = new JLabel();
+                ponto.setText(nomes);
+
+                if (this.menuTemaEscuro.isSelected()) {
+                    Color color = new Color(220, 220, 220);
+                    ponto.setForeground(color);
+                }
+                ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+                ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                        .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_branco.png")));
+
+                ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+                ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+                ponto.setBounds(this.controller.getPonto(nomes).getPosX(),
+                        this.controller.getPonto(nomes).getPosY(), 100, 100);
+                this.calcularPainelPrincipal.add(ponto);
+            }
+        }
+
+        //Estacionamento
+        if (this.controller.existeEstacionamento()) {
+            JLabel ponto = new JLabel();
+            ponto.setText(this.controller.getEstacionamento().getObj());
+
+            if (this.menuTemaEscuro.isSelected()) {
+                Color color = new Color(220, 220, 220);
+                ponto.setForeground(color);
+            }
+            ponto.setFont(new java.awt.Font("Tahoma", 0, 10));
+
+            ponto.setIcon(new javax.swing.ImageIcon(getClass()
+                    .getResource("/br/uefs/ecomp/forteseguro/view/ponto_vertice_preto.png")));
+
+            ponto.setHorizontalTextPosition(SwingConstants.CENTER);
+            ponto.setVerticalTextPosition(SwingConstants.BOTTOM);
+            ponto.setBounds(this.controller.getEstacionamento().getPosX(),
+                    this.controller.getEstacionamento().getPosY(), 100, 100);
+            this.calcularPainelPrincipal.add(ponto);
+        }
+
+    }
+
+    /**
+     * Deleta o desenho do painel da aba de "Calcula caminho".
+     */
+    public void deletaDesenho() {
+        this.calcularPainelPrincipal.removeAll();
+    }
+
+    /**
+     * Atualiza todas as abas da janela principal.
+     */
+    public void atualizaPaineis() {
+        this.programaPronto = false;
+
+        this.atualizaCalcula();
+        this.atualizaRemove();
+        this.atualizaAlterar();
+        this.atualizaCadastro();
+        this.situacaoEstacionamento();
+        this.situacaoBanco();
+        this.situacaoColeta();
+        this.situacaoPontos();
+
+        this.programaPronto = true;
+    }
+
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha um
+     * estacionamento cadastrado.
+     */
+    public void situacaoEstacionamento() {
+        if (!this.controller.existeEstacionamento()) {
+            if (!this.situacaoEstacionamento) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! O estacionamento foi removido/alterado.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "estacionamento ou altere um ponto já existente para estacionamento!");
+                this.cadastrarComboBoxTipoPonto.addItem("Estacionamento");
+                this.situacaoEstacionamento = true;
+            }
+        } else if ("Estacionamento".equals(this.cadastrarComboBoxTipoPonto.getItemAt(3))) {
+            this.cadastrarComboBoxTipoPonto.removeItemAt(3);
+            this.situacaoEstacionamento = false;
+        }
+    }
+
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha pelo menos um
+     * banco cadastrado.
+     */
+    public void situacaoBanco() {
+        if (!this.controller.existeBanco()) {
+            if (!this.situacaoBanco) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! Não existe bancos cadastrados.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "banco ou altere um ponto já existente!");
+                this.situacaoBanco = true;
+            }
+
+        } else if (this.situacaoBanco) {
+            this.situacaoBanco = false;
+        }
+    }
+
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha pelo menos um
+     * ponto de coleta cadastrado.
+     */
+    public void situacaoColeta() {
+        if (!this.controller.existeColeta()) {
+            if (!this.situacaoColeta) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! Não existe pontos de coleta cadastrados.\n"
+                        + "Para calcular uma nova rota, por favor, cadastre um novo\n"
+                        + "ponto de coleta ou altere um ponto já existente!");
+                this.situacaoColeta = true;
+            }
+
+        } else if (this.situacaoColeta) {
+            this.situacaoColeta = false;
+        }
+    }
+
+    /**
+     * Trata os possíveis erros que podem acontecer caso não tenha nenhum ponto
+     * cadastrado.
+     */
+    public void situacaoPontos() {
+        if (!this.controller.existePontos()) {
+            if (!this.nenhumPonto) {
+                JOptionPane.showMessageDialog(new JTextField(""), "Atenção! Não existe pontos cadastrados.\n"
+                        + "Para continuar usando o programa, por favor, cadastre novos pontos\n"
+                        + "ou insira um novo arquivo de leitura (ctrl + N)!");
+                this.tabbedPaneInicial.setSelectedIndex(0);
+                this.onOffAbas(1, false);
+                this.onOffAbas(3, false);
+                this.nenhumPonto = true;
+            }
+        } else if (this.nenhumPonto) {
+            this.onOffAbas(1, true);
+            this.onOffAbas(3, true);
+            this.nenhumPonto = false;
+        }
+    }
+
+    /**
+     * Atualiza a combo box que lista todos os vertíces disponíveis para fazer
+     * ligações.
+     */
+    private void atualizaCadastro() {
+        this.limpaPainelCadastro();
+        this.cadastrarComboBoxLigacoesPonto.removeAllItems();
+        for (String nomes : this.controller.getNomesVertices(-1)) {
+            this.cadastrarComboBoxLigacoesPonto.addItem(nomes);
+        }
+    }
+
+    /**
+     * Atualiza as combo box da aba "Remover ponto".
+     */
+    private void atualizaRemove() {
+        this.limpaPainelRemove();
+        this.removerComboBoxPontos.removeAllItems();
+        this.removerComboBoxLigacoes1.removeAllItems();
+        this.removerComboBoxLigacoes2.removeAllItems();
+        this.removerComboBoxLigacoes1.addItem("");
+        for (String nomes : this.controller.getNomesVertices(-1)) {
+            this.removerComboBoxPontos.addItem(nomes);
+            this.removerComboBoxLigacoes1.addItem(nomes);
+        }
+    }
+
+    /**
+     * Atualiza as combo box da aba "Calcula caminho" e carrega o desenho do
+     * painel.
+     */
+    private void atualizaCalcula() {
+        this.deletaDesenho();
+        this.calcularComboBoxBanco.removeAllItems();
+        this.calcularComboBoxLugarColeta.removeAllItems();
+        this.calcularProgressBar.setValue(0);
+
+        if (this.controller.existeBanco() && this.controller.existeColeta()
+                && this.controller.existeEstacionamento()) {
+            this.onOffAbas(2, true);
+        } else {
+            this.onOffAbas(2, false);
+            return;
+        }
+
+        for (String nomes : this.controller.getNomesVertices(1)) {
+            this.calcularComboBoxBanco.addItem(nomes);
+        }
+        for (String nomes : this.controller.getNomesVertices(2)) {
+            this.calcularComboBoxLugarColeta.addItem(nomes);
+        }
+        if (this.controller.existeEstacionamento()) {
+            this.calculaLabelEstacionamento.setText(this.controller.getEstacionamento().getObj());
+        }
+        this.carregaDesenho();
+    }
+
+    /**
+     * Atualiza a combo box da aba "Alterar ponto".
+     */
+    private void atualizaAlterar() {
+        this.limpaPainelAltera();
+        this.alterarComboBoxEscolhaPonto.removeAllItems();
+        for (String nomes : this.controller.getNomesVertices(-1)) {
+            this.alterarComboBoxEscolhaPonto.addItem(nomes);
+        }
+    }
+
+    /**
+     * Metódo principal da classe.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -923,12 +1525,13 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel cadastrarLabelNomeVertice;
     private javax.swing.JLabel cadastrarLabelPrincipal;
     private javax.swing.JPanel cadastrarPanelLigacoesPontos;
+    private javax.swing.JLabel calculaLabelEstacionamento;
     private javax.swing.JButton calcularButtonCalcular;
     private javax.swing.JComboBox<String> calcularComboBoxBanco;
     private javax.swing.JComboBox<String> calcularComboBoxLugarColeta;
-    private javax.swing.JLabel calcularLabelMenorCaminho;
     private javax.swing.JPanel calcularPainelPrincipal;
     private javax.swing.JProgressBar calcularProgressBar;
+    private javax.swing.JTextArea calcularTextMenorCaminho;
     private javax.swing.JMenu inicialMenuInicial;
     private javax.swing.JMenu inicialMenuSobre;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -941,6 +1544,7 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -948,15 +1552,19 @@ public class MainSwing extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JMenuItem menuAlterarArquivo;
+    private javax.swing.JMenuItem menuAtualizaPaineis;
+    private javax.swing.JCheckBoxMenuItem menuTemaEscuro;
     private javax.swing.JPanel panelAlterar;
     private javax.swing.JPanel panelCadastrar;
     private javax.swing.JPanel panelCalcular;

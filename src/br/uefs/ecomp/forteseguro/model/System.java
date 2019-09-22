@@ -16,15 +16,14 @@ package br.uefs.ecomp.forteseguro.model;
 
 import br.uefs.ecomp.forteseguro.exception.ArestaDuplicadaException;
 import br.uefs.ecomp.forteseguro.exception.VerticeDuplicadoException;
-import br.uefs.ecomp.forteseguro.util.Aresta;
-import br.uefs.ecomp.forteseguro.util.Grafo;
-import br.uefs.ecomp.forteseguro.util.Vertice;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * Classe responsável por gerenciar todo o sistema (classes e objetos) do 
@@ -58,8 +57,9 @@ public class System {
         try{
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            String leitura = null;
             
+            String leitura = null;
+            int oi = 0;
             /*Lê a parte do arquivo que estão os vértices*/
             while(!"[Arestas]".equals(leitura = br.readLine())){
                 if(leitura.equals("[Vertices]"))
@@ -69,15 +69,17 @@ public class System {
                 String identificador = subString[0];
                  //Tipo: 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
                 int tipo = Integer.parseInt(subString[1]);
-                //int x = Integer.parseInt(subString[2]);
-                //int y = Integer.parseInt(subString[3]);
+                int x = Integer.parseInt(subString[2]);
+                int y = Integer.parseInt(subString[3]);
                 try{
-                    this.grafo.inserir(identificador, tipo);
+                    this.grafo.novoVertice(identificador, tipo, x, y);
                     contador++;
                 }
                 catch(VerticeDuplicadoException v){
                     v.toString();
                 }
+                oi++;
+                //JOptionPane.showMessageDialog(new JLabel("oi"),oi);
             }
             /*Lê a parte do arquivo que estão as arestas*/
             while((leitura = br.readLine()) != null){
@@ -85,9 +87,9 @@ public class System {
                 int distancia = Integer.parseInt(subString[2]);
                 
                 try{
-                    this.grafo.inserirAresta(this.grafo.buscarVertice(subString[0]), 
+                    this.grafo.criarAresta(this.grafo.buscarVertice(subString[0]), 
                             this.grafo.buscarVertice(subString[1]), distancia);
-                    this.grafo.inserirAresta(this.grafo.buscarVertice(subString[1]), 
+                    this.grafo.criarAresta(this.grafo.buscarVertice(subString[1]), 
                             this.grafo.buscarVertice(subString[0]), distancia);
                 }
                 catch(ArestaDuplicadaException a){
@@ -109,12 +111,12 @@ public class System {
      * @param cruzamento String - Identificador do vértice que se deseja adicionar.
      * @param tipo int - 0 - Vértice comum | 1 - Banco | 2 - Coleta | 3 - Estacionamento
      * @return Cruzamento adicionado com sucesso! - Caso o vértice seja adicionado
-     * com sucesso | Vértice já está adicionado no grafo! - caso ocorra 
-     * algum problema ao tentar inserir determinado vértice.
+ com sucesso | Vértice já está adicionado no grafo! - caso ocorra 
+ algum problema ao tentar novoVertice determinado vértice.
      */
     public String adicionarCruzamento(String cruzamento, int tipo){
         try{
-            this.grafo.inserir(cruzamento, tipo);
+            this.grafo.novoVertice(cruzamento, tipo);
             return "Cruzamento adicionado com sucesso!";
         }
         catch(VerticeDuplicadoException v){
@@ -129,12 +131,12 @@ public class System {
      * @param x
      * @param y
      * @return Cruzamento adicionado com sucesso! - Caso o vértice seja adicionado
-     * com sucesso | Vértice já está adicionado no grafo! - caso ocorra 
-     * algum problema ao tentar inserir determinado vértice.
+ com sucesso | Vértice já está adicionado no grafo! - caso ocorra 
+ algum problema ao tentar novoVertice determinado vértice.
      */
     public String adicionarVertice(String cruzamento, int tipo, int x, int y){
         try{
-            this.grafo.inserir(cruzamento, tipo, x, y);
+            this.grafo.novoVertice(cruzamento, tipo, x, y);
             return "Cruzamento adicionado com sucesso!";
         }
         catch(VerticeDuplicadoException v){
@@ -148,8 +150,8 @@ public class System {
      * @param v2 String - O outro vértice que faz parte da ligação.
      * @param distancia int - Distância entre os dois vértices formadoes.
      * @return Ligação adicionada com sucesso! - Caso a aresta seja adicionada 
-     * com sucesso | Aresta já está adicionada no sistema! - Caso ocoorra algum
-     * problema ao tentar inserir determinada aresta.
+ com sucesso | Aresta já está adicionada no sistema! - Caso ocoorra algum
+ problema ao tentar novoVertice determinada aresta.
      */
     
     /*Por enquanto está com a distância definida pelo usuário*/
@@ -158,7 +160,7 @@ public class System {
         Vertice<String> vertice2 = this.grafo.buscarVertice(v2);
         
         try{
-            this.grafo.inserirAresta(vertice1, vertice2, distancia);
+            this.grafo.criarAresta(vertice1, vertice2, distancia);
             return "Ligação adicionada com sucesso!";
         }
         catch(ArestaDuplicadaException a){
@@ -205,7 +207,7 @@ public class System {
         Vertice<String> vertice = this.getGrafo().buscarVertice(cruzamento);
         
         if(vertice != null){
-            vertice.setTipo(tipo);
+            vertice.setId(tipo);
         }
     }
     
@@ -215,10 +217,18 @@ public class System {
      */
     public boolean existeEstacionamento(){
         for(Vertice<String> vertice: this.grafo.getVertices()){
-            if(vertice.getTipo() == 3)
+            if(vertice.getId() == 3)
                 return true;
         }
         return false;
+    }
+    
+    public Vertice<String> getEstacionamento(){
+        for(Vertice<String> vertice: this.grafo.getVertices()){
+            if(vertice.getId() == 3)
+                return vertice;
+        }
+        return null;
     }
     
     /** Método que verifica se o vértice passado como parâmetro existe no grafo.
